@@ -5,7 +5,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card">
-				<div class="card-header">{{ __('Booking') }}</div>
+				<div class="card-header">{{ __('Booking Form') }}</div>
 
 				<div class="card-body">
 					@if ($errors->any())
@@ -21,63 +21,73 @@
 						@csrf
 
 						<div class="form-group row">
-							<label for="namaAcara" class="col-md-4 col-form-label text-md-right">{{ __('Nama Acara') }}</label>
+							<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
+							<i class="fa fa-sticky-note-o"></i>
 							<div class="col-md-6">
 								<input id="namaAcara" type="text" class="form-control" name="namaAcara" value="{{ old('namaAcara') }}" required autofocus>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="unitDepartemen" class="col-md-4 col-form-label text-md-right">{{ __('Unit/Departemen') }}</label>
+							<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Unit/Departemen') }}</label>
+							<i class="fa fa-building"></i>
 							<div class="col-md-6">
 								<input id="unitDepartemen" type="text" class="form-control" name="unitDepartemen" value="{{ old('unitDepartemen') }}" required>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="namaAnda" class="col-md-4 col-form-label text-md-right">{{ __('Nama Anda') }}</label>
+							<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
+							<i style="padding-left: 1px" class="fa fa-user"></i>
+							<!-- style="margin-left: 1px" -->
 							<div class="col-md-6">
 								<input id="namaAnda" type="text" class="form-control" name="namaAnda" value="{{ old('namaAnda') }}" required>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="emailITS" class="col-md-4 col-form-label text-md-right">{{ __('Email ITS') }}</label>
+							<label for="emailITS" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}</label>
+							<i class="fa fa-envelope-o"></i>
 							<div class="col-md-6">
 								<input id="emailITS" type="email" class="form-control" name="emailITS" value="{{ old('emailITS') }}" required autocomplete="email">
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="userIntegra" class="col-md-4 col-form-label text-md-right">{{ __('User Integra') }}</label>
+							<label for="userIntegra" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}</label>
+							<i class="fa fa-address-card"></i>
 							<div class="col-md-6">
 								<input id="userIntegra" type="text" class="form-control" name="userIntegra" value="{{ old('userIntegra') }}" required>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="waktuMulai" class="col-md-4 col-form-label text-md-right">{{ __('Waktu Mulai Webinar') }}</label>
+							<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
+							<i class="fa fa-calendar-o"></i>
 							<div class="col-md-6">
-								<input id="waktuMulai" type="datetime-local" class="" name="waktuMulai" value="{{ old('waktuMulai') }}" required>
+								<input id="waktuMulai" type="datetime-local" class="form-control" name="waktuMulai" value="{{ old('waktuMulai') }}" required>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="durasi" class="col-md-4 col-form-label text-md-right">{{ __('Durasi Webinar') }}</label>
+							<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
+							<i class="fa fa-clock-o"></i>
 							<div class="col-md-6">
 								<input id="durasi" type="text" class="form-control" value="" required>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="waktuSelesai" class="col-md-4 col-form-label text-md-right">{{ __('Waktu Selesai Webinar') }}</label>
+							<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}</label>
+							<i class="fa fa-calendar"></i>
 							<div class="col-md-6">
-								<input id="waktuSelesai" type="datetime-local" class="" name="waktuSelesai" value="{{ old('waktuSelesai') }}" required>
+								<input id="waktuSelesai" type="datetime-local" class="form-control" name="waktuSelesai" value="{{ old('waktuSelesai') }}" required>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="civitasAkademik" class="col-md-4 col-form-label text-md-right">{{ __('Civitas Akademik') }}</label>
+							<label for="civitasAkademik" class="col-md-4 col-form-label text-md-left">{{ __('Civitas Akademik') }}</label>
+							<i class="fa fa-users"></i>
 							<div class="col-md-6">
 								<select name="civitasAkademik" id="civitasAkademik" class="form-control">
 									@foreach ($civitas as $item)
@@ -88,15 +98,19 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="relayITSTV" class="col-md-4 col-form-label text-md-right">{{ __('Relay ke ITS TV') }}</label>
+							<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Relay ke ITS TV') }}</label>
 							<div class="col-md-6">
 								<input id="relayITSTV" type="checkbox" class="" name="relayITSTV" value="relayITSTVBoolean">
+								<!-- <label for="iya">Iya</label>
+								<label for="tidak">Tidak</label> -->
 							</div>
-							<sub class="">Webinar akan direlay sesuai dengan persetujuan ......</sub>
+							<div class="col-md-6">
+								<sub class="">Webinar akan direlay sesuai dengan persetujuan ......</sub>
+							</div>	
 						</div>
 
 						<div class="form-group row">
-							<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-right">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
+							<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
 							<div class="col-md-6">
 								<input id="pesertaBanyak" type="checkbox" class="" name="pesertaBanyak" value="pesertaBanyakBoolean">
 							</div>
@@ -106,7 +120,7 @@
 
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
-								<button type="submit" class="btn btn-primary">
+								<button type="submit" class="btn btn-submit">
 									{{ __('Submit Booking') }}
 								</button>
 
