@@ -21,4 +21,12 @@ class Civitas extends Model
     static function getCivitasLookup() {
         return Civitas::pluck('id', 'nama');
     }
+
+    static function getIdFromNama($nama) {
+        return Civitas::where('nama', '=', $nama)->firstOrFail()->id;
+    }
+
+    static function getNamaFromId($id) {
+        return Civitas::findOrFail($id)->nama;
+    }
 }
