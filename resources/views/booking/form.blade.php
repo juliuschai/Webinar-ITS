@@ -94,13 +94,8 @@
 						</div>
 
 						<div class="form-group row">
-<<<<<<< HEAD:resources/views/booking/new.blade.php
-							<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
-							<i class="fa fa-clock-o booking"></i>
-=======
 							<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}</label>
 							<i class="fa fa-calendar"></i>
->>>>>>> f15245befc653f83220798701de78b393caa7c11:resources/views/booking/form.blade.php
 							<div class="col-md-6">
 								<input 
 									id="waktuSelesai" type="datetime-local" class="form-control" name="waktuSelesai" 
@@ -110,13 +105,8 @@
 						</div>
 
 						<div class="form-group row">
-<<<<<<< HEAD:resources/views/booking/new.blade.php
-							<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}</label>
-							<i class="fa fa-calendar booking"></i>
-=======
 							<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
 							<i class="fa fa-clock-o"></i>
->>>>>>> f15245befc653f83220798701de78b393caa7c11:resources/views/booking/form.blade.php
 							<div class="col-md-6">
 								<input id="durasi" type="text" class="form-control" value="" onchange="onupdateDurasi()"> jam
 							</div>
@@ -144,7 +134,6 @@
 									id="relayITSTV" type="checkbox" class="" name="relayITSTV" 
 									value="relayITSTVBoolean" {{ $booking['relay_ITSTV']?'checked':'' }}
 								> 
-								{{-- {{ (old('relayITSTV')??$booking['relay_ITSTV'])==true ? 'checked':'' }} --}}
 								<!-- <label for="iya">Iya</label>
 								<label for="tidak">Tidak</label> -->
 							</div>
@@ -163,13 +152,6 @@
 								<input id="1000" type="radio" class="" name="pesertaBanyak" 
 									value="1000" {{ $booking['peserta_banyak']==true?'checked':'' }}
 								><div>500 - 1000</div>
-								{{-- below is a vague ass syntax explanation checking pesertaBanyak 500
-								if (old('pesertaBanyak') == 500 || $booking['peserta_banyak'] == false) {
-										return 'checked';
-								} else {
-										return '';
-								}
-								--}}
 								</div>
 							{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 						</div>

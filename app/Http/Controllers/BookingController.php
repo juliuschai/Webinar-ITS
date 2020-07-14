@@ -11,10 +11,6 @@ class BookingController extends Controller
 {
     function viewNewBooking(Request $request) {
         $civitas = Civitas::getCivitasList();
-<<<<<<< HEAD
-        // return view('layouts.user', compact('civitas'));
-        return view('booking.user', compact('civitas'));
-=======
         $booking = new Booking();
 
         return view('booking.form', compact(['civitas', 'booking']));
@@ -27,7 +23,6 @@ class BookingController extends Controller
         $booking->saveFromRequest($request);
 
         return redirect()->route('booking.view', ['id'=>$booking['id']]);
->>>>>>> f15245befc653f83220798701de78b393caa7c11
     }
 
     function viewEditBooking(Request $request) {
