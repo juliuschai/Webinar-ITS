@@ -18,6 +18,7 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });
+    Route::get('test','UserController@testGet');
     
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
@@ -25,6 +26,7 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/booking/edit', 'BookingController@viewEditBooking')->name('booking.edit');
     Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
     Route::get('/booking/view', 'BookingController@viewBooking')->name('booking.view');
+    Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
 
     Auth::routes();
 });

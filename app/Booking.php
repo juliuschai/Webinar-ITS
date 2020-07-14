@@ -56,7 +56,18 @@ class Booking extends Model
         $this['peserta_banyak'] = $peserta_banyak;
         $this->save();
     }
+    public function verifyRequest($request) {
+        if ($request['verify'] == 'accept') {
+            $this['disetujui'] = true;
+            $this['api_host_name'] = $request['hostName'];
+            $this['api_host_email'] = $request['hostEmail'];
+        } else if ($request['verify'] == 'deny') {
+            $this['disetujui'] = false;
+        }
 
+        $this['deskripsi_disetujui'] = now().': '.$request['alasan'];
+        $this->save();
+    }
     /**
      * Aborts the current request if the booking is not 
      * owned by the current user 

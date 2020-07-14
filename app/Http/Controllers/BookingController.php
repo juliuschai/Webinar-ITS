@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Civitas;
-use App\Http\Requests\SaveBooking;
+use App\Http\Requests\SaveBookingRequest;
+use App\Http\Requests\VerifyBookingRequest;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -16,9 +17,7 @@ class BookingController extends Controller
         return view('booking.form', compact(['civitas', 'booking']));
     }
 
-    function saveNewBooking(SaveBooking $request) {
-        // Validation via SaveBooking form requests
-
+    function saveNewBooking(SaveBookingRequest $request) {
         $booking = new Booking();
         $booking->saveFromRequest($request);
 
@@ -28,34 +27,39 @@ class BookingController extends Controller
     function viewEditBooking(Request $request) {
         $id = $request['id'];
         $booking = Booking::findOrFail($id);
-        $booking->civitas = Civitas::getNamaFromId($booking->civitas_id);
+        $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
         // TODO:$booking->abortButOwner(auth()->user()->id);
 
         $civitas = Civitas::getCivitasList();
         return view('booking.form', compact(['civitas', 'booking', 'id']));
     }
 
-    function saveEditBooking(SaveBooking $request) {
-        // Validation via SaveBooking form requests
-
+    function saveEditBooking(SaveBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
         // TODO:$booking->abortButOwner(auth()->user()->id);
         $booking->saveFromRequest($request);
 
-        return redirect()->route('booking.edit', ['id'=>$request['id']]);
+        return redirect()->route('booking.view', ['id'=>$request['id']]);
     }
 
     function viewBooking(Request $request) {
-        $booking = Booking::findOrFail($request['id']);
+        $id = $request['id'];
+        $booking = Booking::findOrFail($id);
+        $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
         $isAdmin = true;
         $isOwner = true;
         // TODO:$isOwner = $booking->isBookingOwner(auth()->user()->id);
 
         return view(
             'booking.view', 
-            compact(['booking', 'isOwner', 'isAdmin'])
+            compact(['id', 'booking', 'isOwner', 'isAdmin'])
         );
     }
 
+    function verifyBooking(VerifyBookingRequest $request) {
+        $booking = Booking::findOrFail($request['id']);
+        $booking->verifyRequest($request);
 
+        return redirect()->route('booking.view', ['id'=>$request['id']]);
+    }
 }
