@@ -9,7 +9,8 @@ class BookingController extends Controller
 {
     function viewNewBooking(Request $request) {
         $civitas = Civitas::getCivitasList();
-        return view('booking.new', compact('civitas'));
+        // return view('layouts.user', compact('civitas'));
+        return view('booking.user', compact('civitas'));
     }
 
     function newBooking(Request $request) {
