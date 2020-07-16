@@ -24,7 +24,7 @@ class UserController extends Controller
 
 	function checkLoggingIn(Request $request) {
 		if (empty($request->all())) {
-			return view('welcome');
+			return view('calendar.calendar');
 		} else {
 			// redirect and forward parameters to OIDCLogin
 			$retRoute = redirect()->route('OIDCLogin');
