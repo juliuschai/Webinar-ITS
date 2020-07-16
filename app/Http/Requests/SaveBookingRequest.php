@@ -31,7 +31,7 @@ class SaveBookingRequest extends FormRequest
             'userIntegra' => 'required|string|max:254',
             'waktuMulai' => 'required|date|after:now',
             'waktuSelesai' => 'required|date|after:waktuMulai',
-            'civitasAkademik' => 'required|string|max:12',
+            'group' => 'required|string|max:12',
             'pesertaBanyak' => 'required|numeric|in:500,1000',
         ];
     }

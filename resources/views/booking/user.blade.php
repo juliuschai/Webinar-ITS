@@ -178,18 +178,6 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="civitasAkademik" class="col-md-4 col-form-label text-md-left">{{ __('Civitas Akademik') }}</label>
-                                    <i class="fa fa-users booking"></i>
-                                    <div class="col-md-6">
-                                        <select name="civitasAkademik" id="civitasAkademik" class="form-control">
-                                            @foreach ($civitas as $item)
-                                            <option value="{{$item['nama']}}">{{$item['nama']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
                                     <label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Relay ke ITS TV') }}</label>
                                     <div class="col-md-6">
                                         <input id="relayITSTV" type="checkbox" class="" name="relayITSTV" value="relayITSTVBoolean">

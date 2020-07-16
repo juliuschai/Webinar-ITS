@@ -39,7 +39,7 @@ class Booking extends Model
      * saves parsed data in current booking model instance  
      */
     public function saveFromRequest($request) {
-        $civitas_id = Civitas::getIdFromNama($request->civitasAkademik);
+        $group_id = Group::getIdFromNama($request->group);
         // True if checkbox checked, false not checked
         $relayITSTV = $request->has('relayITSTV'); 
         $peserta_banyak = $request['pesertaBanyak'] == 500 ? false:true;
@@ -51,7 +51,7 @@ class Booking extends Model
         $this['user_integra'] = $request['userIntegra'];
         $this['waktu_mulai'] = $request['waktuMulai'];
         $this['waktu_akhir'] = $request['waktuSelesai'];
-        $this['civitas_id'] = $civitas_id;
+        $this['group_id'] = $group_id;
         $this['relay_ITSTV'] = $relayITSTV;
         $this['peserta_banyak'] = $peserta_banyak;
         $this->save();

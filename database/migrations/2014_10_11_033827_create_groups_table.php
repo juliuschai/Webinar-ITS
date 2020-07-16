@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCivitasTable extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +14,14 @@ class CreateCivitasTable extends Migration
      */
     public function up()
     {
-        Schema::create('civitas', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->string('nama', 12);
+            $table->string('name', 12);
         });
-        DB::table('civitas')->insert([
-            ['nama' => 'Dosen'],
-            ['nama' => 'Tendik'],
-            ['nama' => 'Mahasiswa'],
-            ['nama' => 'Lain-lain'],
+        DB::table('groups')->insert([
+            ['name' => 'Dosen'],
+            ['name' => 'Tendik'],
+            ['name' => 'Mahasiswa'],
         ]);
     }
 
@@ -33,6 +32,6 @@ class CreateCivitasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('civitas');
+        Schema::dropIfExists('groups');
     }
 }

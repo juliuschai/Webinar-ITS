@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
-use App\Civitas;
+use App\Group;
 use App\Http\Requests\SaveBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
 use Illuminate\Http\Request;
@@ -11,10 +11,9 @@ use Illuminate\Http\Request;
 class BookingController extends Controller
 {
     function viewNewBooking(Request $request) {
-        $civitas = Civitas::getCivitasList();
         $booking = new Booking();
 
-        return view('booking.form', compact(['civitas', 'booking']));
+        return view('booking.form', compact(['booking']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
@@ -27,11 +26,9 @@ class BookingController extends Controller
     function viewEditBooking(Request $request) {
         $id = $request['id'];
         $booking = Booking::findOrFail($id);
-        $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
         // TODO:$booking->abortButOwner(auth()->user()->id);
 
-        $civitas = Civitas::getCivitasList();
-        return view('booking.form', compact(['civitas', 'booking', 'id']));
+        return view('booking.form', compact(['booking', 'id']));
     }
 
     function saveEditBooking(SaveBookingRequest $request) {
@@ -45,7 +42,7 @@ class BookingController extends Controller
     function viewBooking(Request $request) {
         $id = $request['id'];
         $booking = Booking::findOrFail($id);
-        $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
+        $booking['group'] = Group::getNameFromId($booking['group_id']);
         $isAdmin = true;
         $isOwner = true;
         // TODO:$isOwner = $booking->isBookingOwner(auth()->user()->id);

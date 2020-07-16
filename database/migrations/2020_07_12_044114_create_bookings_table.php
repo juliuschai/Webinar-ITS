@@ -23,8 +23,8 @@ class CreateBookingsTable extends Migration
 			$table->string('user_integra');
 			$table->timestamp('waktu_mulai', 0)->default('2000-01-01 00:00');
 			$table->timestamp('waktu_akhir', 0)->default('2000-01-01 00:00');
-			$table->unsignedTinyInteger('civitas_id');
-			$table->foreign('civitas_id')->references('id')->on('civitas')->onUpdate('CASCADE')->onDelete('RESTRICT');
+			$table->unsignedBigInteger('user_id');
+			$table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->boolean('relay_ITSTV');
 			$table->boolean('peserta_banyak')->comment('Apakah peserta lebih dari 500');
 			$table->string('api_host_name')->nullable();

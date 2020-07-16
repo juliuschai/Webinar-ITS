@@ -105,12 +105,12 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="civitasAkademik" class="col-md-4 col-form-label text-md-left">{{ __('Civitas Akademik') }}</label>
+						<label for="group" class="col-md-4 col-form-label text-md-left">{{ __('Group') }}</label>
 						<i class="fa fa-users"></i>
 						<div class="col-md-6">
 							<input 
-								id="civitasAkademik" type="text" class="form-control" name="civitasAkademik" 
-								value="{{ $booking['civitas'] }}" disabled
+								id="group" type="text" class="form-control" name="group" 
+								value="{{ $booking['group'] }}" disabled
 							>
 						</div>
 					</div>
