@@ -7,7 +7,7 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-				<div class="card-header">{{ __('Booking Form') }}</div>
+				<div class="card-header">{{ __('Edit Form') }}</div>
 
 				<div class="card-body">
 					@if ($errors->any())
@@ -111,6 +111,21 @@
 							<i class="fa fa-clock-o booking"></i>
 							<div class="col-md-6">
 								<input id="durasi" type="text" class="form-control" value="" onchange="onupdateDurasi()"> jam
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="civitasAkademik" class="col-md-4 col-form-label text-md-left">{{ __('Civitas Akademik') }}</label>
+							<i class="fa fa-users booking"></i>
+							<div class="col-md-6">
+								<select name="civitasAkademik" id="civitasAkademik" class="form-control">
+									@foreach ($civitas as $item)
+									<option 
+										value="{{$item['nama']}}"
+										{{ (old('civitasAkademik')??$booking['civitas']) == $item['nama'] ? 'selected':'' }}
+									>{{$item['nama']}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 

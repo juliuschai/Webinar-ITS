@@ -36,13 +36,17 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
     });
     Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
     Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
-    Route::get('/booking/edit', 'BookingController@viewEditBooking')->name('booking.edit');
+    Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
     Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
 
     Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
     Route::group(['middleware' => 'auth'], function () {
     
     });
+    Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
+    Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');
+    Route::get('/booking/detail/{id}', 'BookingController@detailBooking')->name('booking.detail');
+    Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
 
     Auth::routes();
 });
