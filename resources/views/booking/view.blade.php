@@ -47,7 +47,7 @@
 						<div class="col-md-6">
 							<input 
 								id="namaAnda" type="text" class="form-control" name="namaAnda" 
-								value="{{ $booking['nama_booker'] }}" disabled
+								value="{{ $booking['nama'] }}" disabled
 							>
 						</div>
 					</div>
@@ -58,7 +58,7 @@
 						<div class="col-md-6">
 							<input 
 								id="emailITS" type="email" class="form-control" name="emailITS" 
-								value="{{ $booking['email_its'] }}" disabled autocomplete="email"
+								value="{{ $booking['email'] }}" disabled autocomplete="email"
 							>
 						</div>
 					</div>
@@ -69,7 +69,7 @@
 						<div class="col-md-6">
 							<input 
 								id="userIntegra" type="text" class="form-control" name="userIntegra" 
-								value="{{ $booking['user_integra'] }}" disabled
+								value="{{ $booking['reg_id'] }}" disabled
 							>
 						</div>
 					</div>
@@ -160,7 +160,7 @@
 					@if($isAdmin)
 					<form method="POST" action="{{ route('booking.verify') }}">
 						@csrf
-						<input name="id" type="hidden" value="{{ $id }}">
+						<input name="id" type="hidden" value="{{ $booking['id'] }}">
 						<input id="verify" name="verify" type="hidden" value="">
 
 						<div class="form-group row">

@@ -18,9 +18,9 @@ class CreateBookingsTable extends Migration
 			$table->id();
 			$table->string('nama_acara');
 			$table->string('unit');
-			$table->string('nama_booker');
-			$table->string('email_its');
-			$table->string('user_integra');
+			// $table->string('nama_booker');
+			// $table->string('email_its');
+			// $table->string('user_integra');
 			$table->timestamp('waktu_mulai', 0)->default('2000-01-01 00:00');
 			$table->timestamp('waktu_akhir', 0)->default('2000-01-01 00:00');
 			$table->unsignedBigInteger('user_id');

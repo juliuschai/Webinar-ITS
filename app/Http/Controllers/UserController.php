@@ -13,7 +13,7 @@ class UserController extends Controller
 
 	function login(Request $request) {
 		OIDCHelper::login();
-		return redirect('/auth/check');
+		return redirect()->route('home');
 	}
 
 	function logout(Request $request) {
@@ -26,12 +26,7 @@ class UserController extends Controller
 		if (empty($request->all())) {
 			return view('calendar.calendar');
 		} else {
-			// redirect and forward parameters to OIDCLogin
-			$retRoute = redirect()->route('OIDCLogin');
-			foreach($request->all() as $key => $value) {
-				$retRoute = $retRoute->with($key, $value);
-			}
-			return $retRoute;
+			return $this->login($request);
 		}
 	}
 }

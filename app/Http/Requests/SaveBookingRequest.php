@@ -26,12 +26,8 @@ class SaveBookingRequest extends FormRequest
         return [
             'namaAcara' => 'required|string|max:254',
             'unitDepartemen' => 'required|string|max:254',
-            'namaAnda' => 'required|string|max:254',
-            'emailITS' => 'required|email|max:254',
-            'userIntegra' => 'required|string|max:254',
             'waktuMulai' => 'required|date|after:now',
             'waktuSelesai' => 'required|date|after:waktuMulai',
-            'group' => 'required|string|max:12',
             'pesertaBanyak' => 'required|numeric|in:500,1000',
         ];
     }

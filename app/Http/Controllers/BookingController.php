@@ -3,57 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
-use App\Group;
 use App\Http\Requests\SaveBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
     function viewNewBooking(Request $request) {
         $booking = new Booking();
+        $booking->setUserFields(Auth::id());
 
         return view('booking.form', compact(['booking']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
         $booking = new Booking();
+        $booking->setUserId(Auth::id());
         $booking->saveFromRequest($request);
 
         return redirect()->route('booking.view', ['id'=>$booking['id']]);
     }
 
-    function viewEditBooking(Request $request) {
-        $id = $request['id'];
+    function viewEditBooking($id) {
         $booking = Booking::findOrFail($id);
-        // TODO:$booking->abortButOwner(auth()->user()->id);
+        $booking->abortButOwner(Auth::id());
+        $booking->setUserFields(Auth::id());
 
-        return view('booking.form', compact(['booking', 'id']));
+        return view('booking.form', compact(['booking']));
     }
 
     function saveEditBooking(SaveBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
-        // TODO:$booking->abortButOwner(auth()->user()->id);
+        $booking->abortButOwner(Auth::id());
         $booking->saveFromRequest($request);
 
         return redirect()->route('booking.view', ['id'=>$request['id']]);
     }
 
-    function viewBooking(Request $request) {
-        $id = $request['id'];
+    function viewBooking($id) {
         $booking = Booking::findOrFail($id);
-        $booking['group'] = Group::getNameFromId($booking['group_id']);
-        $isAdmin = true;
-        $isOwner = true;
-        // TODO:$isOwner = $booking->isBookingOwner(auth()->user()->id);
+        $booking->setUserFields($booking['user_id']);
+        $isAdmin = User::find(Auth::id())->isAdmin();
+        $isOwner = $booking->isOwner(Auth::id());
 
         return view(
             'booking.view', 
-            compact(['id', 'booking', 'isOwner', 'isAdmin'])
+            compact(['booking', 'isOwner', 'isAdmin'])
         );
     }
 
     function verifyBooking(VerifyBookingRequest $request) {
+        User::find(Auth::id())->abortButAdmin();
         $booking = Booking::findOrFail($request['id']);
         $booking->verifyRequest($request);
 

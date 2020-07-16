@@ -16,15 +16,29 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/', 'UserController@checkLoggingIn');
-    Route::get('test','UserController@testGet');
-    Route::get('auth/login','UserController@login')->name('OIDCLogin');
-    Route::get('auth/logout','UserController@logout')->name('OIDCLogout');
+    // Route::get('test','UserController@testGet');
     
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('login','UserController@login')->name('login');
 
-    Route::get('/booking/view', 'BookingController@viewBooking')->name('booking.view');
+    Route::get('/booking/view/{id}', 'BookingController@viewBooking')->name('booking.view');
     Route::group(['middleware' => 'auth'], function () {
+        Route::get('/home', 'HomeController@index')->name('home');
+
+        Route::get('logout','UserController@logout')->name('logout');
+
+        Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
+        Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
+        Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
+        Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
+        Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
     });
+    Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
+    Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');
+    Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
+});
+
+// Auth::routes();
+/* 
     Route::get('auth/check', function () {
         $ret['test'] = session('test');
         $ret['check'] = auth()->check();
@@ -34,19 +48,4 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
         $ret['id_token'] = session('id_token');
         var_dump($ret);
     });
-    Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
-    Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
-    Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
-    Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
-
-    Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
-    Route::group(['middleware' => 'auth'], function () {
-    
-    });
-    Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
-    Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');
-    Route::get('/booking/detail/{id}', 'BookingController@detailBooking')->name('booking.detail');
-    Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
-
-    Auth::routes();
-});
+ */

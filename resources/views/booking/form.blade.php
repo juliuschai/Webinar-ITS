@@ -24,7 +24,7 @@
 					<form method="POST" action="{{ route('booking.new') }}">
 					@elseif(Route::is('booking.edit'))
 					<form method="POST" action="{{ route('booking.edit') }}">
-						<input name="id" type="hidden" value="{{ $id }}">
+						<input name="id" type="hidden" value="{{ $booking['id'] }}">
 					@endif
 						@csrf
 
@@ -57,7 +57,7 @@
 							<div class="col-md-6">
 								<input 
 									id="namaAnda" type="text" class="form-control" name="namaAnda" 
-									value="{{ old('namaAnda')??$booking['nama_booker'] }}" required
+									value="{{ $booking['nama'] }}" required disabled
 								>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 							<div class="col-md-6">
 								<input 
 									id="emailITS" type="email" class="form-control" name="emailITS" 
-									value="{{ old('emailITS')??$booking['email_its'] }}" required autocomplete="email"
+									value="{{ $booking['email'] }}" required autocomplete="email" disabled
 								>
 							</div>
 						</div>
@@ -79,7 +79,7 @@
 							<div class="col-md-6">
 								<input 
 									id="userIntegra" type="text" class="form-control" name="userIntegra" 
-									value="{{ old('userIntegra')??$booking['user_integra'] }}" required
+									value="{{ $booking['reg_id'] }}" required disabled
 								>
 							</div>
 						</div>

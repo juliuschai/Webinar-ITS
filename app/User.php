@@ -41,7 +41,18 @@ class User extends Authenticatable
     function checkId($id) {
         return $this->id == $id;
     }
+    
+    function abortButAdmin() {
+        if (!$this->isAdmin()) {
+            abort(403);
+        }
+    }
+
     function isAdmin() {
-        return true;
+        return $this['is_admin'];
+    }
+
+    function isOwner($id) {
+        return $this['id'] == $id;
     }
 }

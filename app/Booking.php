@@ -39,23 +39,22 @@ class Booking extends Model
      * saves parsed data in current booking model instance  
      */
     public function saveFromRequest($request) {
-        $group_id = Group::getIdFromNama($request->group);
         // True if checkbox checked, false not checked
         $relayITSTV = $request->has('relayITSTV'); 
         $peserta_banyak = $request['pesertaBanyak'] == 500 ? false:true;
 
         $this['nama_acara'] = $request['namaAcara'];
         $this['unit'] = $request['unitDepartemen'];
-        $this['nama_booker'] = $request['namaAnda'];
-        $this['email_its'] = $request['emailITS'];
-        $this['user_integra'] = $request['userIntegra'];
+        // $this['nama_booker'] = $request['namaAnda'];
+        // $this['email_its'] = $request['emailITS'];
+        // $this['user_integra'] = $request['userIntegra'];
         $this['waktu_mulai'] = $request['waktuMulai'];
         $this['waktu_akhir'] = $request['waktuSelesai'];
-        $this['group_id'] = $group_id;
         $this['relay_ITSTV'] = $relayITSTV;
         $this['peserta_banyak'] = $peserta_banyak;
         $this->save();
     }
+
     public function verifyRequest($request) {
         if ($request['verify'] == 'accept') {
             $this['disetujui'] = true;
@@ -68,23 +67,35 @@ class Booking extends Model
         $this['deskripsi_disetujui'] = now().': '.$request['alasan'];
         $this->save();
     }
+
+    public function setUserFields($id) {
+        $user = User::findOrFail($id);
+        $this['email'] = $user['email'];
+        $this['nama'] = $user['name'];
+        $this['reg_id'] = $user['reg_id'];
+        $this['reg_id'] = $user['reg_id'];
+        $this['group'] = Group::getNameFromId($user['group_id']);
+    }
+
+    public function setUserId($id) {
+        $this['user_id'] = $id;
+    }
     /**
      * Aborts the current request if the booking is not 
      * owned by the current user 
      * @return void
      */ 
     public function abortButOwner($id) {
-        if ($this->isBookingOwner($id)) {
+        if (!$this->isOwner($id)) {
             abort(403);
         }
     }
 
     /**
-     * Check if user isn't owner of booking
+     * Check if user is owner of booking
      * @return boolean
      */ 
-    public function isBookingOwner($id) {
-        // TODO
-        return true;
+    public function isOwner($id) {
+        return $this['user_id'] == $id;
     }
 }
