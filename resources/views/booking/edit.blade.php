@@ -7,7 +7,7 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-				<div class="card-header">{{ __('Booking Form') }}</div>
+				<div class="card-header">{{ __('Edit Form') }}</div>
 
 				<div class="card-body">
 					@if ($errors->any())

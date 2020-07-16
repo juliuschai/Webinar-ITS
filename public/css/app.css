@@ -11532,3 +11532,224 @@ a,a:visited,a:focus,a:active,:visited,:focus,:active,.btn:focus,.btn:active:focu
 .right_col.booking {
   margin-left: 500px;
 }
+
+.form-radio {
+  margin-top: 15px;
+}
+
+.form-option {
+  margin-left: 30px;
+  margin-top: -20px;
+}
+
+input#relayITSTV {
+  margin-top: 15px;
+}
+
+/* Table */
+
+.table-title {
+  color: #013880;
+  margin: 70px 0px 25px;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #e7edf2;
+}
+
+/* Custom btn */
+
+.btn-custom-primary {
+  color: #fff !important;
+  background-color: #337ab7 !important;
+  border-color: #2e6da4 !important;
+}
+
+.btn-custom-primary:hover {
+    color: #fff !important;
+    background-color: #286090 !important;
+    border-color: #204d74 !important;
+}
+
+.btn-custom-warning {
+  color: #fff !important;
+  background-color: #f0ad4e !important;
+  border-color: #eea236 !important;
+}
+
+.btn-custom-warning:hover {
+  color: #fff !important;
+  background-color: #ec971f !important;
+  border-color: #d58512 !important;
+}
+
+.btn-custom-danger {
+  color: #fff !important;
+  background-color: #d9534f !important;
+  border-color: #d43f3a !important;
+}
+
+.btn-custom-danger:hover {
+  color: #fff !important;
+  background-color: #c9302c !important;
+  border-color: #ac2925 !important;
+}
+
+/* Detail Webinar */
+
+.card-header.detail {
+  /* background-color: rgba(1, 56, 128, .8) !important; */
+  background-color: #013880;
+  color: white;
+}
+
+.card-body.detail {
+  /* background-color: #013880; */
+  background-color: rgba(1, 56, 128, .1) !important;
+  color: black;
+}
+
+.btn-detail {
+  background-color: #013880 !important;
+  color: white !important;
+}
+
+/* Calendar */
+
+#page-container {
+  margin: 0 auto;
+  width: 100%;
+  min-width: 320px;
+}
+
+.block-content {
+  transition: opacity .2s ease-out;
+  margin: 0 auto;
+  padding: 20px 20px 1px;
+  width: 100%;
+  overflow-x: visible;
+}
+
+.block-content .pull-t {
+  margin-top: -20px;
+}
+
+.block-content .pull-b {
+  margin-bottom: -1px;
+}
+
+.block-content .pull-t-b {
+  margin-top: -20px;
+  margin-bottom: -1px;
+}
+
+.block-content .pull-r-l {
+  margin-right: -20px;
+  margin-left: -20px;
+}
+
+.block-content .pull-all {
+  margin: -20px -20px -1px;
+}
+
+.block-content.block-content-full {
+  padding-bottom: 20px;
+}
+
+.block-content.block-content-full .pull-b,
+.block-content.block-content-full .pull-t-b,
+.block-content.block-content-full .pull-all {
+  margin-bottom: -20px;
+}
+
+.block-content p,
+.block-content .push,
+.block-content .block,
+.block-content .items-push > div {
+  margin-bottom: 20px;
+}
+
+.block-content .items-push-2x > div {
+  margin-bottom: 40px;
+}
+
+.block-content .items-push-3x > div {
+  margin-bottom: 60px;
+}
+
+.block-content.block-content-sm {
+  padding-top: 10px;
+}
+
+.block-content.block-content-sm .pull-t,
+.block-content.block-content-sm .pull-t-b,
+.block-content.block-content-sm .pull-all {
+  margin-top: -10px;
+}
+
+.block-content.block-content-sm.block-content-full {
+  padding-bottom: 10px;
+}
+
+.block-content.block-content-sm.block-content-full .pull-b,
+.block-content.block-content-sm.block-content-full .pull-t-b,
+.block-content.block-content-sm.block-content-full .pull-all {
+  margin-bottom: -10px;
+}
+
+.block.block-rounded > .block-content:first-child {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.block.block-rounded > .block-content:last-child {
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.block.block-mode-hidden > .block-content {
+  display: none;
+}
+
+.block.block-mode-loading > .block-header,
+.block.block-mode-loading > .block-content,
+.block.block-mode-loading > .nav-tabs {
+  opacity: .05;
+}
+
+.block.block-mode-pinned > .block-content {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.block.block-themed > .block-header > .block-options .btn-block-option,
+.block.block-themed > .block-content > .block-options .btn-block-option {
+  color: #fff;
+  opacity: .7;
+}
+
+.block.block-themed > .block-header > .block-options .btn-block-option:hover,
+.block.block-themed > .block-content > .block-options .btn-block-option:hover {
+  color: #fff;
+  opacity: 1;
+}
+
+.block.block-themed > .block-header > .block-options .btn-block-option:active,
+.block.block-themed > .block-content > .block-options .btn-block-option:active {
+  color: #fff;
+  opacity: .6;
+}
+
+.block.block-themed > .block-header > .block-options a.btn-block-option:focus,
+.block.block-themed > .block-header > .block-options .active > a.btn-block-option,
+.block.block-themed > .block-header > .block-options .show > button.btn-block-option,
+.block.block-themed > .block-content > .block-options a.btn-block-option:focus,
+.block.block-themed > .block-content > .block-options .active > a.btn-block-option,
+.block.block-themed > .block-content > .block-options .show > button.btn-block-option {
+  color: #fff;
+  opacity: 1;
+}
+
+/* .js-calendar {
+  z-index: 9999 !important;
+} */

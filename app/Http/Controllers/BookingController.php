@@ -62,4 +62,37 @@ class BookingController extends Controller
 
         return redirect()->route('booking.view', ['id'=>$request['id']]);
     }
+
+    public function waitingListBooking() {
+        $booking = Booking::all();
+        return view('booking.table', compact(['civitas', 'booking', 'id']));
+    }
+
+    public function listBooking(Request $request) {
+        $booking = Booking::select('waktu_mulai', 'nama_acara')
+                            ->where('disetujui', '!=', NULL)
+                            ->get();
+
+        return view('booking.list', compact(['civitas', 'booking', 'id']));
+    }
+
+    public function detailBooking(Request $request) 
+    { 
+        // $id = $request['id'];
+        // $booking = Booking::findOrFail($id);
+        // $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
+
+        // $civitas = Civitas::getCivitasList();
+        $booking = Booking::all();
+        return view('booking.detail', compact(['civitas', 'booking', 'id']));
+        
+    }
+
+    public function deleteBooking(Request $request) {
+
+        $id = $request['id'];
+        Booking::destroy($id);
+
+        return redirect('/booking/list')->with('status', 'Data Webinar Berhasil Dihapus!');
+    }
 }
