@@ -49,10 +49,10 @@ class OIDCHelper extends OpenIDConnectClient {
 			$user = User::firstOrNew([
 				'email' => $attr->email,
 			]);
-			$user['name'] = $attr->name;
-			$user['reg_id'] = $attr->reg_id;
+			$user->nama = $attr->name;
+			$user->integra = $attr->reg_id;
 			$groupStr = OIDCHelper::groupToString($attr->group);
-			$user['group_id'] = Group::findOrCreateGetId($groupStr);
+			$user->group_id = Group::findOrCreateGetId($groupStr);
 			$user->save();
 
 			Auth::login($user);

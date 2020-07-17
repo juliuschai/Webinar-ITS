@@ -8,31 +8,31 @@ class Group extends Model
 {
     public $timestamps = false;
     /**
-     * Get names of all group from database
+     * Get namas of all group from database
      */
     static function getGroupList() {
-        return Group::select('name')->get();
+        return Group::select('nama')->get();
     }
 
     /**
      * Get associative array of group where key is
-     * group.name and value is group.id
+     * group.nama and value is group.id
      */
     static function getGroupLookup() {
-        return Group::pluck('id', 'name');
+        return Group::pluck('id', 'nama');
     }
 
-    static function getIdFromName($name) {
+    static function getIdFromNama($nama) {
         
-        return Group::where('name', '=', $name)->firstOrFail()->id;
+        return Group::where('nama', '=', $nama)->firstOrFail()->id;
     }
 
-    static function getNameFromId($id) {
-        return Group::findOrFail($id)->name;
+    static function getNamaFromId($id) {
+        return Group::findOrFail($id)->nama;
     }
 
     static function findOrCreateGetId($str) {
-        $group = Group::firstOrCreate(['name' => $str]);
+        $group = Group::firstOrCreate(['nama' => $str]);
         return $group['id'];
     }
 }

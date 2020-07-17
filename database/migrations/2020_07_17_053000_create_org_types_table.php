@@ -2,10 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupsTable extends Migration
+class CreateOrgTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +13,15 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('org_types', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->string('nama', 12);
+            $table->string('nama');
         });
-        DB::table('groups')->insert([
-            ['nama' => 'Dosen'],
-            ['nama' => 'Tendik'],
-            ['nama' => 'Mahasiswa'],
+
+        DB::table('org_types')->insert([
+            ['nama' => 'Departemen'],
+            ['nama' => 'Fakultas'],
+            ['nama' => 'Unit'],
         ]);
     }
 
@@ -32,6 +32,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('org_types');
     }
 }

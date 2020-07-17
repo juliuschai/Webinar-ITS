@@ -24,8 +24,14 @@ class SaveBookingRequest extends FormRequest
     public function rules()
     {
         return [
+            'namaPic' => 'required|string|max:254',
+            'integraPic' => 'required|string|max:20',
+            'emailPic' => 'required|email|max:254',
+            'sivitas' => 'required|string|max:254',
+            'departemenUnit' => 'required|string|max:254',
+            'noWa' => 'required|string|max:254',
             'namaAcara' => 'required|string|max:254',
-            'unitDepartemen' => 'required|string|max:254',
+            'penyelengaraAcara' => 'required|numeric|exists:organisasis,id',
             'waktuMulai' => 'required|date|after:now',
             'waktuSelesai' => 'required|date|after:waktuMulai',
             'pesertaBanyak' => 'required|numeric|in:500,1000',

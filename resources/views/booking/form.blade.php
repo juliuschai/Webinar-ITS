@@ -29,6 +29,72 @@
 						@csrf
 
 						<div class="form-group row">
+							<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="namaPic" type="text" class="form-control" name="namaPic" 
+									value="{{ old('namaPic')??$booking['nama_pic'] }}" required autofocus
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="integraPic" type="text" class="form-control" name="integraPic" 
+									value="{{ old('integraPic')??$booking['integra_pic'] }}" required autofocus
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="emailPic" type="text" class="form-control" name="emailPic" 
+									value="{{ old('emailPic')??$booking['email_pic'] }}" required autofocus
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="sivitas" type="text" class="form-control" name="sivitas" 
+									value="{{ old('sivitas')??$booking['sivitas'] }}" required autofocus
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="departemenUnit" class="col-md-4 col-form-label text-md-left">{{ __('Departemen/Unit') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="departemenUnit" type="text" class="form-control" name="departemenUnit" 
+									value="{{ old('departemenUnit')??$booking['unit'] }}" required autofocus
+								>
+							</div>
+						</div>	
+
+						<div class="form-group row">
+							<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="noWa" type="tel" class="form-control" name="noWa" autocomplete="tel"
+									value="{{ old('noWa')??$booking['no_wa'] }}" required autofocus
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
 							<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
@@ -40,47 +106,17 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Unit/Departemen') }}</label>
-							<i class="fa fa-building booking"></i>
+							<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
+							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
-								<input 
-									id="unitDepartemen" type="text" class="form-control" name="unitDepartemen" 
-									value="{{ old('unitDepartemen')??$booking['unit'] }}" required
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
-							<i style="padding-left: 1px" class="fa fa-user booking"></i>
-							<!-- style="margin-left: 1px" -->
-							<div class="col-md-6">
-								<input 
-									id="namaAnda" type="text" class="form-control" name="namaAnda" 
-									value="{{ $booking['nama'] }}" required disabled
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="emailITS" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}</label>
-							<i class="fa fa-envelope-o booking"></i>
-							<div class="col-md-6">
-								<input 
-									id="emailITS" type="email" class="form-control" name="emailITS" 
-									value="{{ $booking['email'] }}" required autocomplete="email" disabled
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="userIntegra" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}</label>
-							<i class="fa fa-address-card booking"></i>
-							<div class="col-md-6">
-								<input 
-									id="userIntegra" type="text" class="form-control" name="userIntegra" 
-									value="{{ $booking['reg_id'] }}" required disabled
-								>
+								<select name="penyelengaraAcara" id="penyelengaraAcara" class="form-control">
+									@foreach ($organisasis as $organisasi)
+									<option 
+										value="{{$organisasi['id']}}"
+										{{ (old('penyelengaraAcara')??$booking['org_id']) == $organisasi['id'] ? 'selected':'' }}
+									>{{$organisasi['nama']}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 
@@ -111,6 +147,40 @@
 							<i class="fa fa-clock-o booking"></i>
 							<div class="col-md-6">
 								<input id="durasi" type="text" class="form-control" value="" onchange="onupdateDurasi()"> jam
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
+							<i style="padding-left: 1px" class="fa fa-user booking"></i>
+							<!-- style="margin-left: 1px" -->
+							<div class="col-md-6">
+								<input 
+									id="namaAnda" type="text" class="form-control" name="namaAnda" 
+									value="{{ $booking['reg_nama'] }}" required disabled
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="emailITS" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}</label>
+							<i class="fa fa-envelope-o booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="emailITS" type="email" class="form-control" name="emailITS" 
+									value="{{ $booking['reg_email'] }}" required autocomplete="email" disabled
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="userIntegra" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}</label>
+							<i class="fa fa-address-card booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="userIntegra" type="text" class="form-control" name="userIntegra" 
+									value="{{ $booking['reg_integra'] }}" required disabled
+								>
 							</div>
 						</div>
 

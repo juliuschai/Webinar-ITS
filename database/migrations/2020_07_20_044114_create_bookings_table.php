@@ -16,18 +16,22 @@ class CreateBookingsTable extends Migration
 	{
 		Schema::create('bookings', function (Blueprint $table) {
 			$table->id();
-			$table->string('nama_acara');
+			$table->string('nama_pic');
+			$table->string('integra_pic', 20);
+			$table->string('email_pic');
+			$table->string('sivitas');
 			$table->string('unit');
-			// $table->string('nama_booker');
-			// $table->string('email_its');
-			// $table->string('user_integra');
+			$table->string('no_wa');
+			$table->string('nama_acara');
+			$table->unsignedBigInteger('org_id')->comment('Field Penyelenggara Acara');
+			$table->foreign('org_id')->references('id')->on('organisasis')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->timestamp('waktu_mulai', 0)->default('2000-01-01 00:00');
 			$table->timestamp('waktu_akhir', 0)->default('2000-01-01 00:00');
 			$table->unsignedBigInteger('user_id');
 			$table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->boolean('relay_ITSTV');
 			$table->boolean('peserta_banyak')->comment('Apakah peserta lebih dari 500');
-			$table->string('api_host_name')->nullable();
+			$table->string('api_host_nama')->nullable();
 			$table->string('api_host_email')->nullable();
 			$table->boolean('disetujui')->nullable();
 			$table->string('deskripsi_disetujui')->nullable();

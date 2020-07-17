@@ -19,12 +19,12 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
     // Route::get('test','UserController@testGet');
     
     Route::get('login','UserController@login')->name('login');
+    Route::get('logout','UserController@logout')->name('logout');
 
     Route::get('/booking/view/{id}', 'BookingController@viewBooking')->name('booking.view');
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
 
-        Route::get('logout','UserController@logout')->name('logout');
 
         Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
         Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');

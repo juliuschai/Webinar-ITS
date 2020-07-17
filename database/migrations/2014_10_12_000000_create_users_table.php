@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->index('email');
-            $table->string('name');
-            $table->string('reg_id')->unique();
+            $table->string('nama');
+            $table->string('integra')->unique();
             $table->unsignedTinyInteger('group_id');
 			$table->foreign('group_id')->references('id')->on('groups')->onUpdate('CASCADE')->onDelete('RESTRICT');
             $table->boolean('is_admin')->default(false);

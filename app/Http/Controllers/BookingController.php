@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\Http\Requests\SaveBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
+use App\Organisasi;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,9 @@ class BookingController extends Controller
     function viewNewBooking(Request $request) {
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
+        $organisasis = Organisasi::get();
 
-        return view('booking.form', compact(['booking']));
+        return view('booking.form', compact(['booking', 'organisasis']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
@@ -30,8 +32,9 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
+        $organisasis = Organisasi::get();
 
-        return view('booking.form', compact(['booking']));
+        return view('booking.form', compact(['booking', 'organisasis']));
     }
 
     function saveEditBooking(SaveBookingRequest $request) {
