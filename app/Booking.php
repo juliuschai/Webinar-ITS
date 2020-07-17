@@ -65,6 +65,8 @@ class Booking extends Model
             $this->api_host_email = $request->hostEmail;
         } else if ($request->verify == 'deny') {
             $this->disetujui = false;
+            $this->api_host_nama = null;
+            $this->api_host_email = null;
         }
 
         $this->deskripsi_disetujui = now().': '.$request->alasan;
@@ -79,9 +81,24 @@ class Booking extends Model
         $this->group = Group::getNamaFromId($user->group_id);
     }
 
+    public function setOrgFields($id) {
+        $org = Organisasi::join('org_types as t', 't.id', '=', 'organisasis.org_type_id')
+        ->where('organisasis.id', '=', $id)
+        ->first(['organisasis.nama as nama', 't.nama as type']);
+        $this->org_type = $org->type;
+        $this->org_nama = $org->nama;
+    }
+
     public function setUserId($id) {
         $this->user_id = $id;
     }
+
+    public function abortIfApproved() {
+        if ($this->disetujui != null) {
+            abort(403);
+        }
+    }
+
     /**
      * Aborts the current request if the booking is not 
      * owned by the current user 

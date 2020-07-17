@@ -45,7 +45,7 @@
 							<div class="col-md-6">
 								<input 
 									id="integraPic" type="text" class="form-control" name="integraPic" 
-									value="{{ old('integraPic')??$booking['integra_pic'] }}" required autofocus
+									value="{{ old('integraPic')??$booking['integra_pic'] }}" required
 								>
 							</div>
 						</div>
@@ -56,7 +56,7 @@
 							<div class="col-md-6">
 								<input 
 									id="emailPic" type="text" class="form-control" name="emailPic" 
-									value="{{ old('emailPic')??$booking['email_pic'] }}" required autofocus
+									value="{{ old('emailPic')??$booking['email_pic'] }}" required
 								>
 							</div>
 						</div>
@@ -67,7 +67,7 @@
 							<div class="col-md-6">
 								<input 
 									id="sivitas" type="text" class="form-control" name="sivitas" 
-									value="{{ old('sivitas')??$booking['sivitas'] }}" required autofocus
+									value="{{ old('sivitas')??$booking['sivitas'] }}" required
 								>
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 							<div class="col-md-6">
 								<input 
 									id="departemenUnit" type="text" class="form-control" name="departemenUnit" 
-									value="{{ old('departemenUnit')??$booking['unit'] }}" required autofocus
+									value="{{ old('departemenUnit')??$booking['unit'] }}" required
 								>
 							</div>
 						</div>	
@@ -89,7 +89,7 @@
 							<div class="col-md-6">
 								<input 
 									id="noWa" type="tel" class="form-control" name="noWa" autocomplete="tel"
-									value="{{ old('noWa')??$booking['no_wa'] }}" required autofocus
+									value="{{ old('noWa')??$booking['no_wa'] }}" required
 								>
 							</div>
 						</div>
@@ -100,13 +100,13 @@
 							<div class="col-md-6">
 								<input 
 									id="namaAcara" type="text" class="form-control" name="namaAcara" 
-									value="{{ old('namaAcara')??$booking['nama_acara'] }}" required autofocus
+									value="{{ old('namaAcara')??$booking['nama_acara'] }}" required
 								>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
+							<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
 								<select name="penyelengaraAcara" id="penyelengaraAcara" class="form-control">
@@ -156,7 +156,7 @@
 							<!-- style="margin-left: 1px" -->
 							<div class="col-md-6">
 								<input 
-									id="namaAnda" type="text" class="form-control" name="namaAnda" 
+									id="namaAnda" type="text" class="form-control" 
 									value="{{ $booking['reg_nama'] }}" required disabled
 								>
 							</div>
@@ -167,7 +167,7 @@
 							<i class="fa fa-envelope-o booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="emailITS" type="email" class="form-control" name="emailITS" 
+									id="emailITS" type="email" class="form-control" 
 									value="{{ $booking['reg_email'] }}" required autocomplete="email" disabled
 								>
 							</div>
@@ -178,8 +178,19 @@
 							<i class="fa fa-address-card booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="userIntegra" type="text" class="form-control" name="userIntegra" 
+									id="userIntegra" type="text" class="form-control" 
 									value="{{ $booking['reg_integra'] }}" required disabled
+								>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="group" class="col-md-4 col-form-label text-md-left">{{ __('Group') }}</label>
+							<i class="fa fa-address-card booking"></i>
+							<div class="col-md-6">
+								<input 
+									id="group" type="text" class="form-control" 
+									value="{{ $booking['group'] }}" required disabled
 								>
 							</div>
 						</div>
@@ -232,30 +243,5 @@
 		</div>
 	</div>
 <!-- </div> -->
-<script defer>
-
-	function getTimeZoneOffsetInMs() {
-		return new Date().getTimezoneOffset() * -60 * 1000;
-	}
-	
-	function onupdateDurasi() {
-		let start = new Date(document.getElementById('waktuMulai').value);
-		let hours = document.getElementById('durasi').value;
-
-		let end = new Date(start.getTime() + getTimeZoneOffsetInMs() + parseFloat(hours)*3600*1000);
-		document.getElementById('waktuSelesai').value = end.toISOString().substring(0, 16);
-	}
-
-	function onupdateWaktu() {
-		let start = new Date(document.getElementById('waktuMulai').value);
-		let end = new Date(document.getElementById('waktuSelesai').value);
-
-		document.getElementById('durasi').value = (end-start)/3600/1000;
-	}
-	
-	// Even though the script is already at the bottom of the page and inputs are already loaded,
-	// Seems like the function still needs to wait until document is ready
-	// idk what's not ready when the script is loaded with the html tho
-	setTimeout(onupdateWaktu, 500);
-</script>
+<script src="{{ asset('js/booking/durasi.js') }}" defer></script>
 @endsection

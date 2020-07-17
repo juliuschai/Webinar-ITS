@@ -30,6 +30,7 @@ class BookingController extends Controller
 
     function viewEditBooking($id) {
         $booking = Booking::findOrFail($id);
+        $booking->abortIfApproved();
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
         $organisasis = Organisasi::get();
@@ -39,6 +40,7 @@ class BookingController extends Controller
 
     function saveEditBooking(SaveBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
+        $booking->abortIfApproved();
         $booking->abortButOwner(Auth::id());
         $booking->saveFromRequest($request);
 
@@ -47,10 +49,17 @@ class BookingController extends Controller
 
     function viewBooking($id) {
         $booking = Booking::findOrFail($id);
-        $booking->setUserFields($booking['user_id']);
-        $isAdmin = User::find(Auth::id())->isAdmin();
-        $isOwner = $booking->isOwner(Auth::id());
-
+        if (Auth::check()) {
+            $isAdmin = User::find(Auth::id())->isAdmin();
+            $isOwner = $booking->isOwner(Auth::id());
+            if ($isAdmin || $isOwner) {
+                $booking->setOrgFields($booking['org_id']);
+                $booking->setUserFields($booking['user_id']);    
+            }
+        } else {
+            $isAdmin = false;
+            $isOwner = false;
+        }
         return view(
             'booking.view', 
             compact(['booking', 'isOwner', 'isAdmin'])
