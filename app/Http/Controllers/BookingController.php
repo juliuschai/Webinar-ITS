@@ -17,8 +17,9 @@ class BookingController extends Controller
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
         $organisasis = Organisasi::get();
+        $orgTypes = OrgType::get();
 
-        return view('booking.form', compact(['booking', 'organisasis']));
+        return view('booking.form', compact(['booking', 'organisasis', 'orgTypes']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {

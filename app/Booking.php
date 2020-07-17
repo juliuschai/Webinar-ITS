@@ -83,8 +83,8 @@ class Booking extends Model
 
     public function setOrgFields($id) {
         $org = Organisasi::join('org_types as t', 't.id', '=', 'organisasis.org_type_id')
-        ->where('organisasis.id', '=', $id)
-        ->first(['organisasis.nama as nama', 't.nama as type']);
+            ->where('organisasis.id', '=', $id)
+            ->first(['organisasis.nama as nama', 't.nama as type']);
         $this->org_type = $org->type;
         $this->org_nama = $org->nama;
     }
