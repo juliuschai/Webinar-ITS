@@ -6,6 +6,7 @@ use App\Booking;
 use App\Http\Requests\SaveBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
 use App\Organisasi;
+use App\OrgType;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +34,11 @@ class BookingController extends Controller
         $booking->abortIfApproved();
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
+        $booking->org_type_id = Organisasi::getTypeIdById($booking->org_id);
         $organisasis = Organisasi::get();
+        $orgTypes = OrgType::get();
 
-        return view('booking.form', compact(['booking', 'organisasis']));
+        return view('booking.form', compact(['booking', 'organisasis', 'orgTypes']));
     }
 
     function saveEditBooking(SaveBookingRequest $request) {

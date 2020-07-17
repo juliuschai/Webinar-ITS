@@ -109,13 +109,15 @@
 							<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
+								<input id="orgDatas" hidden
+									data-types="{{json_encode($orgTypes)}}" 
+									data-orgs="{{json_encode($organisasis)}}" 
+									data-curtypeid="{{json_encode($booking['org_type_id'])}}" 
+									data-curorgid="{{json_encode($booking['org_id'])}}"
+								>
+								<select name="penyelengaraAcaraTypes" id="penyelengaraAcaraTypes" class="form-control">
+								</select>
 								<select name="penyelengaraAcara" id="penyelengaraAcara" class="form-control">
-									@foreach ($organisasis as $organisasi)
-									<option 
-										value="{{$organisasi['id']}}"
-										{{ (old('penyelengaraAcara')??$booking['org_id']) == $organisasi['id'] ? 'selected':'' }}
-									>{{$organisasi['nama']}}</option>
-									@endforeach
 								</select>
 							</div>
 						</div>
@@ -244,4 +246,5 @@
 	</div>
 <!-- </div> -->
 <script src="{{ asset('js/booking/durasi.js') }}" defer></script>
+<script src="{{ asset('js/booking/organisasis.js') }}" defer></script>
 @endsection
