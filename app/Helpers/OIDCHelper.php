@@ -47,7 +47,10 @@ class OIDCHelper extends OpenIDConnectClient {
 			}
 
 			$user = User::firstOrNew([
-				'email' => $attr->email,
+				// PROD:switch start
+				// 'email' => $attr->email,
+				'email' => $attr->email??$attr->alternate_email,
+				// PROD:switch start
 			]);
 			$user->nama = $attr->name;
 			$user->integra = $attr->reg_id;
