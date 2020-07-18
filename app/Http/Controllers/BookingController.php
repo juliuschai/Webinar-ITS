@@ -54,7 +54,7 @@ class BookingController extends Controller
     function viewBooking($id) {
         $booking = Booking::findOrFail($id);
         if (Auth::check()) {
-            $isAdmin = User::find(Auth::id())->isAdmin();
+            $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
             $isOwner = $booking->isOwner(Auth::id());
             if ($isAdmin || $isOwner) {
                 $booking->setOrgFields($booking['unit_id']);
@@ -71,7 +71,7 @@ class BookingController extends Controller
     }
 
     function verifyBooking(VerifyBookingRequest $request) {
-        User::find(Auth::id())->abortButAdmin();
+        User::findOrLogout(Auth::id())->abortButAdmin();
         $booking = Booking::findOrFail($request['id']);
         $booking->verifyRequest($request);
 

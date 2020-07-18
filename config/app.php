@@ -128,6 +128,8 @@ return [
 
     'base_domain' => env('APP_BASE_DOMAIN', 'itslocal.com'),
 
+    'base_subdomain' => env('APP_BASE_SUBDOMAIN', 'itslocal.com'),
+
     'cipher' => 'AES-256-CBC',
 
     /*

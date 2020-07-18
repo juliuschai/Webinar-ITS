@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
+Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/', 'UserController@checkLoggingIn');
     // Route::get('/tes', 'BookingController@tes')->name('booking.list');
     
