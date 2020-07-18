@@ -12,7 +12,6 @@
                     <th class="text-center" scope="col">Tanggal</th>
                     <th class="text-center" scope="col">Waktu</th>
                     <th class="text-center" scope="col">Nama Acara</th>
-                    <th class="text-center" scope="col">Status</th>
                     <th class="text-center" scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -23,9 +22,8 @@
                     <td class="text-center">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ $booking->nama_acara }}</td>
-                    <td class="text-center">Disetujui</td>
                     <td class="text-center">
-                        <a href="{{ url('/booking/detail/'.$booking->id) }}">
+                        <a href="{{ url('/booking/view/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
                             <i class="fa fa-search"></i>
                         </button>
