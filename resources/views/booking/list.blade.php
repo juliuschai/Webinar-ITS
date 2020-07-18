@@ -25,21 +25,9 @@
                     <td class="text-center">
                         <a href="{{ url('/booking/detail/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-search">  Detail</i>
                         </button>
                         </a>
-                        <a href="{{ url('/booking/edit/'.$booking->id) }}">
-                        <button type="button" class="btn btn-custom-warning" title="Edit Webinar">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        </a>
-                        <form action="{{ url('/booking/delete/'.$booking->id) }}" method="post" class="d-inline">    
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar {{$booking->nama_acara}} ?')" title="Hapus Webinar">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                        </form>
                     </td>
                     </tr>
                     @endforeach

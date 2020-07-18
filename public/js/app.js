@@ -50045,3 +50045,60 @@ $(document).ready(function () {
   init_autosize();
 
 });	
+
+// Form Booking
+
+// var currentTab = 0; // Current tab is set to be the first tab (0)
+// showTab(currentTab); // Display the current tab
+
+// function showTab(n) {
+//   // This function will display the specified tab of the form ...
+//   var x = document.getElementsByClassName("tab");
+//   x[n].style.display = "block";
+//   // ... and fix the Previous/Next buttons:
+//   if (n == 0) {
+//     // document.getElementById("prevBtn").style.display = "none";
+//     document.getElementById("submitBtn").style.display = "none";
+//     // document.getElementById("nextBtn").innerHTML = "Next";
+//   } else {
+//     // document.getElementById("prevBtn").style.display = "inline";
+//     document.getElementById("submitBtn").style.display = "inline";
+//     // document.getElementById("nextBtn").style.display = "none";
+//   }
+//   if (n == (x.length - 1)) {
+//     document.getElementById("nextBtn").style.display = "none";
+//     // document.getElementById("nextBtn").innerHTML = "Submit";
+//   } else {
+//     document.getElementById("nextBtn").innerHTML = "Next";
+//   }
+//   // ... and run a function that displays the correct step indicator:
+//   fixStepIndicator(n)
+// }
+
+// function nextPrev(n) {
+//   // This function will figure out which tab to display
+//   var x = document.getElementsByClassName("tab");
+//   // Exit the function if any field in the current tab is invalid:
+//   // Hide the current tab:
+//   x[currentTab].style.display = "none";
+//   // Increase or decrease the current tab by 1:
+//   currentTab = currentTab + n;
+//   // if you have reached the end of the form... :
+//   if (currentTab >= x.length) {
+//     //...the form gets submitted:
+//     document.getElementById("bookingForm").submit();
+//     return false;
+//   }
+//   // Otherwise, display the correct tab:
+//   showTab(currentTab);
+// }
+
+$("body").on("keyup", "form", function(e){
+  if (e.which == 13){
+    if ($("#next").is(":visible") && $("fieldset.current").find("input, textarea").valid() ){
+      e.preventDefault();
+      nextSection();
+      return false;
+    }
+  }
+});

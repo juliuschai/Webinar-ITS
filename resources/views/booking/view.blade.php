@@ -21,7 +21,7 @@
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
 						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
+						<i tyle="padding-left: 1px" class="fa fa-user booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="namaPic" type="text" class="form-control" 
@@ -32,7 +32,7 @@
 
 					<div class="form-group row">
 						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
+						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="integraPic" type="text" class="form-control" 
@@ -43,7 +43,7 @@
 
 					<div class="form-group row">
 						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
+						<i class="fa fa-envelope booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="emailPic" type="text" class="form-control" 
@@ -54,7 +54,7 @@
 
 					<div class="form-group row">
 						<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
+						<i class="fa fa-users booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="sivitas" type="text" class="form-control" 
@@ -65,12 +65,13 @@
 
 					<div class="form-group row">
 						<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
+						<i class="fa fa-user-circle booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="penyelengaraAcaraType" type="text" class="form-control" 
 								value="{{ $booking['unit_type'] }}" disabled
 							>
+							</br>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
 								value="{{ $booking['unit_nama'] }}" disabled
@@ -80,7 +81,7 @@
 
 					<div class="form-group row">
 						<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
+						<i class="fa fa-mobile fa-2x booking""></i>
 						<div class="col-md-6">
 							<input 
 								id="noWa" type="tel" class="form-control"

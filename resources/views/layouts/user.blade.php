@@ -70,7 +70,7 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="calendar.html">Calendar</a></li>
+                      <li><a href="{{ url('/booking/waitinglist') }}">Calendar</a></li>
                     </ul>
                   </li>
                 </ul>

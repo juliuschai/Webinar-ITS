@@ -21,16 +21,19 @@
 					@endif
 
 					@if(Route::is('booking.new'))
-					<form method="POST" action="{{ route('booking.new') }}">
+					<form id="bookingForm" method="POST" action="{{ route('booking.new') }}">
 					@elseif(Route::is('booking.edit'))
-					<form method="POST" action="{{ route('booking.edit') }}">
+					<form id="bookingForm" method="POST" action="{{ route('booking.edit') }}">
 						<input name="id" type="hidden" value="{{ $booking['id'] }}">
 					@endif
 						@csrf
 
+				<div id="fieldsets">
+					<!-- <div class="tab"> -->
+					<fieldset class="current">
 						<div class="form-group row">
 							<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i style="padding-left: 1px" class="fa fa-user booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="namaPic" type="text" class="form-control" name="namaPic" 
@@ -41,7 +44,7 @@
 
 						<div class="form-group row">
 							<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i class="fa fa-address-card booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="integraPic" type="text" class="form-control" name="integraPic" 
@@ -52,7 +55,7 @@
 
 						<div class="form-group row">
 							<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i class="fa fa-envelope booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="emailPic" type="text" class="form-control" name="emailPic" 
@@ -63,7 +66,7 @@
 
 						<div class="form-group row">
 							<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i class="fa fa-users booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="sivitas" type="text" class="form-control" name="sivitas" 
@@ -74,7 +77,7 @@
 
 						<div class="form-group row">
 							<label for="departemenUnit" class="col-md-4 col-form-label text-md-left">{{ __('Departemen/Unit') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i class="fa fa-building booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="departemenUnit" type="text" class="form-control" name="departemenUnit" 
@@ -85,7 +88,7 @@
 
 						<div class="form-group row">
 							<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i class="fa fa-mobile fa-2x booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="noWa" type="tel" class="form-control" name="noWa" autocomplete="tel"
@@ -93,7 +96,11 @@
 								>
 							</div>
 						</div>
+					</fieldset>
 
+					<fieldset class="next">
+					<!-- <div class="tab"> -->
+					<!-- <div class="step"> -->
 						<div class="form-group row">
 							<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
@@ -107,7 +114,7 @@
 
 						<div class="form-group row">
 							<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
+							<i class="fa fa-user-circle booking"></i>
 							<div class="col-md-6">
 								<input id="unitDatas" hidden
 									data-types="{{json_encode($unitTypes)}}" 
@@ -117,6 +124,7 @@
 								>
 								<select name="penyelengaraAcaraTypes" id="penyelengaraAcaraTypes" class="form-control">
 								</select>
+								</br>
 								<select name="penyelengaraAcara" id="penyelengaraAcara" class="form-control">
 								</select>
 							</div>
@@ -188,7 +196,7 @@
 
 						<div class="form-group row">
 							<label for="group" class="col-md-4 col-form-label text-md-left">{{ __('Group') }}</label>
-							<i class="fa fa-address-card booking"></i>
+							<i class="fa fa-users booking"></i>
 							<div class="col-md-6">
 								<input 
 									id="group" type="text" class="form-control" 
@@ -225,11 +233,12 @@
 								</div>
 							{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 						</div>
-
-
+					<!-- </div> -->
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
-								<button type="submit" class="btn btn-submit">
+								<!-- <button type="button" id="prevBtn" class="btn btn-submit" onclick="nextPrev(-1)">Previous</button> -->
+								<button type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
+								<button type="submit" id="submitBtn" class="btn btn-submit">
 									@if(Route::is('booking.new'))
 									{{ __('Submit Booking') }}
 									@elseif(Route::is('booking.edit'))
@@ -239,7 +248,10 @@
 
 							</div>
 						</div>
+					</fieldset>
+
 					</form>
+				</div>
 				</div>
 			</div>
 		</div>
