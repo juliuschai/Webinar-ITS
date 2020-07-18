@@ -33,9 +33,11 @@ Route::domain('webinar.'.Config::get('app.base_domain'))->group(function () {
         Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
         Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
 
-        Route::get('/unit', 'OrganisasiController@viewOrganisasi')->name('organisasi.view');
-        Route::post('/unit/add', 'OrganisasiController@addOrganisasi')->name('organisasi.add');
-        Route::post('/unit/delete/{id}', 'OrganisasiController@delOrganisasi')->name('organisasi.delete');
+        Route::get('/unit', 'UnitController@viewUnit')->name('unit.view');
+        Route::post('/unit/add', 'UnitController@addUnit')->name('unit.add');
+        Route::post('/unit/delete/{id}', 'UnitController@delUnit')->name('unit.delete');
+        Route::get('/unit/edit/{id}', 'UnitController@viewEditUnit')->name('unit.edit');
+        Route::post('/unit/edit/{id}', 'UnitController@saveEditUnit')->name('unit.edit');
     });
     Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
     Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');

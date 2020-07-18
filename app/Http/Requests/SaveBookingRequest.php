@@ -31,7 +31,7 @@ class SaveBookingRequest extends FormRequest
             'departemenUnit' => 'required|string|max:254',
             'noWa' => 'required|string|max:254',
             'namaAcara' => 'required|string|max:254',
-            'penyelengaraAcara' => 'required|numeric|exists:organisasis,id',
+            'penyelengaraAcara' => 'required|numeric|exists:units,id',
             'waktuMulai' => 'required|date|after:now',
             'waktuSelesai' => 'required|date|after:waktuMulai',
             'pesertaBanyak' => 'required|numeric|in:500,1000',

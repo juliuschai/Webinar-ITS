@@ -23,8 +23,8 @@ class CreateBookingsTable extends Migration
 			$table->string('unit');
 			$table->string('no_wa');
 			$table->string('nama_acara');
-			$table->unsignedBigInteger('org_id')->comment('Field Penyelenggara Acara');
-			$table->foreign('org_id')->references('id')->on('organisasis')->onUpdate('CASCADE')->onDelete('RESTRICT');
+			$table->unsignedBigInteger('unit_id')->comment('Field Penyelenggara Acara');
+			$table->foreign('unit_id')->references('id')->on('units')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->timestamp('waktu_mulai', 0)->default('2000-01-01 00:00');
 			$table->timestamp('waktu_akhir', 0)->default('2000-01-01 00:00');
 			$table->unsignedBigInteger('user_id');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrgTypesTable extends Migration
+class CreateUnitTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateOrgTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('org_types', function (Blueprint $table) {
+        Schema::create('unit_types', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('nama');
         });
 
-        DB::table('org_types')->insert([
+        DB::table('unit_types')->insert([
             ['nama' => 'Departemen'],
             ['nama' => 'Fakultas'],
             ['nama' => 'Unit'],
@@ -32,6 +32,6 @@ class CreateOrgTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('org_types');
+        Schema::dropIfExists('unit_types');
     }
 }

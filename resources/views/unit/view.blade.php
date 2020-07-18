@@ -12,18 +12,18 @@
 		<div class="col">Unit baru</div>
 	</div>
 	<div class="form-group row col-md-12 col-sm-12">
-		<form method="POST" action="{{route('organisasi.add')}}">
+		<form method="POST" action="{{route('unit.add')}}">
 			@csrf
 			<div class="form-group row">
-				<label for="orgNama" class="col-md-4 col-form-label text-md-left">Nama:</label>
+				<label for="unitNama" class="col-md-4 col-form-label text-md-left">Nama:</label>
 				<div class="col">
-					<input id="orgNama" type="text" name="orgNama" class="form-control">
+					<input id="unitNama" type="text" name="unitNama" class="form-control">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label for="orgType" class="col-md-4 col-form-label text-md-left">Type:</label>
+				<label for="unitType" class="col-md-4 col-form-label text-md-left">Type:</label>
 				<div class="col">
-					<select name="orgType" id="orgType" class="form-control">
+					<select name="unitType" id="unitType" class="form-control">
 						@foreach ($types as $type)
 							<option value="{{$type->id}}">{{$type->nama}}</option>	
 						@endforeach
@@ -41,19 +41,26 @@
 				<th scope="col">Nama</th>
 				<th scope="col">Type</th>
 				<th scope="col"></th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($organisasis as $organisasi)
+			@foreach ($units as $unit)
 			<tr>
-				<td>{{ $organisasi->nama }}</td>
-				<td>{{ $organisasi->org_type }}</td>
-				<td><form method="POST" action="{{route('organisasi.delete', ["id" => $organisasi->id])}}">@csrf<button class="btn btn-danger">delete</button></form></td>
+				<td>{{ $unit->nama }}</td>
+				<td>{{ $unit->unit_type }}</td>
+				<td><a href="{{route('unit.edit', ['id'=>$unit->id])}}"><button class="btn btn-info">Edit</button></a></td>
+				<td>
+					<form method="POST" action="{{route('unit.delete', ["id" => $unit->id])}}">
+						@csrf
+						<button class="btn btn-danger">Delete</button>
+					</form>
+				</td>
 			</tr>
 			@endforeach
 		</tbody>
 	</table>
 </div>
 
-{{ $organisasis->links() }}
+{{ $units->links() }}
 @endsection
