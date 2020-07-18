@@ -150,10 +150,10 @@
 								<input 
 									id="500" type="radio" class="form-radio" name="pesertaBanyak" 
 									value="500" {{ $booking['peserta_banyak']==false?'checked':'' }}
-								><div class="form-option">< 500</div>
+								><div class="form-option">&le; 500</div>
 								<input id="1000" type="radio" class="form-radio" name="pesertaBanyak" 
 									value="1000" {{ $booking['peserta_banyak']==true?'checked':'' }}
-								><div class="form-option">500 - 1000</div>
+								><div class="form-option">501 - 1000</div>
 								</div>
 							{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 						</div>

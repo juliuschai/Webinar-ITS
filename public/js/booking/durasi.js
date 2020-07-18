@@ -11,8 +11,14 @@ function onupdateDurasi() {
 }
 
 function onupdateWaktu() {
-	let start = new Date(document.getElementById('waktuMulai').value);
-	let end = new Date(document.getElementById('waktuSelesai').value);
+	let startStr = document.getElementById('waktuMulai').value;
+	let endStr = document.getElementById('waktuSelesai').value;
+	console.log(startStr);
+	if (startStr == "" || endStr == "") {
+		return;
+	}
+	let start = new Date(startStr);
+	let end = new Date(endStr);
 
 	document.getElementById('durasi').value = (end-start)/3600/1000;
 }

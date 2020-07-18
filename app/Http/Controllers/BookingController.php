@@ -32,7 +32,7 @@ class BookingController extends Controller
 
     function viewEditBooking($id) {
         $booking = Booking::findOrFail($id);
-        $booking->abortIfApproved();
+        $booking->abortIfVerified();
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
         $booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
@@ -44,7 +44,7 @@ class BookingController extends Controller
 
     function saveEditBooking(SaveBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
-        $booking->abortIfApproved();
+        $booking->abortIfVerified();
         $booking->abortButOwner(Auth::id());
         $booking->saveFromRequest($request);
 

@@ -21,7 +21,7 @@ class CreateUnitTypesTable extends Migration
         DB::table('unit_types')->insert([
             ['nama' => 'Departemen'],
             ['nama' => 'Fakultas'],
-            ['nama' => 'Unit'],
+            ['nama' => 'Direktorat/Kantor/Unit/Biro'],
         ]);
     }
 

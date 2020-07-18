@@ -29,34 +29,34 @@
 						@csrf
 
 						<div class="form-group row">
-							<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
+							<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC Zoom') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="namaPic" type="text" class="form-control" name="namaPic" 
-									value="{{ old('namaPic')??$booking['nama_pic'] }}" required autofocus
+									id="namaPic" type="text" class="form-control" 
+									value="{{ $booking['nama_pic'] }}" disabled
 								>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
+							<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC Zoom') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="integraPic" type="text" class="form-control" name="integraPic" 
-									value="{{ old('integraPic')??$booking['integra_pic'] }}" required
+									id="integraPic" type="text" class="form-control"  
+									value="{{ $booking['integra_pic'] }}" disabled
 								>
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
+							<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC Zoom') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="emailPic" type="text" class="form-control" name="emailPic" 
-									value="{{ old('emailPic')??$booking['email_pic'] }}" required
+									id="emailPic" type="text" class="form-control" 
+									value="{{ $booking['email_pic'] }}" disabled
 								>
 							</div>
 						</div>
@@ -66,30 +66,19 @@
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="sivitas" type="text" class="form-control" name="sivitas" 
-									value="{{ old('sivitas')??$booking['sivitas'] }}" required
+									id="sivitas" type="text" class="form-control" 
+									value="{{ $booking['sivitas'] }}" disabled
 								>
 							</div>
 						</div>
-
-						<div class="form-group row">
-							<label for="departemenUnit" class="col-md-4 col-form-label text-md-left">{{ __('Departemen/Unit') }}</label>
-							<i class="fa fa-sticky-note-o booking"></i>
-							<div class="col-md-6">
-								<input 
-									id="departemenUnit" type="text" class="form-control" name="departemenUnit" 
-									value="{{ old('departemenUnit')??$booking['unit'] }}" required
-								>
-							</div>
-						</div>	
 
 						<div class="form-group row">
 							<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
 								<input 
-									id="noWa" type="tel" class="form-control" name="noWa" autocomplete="tel"
-									value="{{ old('noWa')??$booking['no_wa'] }}" required
+									id="noWa" type="tel" class="form-control" name="noWa" autocomplete="tel" placeholder="Contoh: 089605606878"
+									value="{{ old('noWa')??$booking['no_wa'] }}" required autofocus
 								>
 							</div>
 						</div>
@@ -153,52 +142,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
-							<i style="padding-left: 1px" class="fa fa-user booking"></i>
-							<!-- style="margin-left: 1px" -->
-							<div class="col-md-6">
-								<input 
-									id="namaAnda" type="text" class="form-control" 
-									value="{{ $booking['reg_nama'] }}" required disabled
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="emailITS" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}</label>
-							<i class="fa fa-envelope-o booking"></i>
-							<div class="col-md-6">
-								<input 
-									id="emailITS" type="email" class="form-control" 
-									value="{{ $booking['reg_email'] }}" required autocomplete="email" disabled
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="userIntegra" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}</label>
-							<i class="fa fa-address-card booking"></i>
-							<div class="col-md-6">
-								<input 
-									id="userIntegra" type="text" class="form-control" 
-									value="{{ $booking['reg_integra'] }}" required disabled
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="group" class="col-md-4 col-form-label text-md-left">{{ __('Group') }}</label>
-							<i class="fa fa-address-card booking"></i>
-							<div class="col-md-6">
-								<input 
-									id="group" type="text" class="form-control" 
-									value="{{ $booking['group'] }}" required disabled
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Relay ke ITS TV') }}</label>
+							<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
 							<div class="col-md-6">
 								<input 
 									id="relayITSTV" type="checkbox" class="" name="relayITSTV" 
@@ -208,7 +152,7 @@
 								<label for="tidak">Tidak</label> -->
 							</div>
 							<div class="col-md-6">
-								<sub class="">Webinar akan direlay sesuai dengan persetujuan ......</sub>
+								<sub class="">Silahkan menghubungi Unit Komunikasi Publik (UKP) pada <a href="https://servicedesk.its.ac.id/" target="_blank">servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
 							</div>	
 						</div>
 
@@ -218,10 +162,10 @@
 								<input 
 									id="500" type="radio" class="form-radio" name="pesertaBanyak" 
 									value="500" {{ $booking['peserta_banyak']==false?'checked':'' }}
-								><div class="form-option">< 500</div>
+								><div class="form-option">&le; 500</div>
 								<input id="1000" type="radio" class="form-radio" name="pesertaBanyak" 
 									value="1000" {{ $booking['peserta_banyak']==true?'checked':'' }}
-								><div class="form-option">500 - 1000</div>
+								><div class="form-option">501 - 1000</div>
 								</div>
 							{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 						</div>

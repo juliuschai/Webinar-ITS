@@ -29,21 +29,21 @@ class UnitController extends Controller
         ]);
         $unit = new Unit();
         $unit->nama = $request->unitNama;
-        $unit_nama = $unit->nama;
+        $unit = $unit->nama;
         $unit->unit_type_id = $request->unitType;
         $unit->save();
         $unit_type = UnitType::findOrFail($request->unitType)->nama;
 
-        return redirect()->route('unit.view')->with('message', "added \"{$unit_nama}\" with type \"{$unit_type}\"");
+        return redirect()->route('unit.view')->with('message', "added \"{$unit}\" with type \"{$unit_type}\"");
     }
 
     function delUnit($id) {
         User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
-        $unit_nama = $unit->nama;
+        $unit = $unit->nama;
         $unit_type = UnitType::findOrFail($unit->unit_type_id)->nama;
         $unit->delete();
-        return redirect()->route('unit.view')->with('message', "deleted \"{$unit_nama}\" with type \"{$unit_type}\"");
+        return redirect()->route('unit.view')->with('message', "deleted \"{$unit}\" with type \"{$unit_type}\"");
     }
 
     function viewEditUnit($id) {
@@ -57,10 +57,10 @@ class UnitController extends Controller
         User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $unit->nama = $request->unitNama;
-        $unit_nama = $unit->nama;
+        $unit = $unit->nama;
         $unit->unit_type_id = $request->unitType;
         $unit->save();
         $unit_type = UnitType::findOrFail($request->unitType)->nama;
-        return redirect()->route('unit.view')->with('message', "deleted \"{$unit_nama}\" with type \"{$unit_type}\"");
+        return redirect()->route('unit.view')->with('message', "deleted \"{$unit}\" with type \"{$unit_type}\"");
     }
 }

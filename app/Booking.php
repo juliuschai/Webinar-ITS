@@ -43,11 +43,6 @@ class Booking extends Model
         $relayITSTV = $request->has('relayITSTV'); 
         $peserta_banyak = $request->pesertaBanyak == 500 ? false:true;
 
-        $this->nama_pic = $request->namaPic;
-        $this->integra_pic = $request->integraPic;
-        $this->email_pic = $request->emailPic;
-        $this->sivitas = $request->sivitas;
-        $this->unit = $request->departemenUnit;
         $this->no_wa = $request->noWa;
         $this->nama_acara = $request->namaAcara;
         $this->unit_id = $request->penyelengaraAcara;
@@ -59,26 +54,26 @@ class Booking extends Model
     }
 
     public function verifyRequest($request) {
-        if ($request->verify == 'accept') {
+        if ($request->verify == 'setuju') {
             $this->disetujui = true;
             $this->api_host_nama = $request->hostNama;
             $this->api_host_email = $request->hostEmail;
-        } else if ($request->verify == 'deny') {
+        } else if ($request->verify == 'tolak') {
             $this->disetujui = false;
             $this->api_host_nama = null;
             $this->api_host_email = null;
         }
 
-        $this->deskripsi_disetujui = now().': '.$request->alasan;
+        $this->deskripsi_disetujui = $request->alasan;
         $this->save();
     }
 
     public function setUserFields($id) {
         $user = User::findOrFail($id);
-        $this->reg_email = $user->email;
-        $this->reg_nama = $user->nama;
-        $this->reg_integra = $user->integra;
-        $this->group = Group::getNamaFromId($user->group_id);
+        $this->integra_pic = $user->nama;
+        $this->nama_pic = $user->integra;
+        $this->email_pic = $user->email;
+        $this->sivitas = Group::getNamaFromId($user->group_id);
     }
 
     public function setOrgFields($id) {
@@ -86,14 +81,14 @@ class Booking extends Model
             ->where('units.id', '=', $id)
             ->first(['units.nama as nama', 't.nama as type']);
         $this->unit_type = $unit->type;
-        $this->unit_nama = $unit->nama;
+        $this->unit = $unit->nama;
     }
 
     public function setUserId($id) {
         $this->user_id = $id;
     }
 
-    public function abortIfApproved() {
+    public function abortIfVerified() {
         if ($this->disetujui != null) {
             abort(403);
         }

@@ -20,7 +20,7 @@
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
-						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
+						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC Zoom') }}</label>
 						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
+						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC Zoom') }}</label>
 						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
+						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC Zoom') }}</label>
 						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
@@ -62,21 +62,6 @@
 							>
 						</div>
 					</div>
-
-					<div class="form-group row">
-						<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
-						<div class="col-md-6">
-							<input 
-								id="penyelengaraAcaraType" type="text" class="form-control" 
-								value="{{ $booking['unit_type'] }}" disabled
-							>
-							<input 
-								id="penyelengaraAcara" type="text" class="form-control" 
-								value="{{ $booking['unit_nama'] }}" disabled
-							>
-						</div>
-					</div>	
 
 					<div class="form-group row">
 						<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
@@ -102,15 +87,19 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Unit/Departemen') }}</label>
-						<i class="fa fa-building"></i>
+						<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
+						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
-								id="unitDepartemen" type="text" class="form-control" 
+								id="penyelengaraAcaraType" type="text" class="form-control" 
+								value="{{ $booking['unit_type'] }}" disabled
+							>
+							<input 
+								id="penyelengaraAcara" type="text" class="form-control" 
 								value="{{ $booking['unit'] }}" disabled
 							>
 						</div>
-					</div>
+					</div>	
 
 					<div class="form-group row">
 						<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
@@ -144,58 +133,10 @@
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
-						<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
-						<i style="padding-left: 1px" class="fa fa-user"></i>
-						<!-- style="margin-left: 1px" -->
-						<div class="col-md-6">
-							<input 
-								id="namaAnda" type="text" class="form-control" 
-								value="{{ $booking['reg_nama'] }}" disabled
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="emailITS" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}</label>
-						<i class="fa fa-envelope-o"></i>
-						<div class="col-md-6">
-							<input 
-								id="emailITS" type="email" class="form-control" 
-								value="{{ $booking['reg_email'] }}" disabled autocomplete="email"
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="userIntegra" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}</label>
-						<i class="fa fa-address-card"></i>
-						<div class="col-md-6">
-							<input 
-								id="userIntegra" type="text" class="form-control" 
-								value="{{ $booking['reg_integra'] }}" disabled
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="group" class="col-md-4 col-form-label text-md-left">{{ __('Group') }}</label>
-						<i class="fa fa-users"></i>
-						<div class="col-md-6">
-							<input 
-								id="group" type="text" class="form-control" 
-								value="{{ $booking['group'] }}" disabled
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Relay ke ITS TV') }}</label>
+						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
 						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
-							<input 
-								id="relayITSTV" type="text" class="form-control" 
-								value="{{ $booking['relay_ITSTV']?'iya':'tidak' }}" disabled
-							> 
+							<div id="relayITSTV">{{ $booking['relay_ITSTV']?'Iya':'Tidak' }}</div>
 							<!-- <label for="iya">Iya</label>
 							<label for="tidak">Tidak</label> -->
 						</div>
@@ -205,10 +146,7 @@
 						<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
 						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
-							<input 
-								id="pesertaBanyak" type="text" class="form-control" 
-								value="{{ $booking['peserta_banyak']==false?'< 500':'500-1000' }}" disabled
-							>
+							<div id="pesertaBanyak">{!! $booking['peserta_banyak']==false?'&le; 500':'501 - 1000' !!}</div>
 						</div>
 						{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 					</div>
@@ -219,10 +157,11 @@
 						<div class="col-md-6">
 							<input 
 								id="disetujui" type="text" class="form-control" 
-								value="{{ null!==$booking['disetujui'] ? ($booking['disetujui']?'approved':'denied'):'' }}" disabled
+								value="{{ null!==$booking['disetujui'] ? ($booking['disetujui']?'Disetjui':'Ditolak'):'' }}" disabled
 							>
 						</div>
 					</div>
+
 					<div class="form-group row">
 						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
 						<i class="fa fa-sticky-note-o"></i>
@@ -269,11 +208,11 @@
 	
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
-								<button type="button" class="btn btn-submit" onclick="acceptBooking()">
-									{{ __('Approve Booking') }}
+								<button type="button" class="btn btn-submit" onclick="setujuBooking()">
+									{{ __('Setujui Booking') }}
 								</button>
-								<button type="button" class="btn btn-outline-danger" onclick="denyBooking()">
-									{{ __('Deny Booking') }}
+								<button type="button" class="btn btn-danger" onclick="tolakBooking()">
+									{{ __('Tolak Booking') }}
 								</button>
 							</div>
 						</div>
