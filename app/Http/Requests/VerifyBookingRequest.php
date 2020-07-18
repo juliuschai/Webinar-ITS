@@ -25,7 +25,7 @@ class VerifyBookingRequest extends FormRequest
     {
         return [
             'verify' => 'required|string|in:accept,deny',
-            'alasan' => 'string|max:254',
+            'alasan' => 'nullable|string|max:254',
             'hostNama' => 'required_if:verify,accept|string|max:254',
             'hostEmail' => 'required_if:verify,accept|string|max:254',
         ];
