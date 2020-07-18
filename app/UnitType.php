@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrgType extends Model
+class UnitType extends Model
 {
     public $timestamps = false;
 }

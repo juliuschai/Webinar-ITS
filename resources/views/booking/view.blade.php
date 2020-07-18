@@ -69,11 +69,11 @@
 						<div class="col-md-6">
 							<input 
 								id="penyelengaraAcaraType" type="text" class="form-control" 
-								value="{{ $booking['org_type'] }}" disabled
+								value="{{ $booking['unit_type'] }}" disabled
 							>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
-								value="{{ $booking['org_nama'] }}" disabled
+								value="{{ $booking['unit_nama'] }}" disabled
 							>
 						</div>
 					</div>	

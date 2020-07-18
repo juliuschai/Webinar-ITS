@@ -1,14 +1,14 @@
-var orgTypes = [], orgs = [];
+var unitTypes = [], units = [];
 
-function populateOrgSelects() {
-	let elm = document.getElementById('orgDatas');
-	orgTypes = JSON.parse(elm.dataset.types);
-	orgs = JSON.parse(elm.dataset.orgs);
+function populateUnitSelects() {
+	let elm = document.getElementById('unitDatas');
+	unitTypes = JSON.parse(elm.dataset.types);
+	units = JSON.parse(elm.dataset.units);
 	curTypeId = elm.dataset.curtypeid;
-	curOrgId = elm.dataset.curorgid;
+	curUnitId = elm.dataset.curunitid;
 	// Populate type select
 	let typeSelect = document.getElementById('penyelengaraAcaraTypes')
-	for (type of orgTypes) {
+	for (type of unitTypes) {
 		var opt = document.createElement("option");
 		opt.value = type.id;
 		opt.innerText = type.nama; // whatever property it has
@@ -20,27 +20,27 @@ function populateOrgSelects() {
 		typeSelect.appendChild(opt);
 	}
 
-	let orgSelect = document.getElementById('penyelengaraAcara')
-	for (org of orgs) {
+	let unitSelect = document.getElementById('penyelengaraAcara')
+	for (unit of units) {
 		var opt = document.createElement("option");
-		opt.value = org.id;
-		opt.innerText = org.nama; // whatever property it has
-		if (org.id == curOrgId) {
+		opt.value = unit.id;
+		opt.innerText = unit.nama; // whatever property it has
+		if (unit.id == curUnitId) {
 			opt.setAttribute('selected', true);
 		}
 		// then append it to the select element
-		orgSelect.appendChild(opt);
+		unitSelect.appendChild(opt);
 	}
 }
 
-function onchangeOrgType() {
+function onchangeUnitType() {
 	let curTypeId = document.getElementById('penyelengaraAcaraTypes').value;
-	// hide all options except for org_type_id
+	// hide all options except for unit_type_id
 	options = document.getElementById('penyelengaraAcara').options;
 	selIdx = options.selectedIndex;
 	reselectLater = false
 	Array.from(options).forEach(function (opt, idx) {
-		if (curTypeId == orgs[idx].org_type_id) {
+		if (curTypeId == units[idx].unit_type_id) {
 			opt.style.display = '';
 		} else {
 			opt.style.display = 'none';
@@ -61,6 +61,6 @@ function onchangeOrgType() {
 	}
 }
 
-populateOrgSelects();
-document.getElementById('penyelengaraAcaraTypes').onchange = onchangeOrgType;
-onchangeOrgType();
+populateUnitSelects();
+document.getElementById('penyelengaraAcaraTypes').onchange = onchangeUnitType;
+onchangeUnitType();

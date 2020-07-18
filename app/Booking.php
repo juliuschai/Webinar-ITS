@@ -50,7 +50,7 @@ class Booking extends Model
         $this->unit = $request->departemenUnit;
         $this->no_wa = $request->noWa;
         $this->nama_acara = $request->namaAcara;
-        $this->org_id = $request->penyelengaraAcara;
+        $this->unit_id = $request->penyelengaraAcara;
         $this->waktu_mulai = $request->waktuMulai;
         $this->waktu_akhir = $request->waktuSelesai;
         $this->relay_ITSTV = $relayITSTV;
@@ -82,11 +82,11 @@ class Booking extends Model
     }
 
     public function setOrgFields($id) {
-        $org = Organisasi::join('org_types as t', 't.id', '=', 'organisasis.org_type_id')
-        ->where('organisasis.id', '=', $id)
-        ->first(['organisasis.nama as nama', 't.nama as type']);
-        $this->org_type = $org->type;
-        $this->org_nama = $org->nama;
+        $unit = Unit::join('unit_types as t', 't.id', '=', 'units.unit_type_id')
+            ->where('units.id', '=', $id)
+            ->first(['units.nama as nama', 't.nama as type']);
+        $this->unit_type = $unit->type;
+        $this->unit_nama = $unit->nama;
     }
 
     public function setUserId($id) {

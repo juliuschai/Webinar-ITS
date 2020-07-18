@@ -109,11 +109,11 @@
 							<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
 							<i class="fa fa-sticky-note-o booking"></i>
 							<div class="col-md-6">
-								<input id="orgDatas" hidden
-									data-types="{{json_encode($orgTypes)}}" 
-									data-orgs="{{json_encode($organisasis)}}" 
-									data-curtypeid="{{json_encode($booking['org_type_id'])}}" 
-									data-curorgid="{{json_encode($booking['org_id'])}}"
+								<input id="unitDatas" hidden
+									data-types="{{json_encode($unitTypes)}}" 
+									data-units="{{json_encode($units)}}" 
+									data-curtypeid="{{json_encode($booking['unit_type_id'])}}" 
+									data-curunitid="{{json_encode($booking['unit_id'])}}"
 								>
 								<select name="penyelengaraAcaraTypes" id="penyelengaraAcaraTypes" class="form-control">
 								</select>
@@ -246,5 +246,5 @@
 	</div>
 <!-- </div> -->
 <script src="{{ asset('js/booking/durasi.js') }}" defer></script>
-<script src="{{ asset('js/booking/organisasis.js') }}" defer></script>
+<script src="{{ asset('js/booking/units.js') }}" defer></script>
 @endsection

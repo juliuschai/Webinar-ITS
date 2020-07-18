@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\Http\Requests\SaveBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
-use App\Organisasi;
-use App\OrgType;
+use App\Unit;
+use App\UnitType;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +16,10 @@ class BookingController extends Controller
     function viewNewBooking(Request $request) {
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
-        $organisasis = Organisasi::get();
+        $units = Unit::get();
+        $unitTypes = UnitType::get();
 
-        return view('booking.form', compact(['booking', 'organisasis']));
+        return view('booking.form', compact(['booking', 'units', 'unitTypes']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
@@ -34,11 +35,11 @@ class BookingController extends Controller
         $booking->abortIfApproved();
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
-        $booking->org_type_id = Organisasi::getTypeIdById($booking->org_id);
-        $organisasis = Organisasi::get();
-        $orgTypes = OrgType::get();
+        $booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
+        $units = Unit::get();
+        $unitTypes = UnitType::get();
 
-        return view('booking.form', compact(['booking', 'organisasis', 'orgTypes']));
+        return view('booking.form', compact(['booking', 'units', 'unitTypes']));
     }
 
     function saveEditBooking(SaveBookingRequest $request) {
@@ -56,7 +57,7 @@ class BookingController extends Controller
             $isAdmin = User::find(Auth::id())->isAdmin();
             $isOwner = $booking->isOwner(Auth::id());
             if ($isAdmin || $isOwner) {
-                $booking->setOrgFields($booking['org_id']);
+                $booking->setOrgFields($booking['unit_id']);
                 $booking->setUserFields($booking['user_id']);    
             }
         } else {
