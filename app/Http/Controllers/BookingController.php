@@ -16,7 +16,7 @@ class BookingController extends Controller
     function viewNewBooking(Request $request) {
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
-        $units = Unit::get();
+        $units = Unit::getDefault();
         $unitTypes = UnitType::get();
 
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
@@ -36,7 +36,7 @@ class BookingController extends Controller
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
         $booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
-        $units = Unit::get();
+        $units = Unit::getDefault();
         $unitTypes = UnitType::get();
 
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
@@ -80,7 +80,7 @@ class BookingController extends Controller
 
     public function waitingListBooking() {
         $booking = Booking::all();
-        return view('booking.table', compact(['civitas', 'booking', 'id']));
+        return view('booking.table', compact(['booking']));
     }
 
     public function listBooking(Request $request) {
@@ -88,7 +88,7 @@ class BookingController extends Controller
                             ->where('disetujui', '!=', NULL)
                             ->get();
 
-        return view('booking.list', compact(['civitas', 'booking', 'id']));
+        return view('booking.list', compact(['booking']));
     }
 
     public function detailBooking(Request $request) 
@@ -99,7 +99,7 @@ class BookingController extends Controller
 
         // $civitas = Civitas::getCivitasList();
         $booking = Booking::all();
-        return view('booking.detail', compact(['civitas', 'booking', 'id']));
+        return view('booking.detail', compact(['booking']));
         
     }
 
