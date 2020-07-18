@@ -56,7 +56,7 @@ class User extends Authenticatable
         return $this['id'] == $id;
     }
 
-    function findOrLogout($id) {
+    static function findOrLogout($id) {
         $user = User::find($id);
         if ($user == null) {
             return redirect()->route('logout');
