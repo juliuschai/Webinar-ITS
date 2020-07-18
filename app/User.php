@@ -55,4 +55,13 @@ class User extends Authenticatable
     function isOwner($id) {
         return $this['id'] == $id;
     }
+
+    function findOrLogout($id) {
+        $user = User::find($id);
+        if ($user == null) {
+            return redirect()->route('logout');
+        } else {
+            return $user;
+        }
+    }
 }

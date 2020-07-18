@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class UnitController extends Controller
 {
     function viewUnit() {
-        unitsUser::findOrFail(Auth::id())->abortButAdmin();
+        User::findOrLogout(Auth::id())->abortButAdmin();
         $units = Unit::join('unit_types as t', 't.id', '=', 'units.unit_type_id')
             ->select(['units.id', 'units.nama', 't.nama as unit_type'])
             ->orderBy('t.id')
@@ -22,7 +22,7 @@ class UnitController extends Controller
     }
 
     function addUnit(Request $request) {
-        unitsUser::findOrFail(Auth::id())->abortButAdmin();
+        User::findOrLogout(Auth::id())->abortButAdmin();
         $this->validate($request, [
             'unitNama' => 'required|string|max:254',
             'unitType' => 'required|numeric',
@@ -38,7 +38,7 @@ class UnitController extends Controller
     }
 
     function delUnit($id) {
-        unitsUser::findOrFail(Auth::id())->abortButAdmin();
+        User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $unit_nama = $unit->nama;
         $unit_type = UnitType::findOrFail($unit->unit_type_id)->nama;
@@ -47,14 +47,14 @@ class UnitController extends Controller
     }
 
     function viewEditUnit($id) {
-        unitsUser::findOrFail(Auth::id())->abortButAdmin();
+        User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $types = UnitType::get();
         return view('unit.edit', compact('unit','types'));
     }
 
     function saveEditUnit($id, Request $request) {
-        unitsUser::findOrFail(Auth::id())->abortButAdmin();
+        User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $unit->nama = $request->unitNama;
         $unit_nama = $unit->nama;
