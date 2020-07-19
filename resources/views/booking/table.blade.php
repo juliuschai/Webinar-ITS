@@ -4,7 +4,7 @@
 
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-            <h2 class="table-title">Waiting List Webinar</h2>
+            <h2 class="table-title">Daftar Webinar</h2>
             <table class="table table-bordered table-striped table-bordered table-hover">
                 <thead class="thead-custom-blue">
                     <tr>

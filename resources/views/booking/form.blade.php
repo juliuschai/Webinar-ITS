@@ -7,10 +7,9 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-				<div class="card-header">{{ __('Booking Form') }}</div>
-				<ul id="section-tabs">
-							<li class="current active">Data PIC Zoom</li>
-							<li>Informasi</li>
+					<ul id="section-tabs">
+							<li id="satu" class="current active">Data PIC Zoom</li>
+							<li id="dua">Informasi</li>
 					</ul>
 
 				<div class="card-body">
@@ -98,10 +97,12 @@
 									>
 								</div>
 							</div>
+							<div class="form-group row">
+							<button type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
+							</div>
 						</div>
 
 						<div class="tab">
-						<!-- <div class="step"> -->
 							<div class="form-group row">
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
 								<i class="fa fa-sticky-note-o booking"></i>
@@ -169,8 +170,6 @@
 										id="relayITSTV" type="checkbox" class="" name="relayITSTV" 
 										value="relayITSTVBoolean" {{ $booking['relay_ITSTV']?'checked':'' }}
 									> 
-									<!-- <label for="iya">Iya</label>
-									<label for="tidak">Tidak</label> -->
 								</div>
 								<div class="col-md-6">
 									<sub class="">Silahkan menghubungi Unit Komunikasi Publik (UKP) pada <a href="https://servicedesk.its.ac.id/" target="_blank">
@@ -191,11 +190,11 @@
 								</div>
 								{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 							</div>
-						</div>
+						<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
 									<!-- <button type="button" id="prevBtn" class="btn btn-submit" onclick="nextPrev(-1)">Previous</button> -->
-									<button type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
+									<!-- <button type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button> -->
 									<button type="submit" id="submitBtn" class="btn btn-submit">
 										@if(Route::is('booking.new'))
 										{{ __('Submit Booking') }}
@@ -206,13 +205,9 @@
 
 								</div>
 							</div>
-						<!-- </fieldset> -->
+						</div>
+
 						<!-- </div> -->
-<!-- 
-						<a class="btn" id="next">Next Section ▷</a>
-							<input type="submit" class="btn"> -->
-						<!-- </div> -->
-					<!-- </div> -->
 					</form>
 				</div>
 			</div>

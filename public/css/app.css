@@ -11052,7 +11052,7 @@ fieldset.next {
 /* input[type=submit] {
   display: none;
   border: none;
-}
+}*/
 #section-tabs {
   font-size: 0.8em;
   height: 50px;
@@ -11154,9 +11154,8 @@ textarea + .valid {
   -moz-transition: all 0.3s;
   color: #fff;
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-family: 'Merriweather Sans', sans-serif;
+  bottom: 15px;
+  right: 50px;
 }
 .btn:hover {
   background: #26a19a;
