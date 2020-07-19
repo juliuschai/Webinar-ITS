@@ -26,7 +26,6 @@ class VerifyBookingRequest extends FormRequest
         return [
             'verify' => 'required|string|in:setuju,tolak',
             'alasan' => 'required_if:verify,tolak|string|max:254',
-            'hostNama' => 'required_if:verify,setuju|string|max:254',
             'hostEmail' => 'required_if:verify,setuju|string|max:254',
         ];
     }

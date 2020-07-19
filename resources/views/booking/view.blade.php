@@ -174,44 +174,26 @@
 					<form method="POST" action="{{ route('booking.verify') }}">
 						@csrf
 						<input name="id" type="hidden" value="{{ $booking['id'] }}">
-						<input id="verify" name="verify" type="hidden" value="">
+						<input name="verify" type="hidden" value="setuju">
 
 						<div class="form-group row">
-							<label for="hostNama" class="col-md-4 col-form-label text-md-left">{{ __('Host Name') }}</label>
-							<i class="fa fa-building"></i>
-							<div class="col-md-6">
-								<input 
-									id="hostNama" type="text" class="form-control" name="hostNama" 
-									value="{{ old('hostNama')??$booking['api_host_nama'] }}" required
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Email') }}</label>
+							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Account') }}</label>
 							<i class="fa fa-envelope-o"></i>
 							<div class="col-md-6">
-								<input 
-									id="hostEmail" type="email" class="form-control" name="hostEmail" 
-									value="{{ old('hostEmail')??$booking['api_host_email'] }}" required autocomplete="email"
-								>
+								{{ isset($booking['api_host_email'])?'Last picked: '.$booking['api_host_email']:'' }}
+								<select name="hostEmail" id="hostEmail" class="form-control">
+									<option value="500 (1)">500 (1)</option>
+									<option value="500 (2)">500 (2)</option>
+									<option value="1000 (1)">1000 (1)</option>
+								</select>
 							</div>
 						</div>
-
-						<div class="form-group row">
-							<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
-							<i class="fa fa-sticky-note-o"></i>
-							<div class="col-md-6">
-								<textarea id="alasan" type="text" class="form-control" name="alasan">{{ old('alasan') }}</textarea>
-							</div>
-						</div>
-	
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
-								<button type="button" class="btn btn-submit" onclick="setujuBooking()">
+								<button type="submit" class="btn btn-submit">
 									{{ __('Setujui Booking') }}
 								</button>
-								<button type="button" class="btn btn-danger" onclick="tolakBooking()">
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal" onclick="modalPopulate()">
 									{{ __('Tolak Booking') }}
 								</button>
 							</div>
@@ -223,8 +205,57 @@
 		</div>
 	</div>
 </div>
-@if($isAdmin)
-<script src="{{ asset('js/booking/verify.js') }}" defer></script>
-@endif
+
+<!-- Modal -->
+<div class="modal fade" id="denyModal" tabindex="-1" role="dialog" aria-labelledby="denyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="denyModalLabel">Konfirmasi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<form action="{{route('booking.verify')}}" method="POST">
+				@csrf
+				<input name="id" type="hidden" value="{{ $booking['id'] }}">
+				<input name="verify" type="hidden" value="tolak">
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
+						<i class="fa fa-sticky-note-o"></i>
+						<div class="col-md-6">
+							<textarea id="alasan" type="text" class="form-control" name="alasan">{{ old('alasan') }}</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-danger">Tolak Booking</button>
+				</div>
+			</form>
+    </div>
+  </div>
+</div>
+
 <script src="{{ asset('js/booking/durasi.js') }}" defer></script>
+<script type="text/javascript" >
+	function modalPopulate() {
+		let unitNama = document.getElementById('unitNama').value;
+		let unitTypeSelElm = document.getElementById('unitType');
+		let unitType = unitTypeSelElm.options[unitTypeSelElm.selectedIndex].innerText;
+		if (unitTypeSelElm.selectedIndex == 0) {
+			alert("Mohon pilih tipe unit");
+			return;
+		}
+		let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
+		document.getElementById('confirmationText').innerText = text;
+		
+		document.getElementById('modalUnitNama').value = unitNama;
+		document.getElementById('modalUnitType').value = unitTypeSelElm.value;
+
+	}
+
+</script>
+
 @endsection

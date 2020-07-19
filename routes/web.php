@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,13 +37,15 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         Route::group(['middleware' => 'admin'], function () {
             Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
 
-            Route::get('/unit', 'UnitController@viewUnit')->name('unit.view');
-            Route::post('/unit/add', 'UnitController@addUnit')->name('unit.add');
-            Route::post('/unit/delete/{id}', 'UnitController@delUnit')->name('unit.delete');
-            Route::get('/unit/edit/{id}', 'UnitController@viewEditUnit')->name('unit.edit');
-            Route::post('/unit/edit/{id}', 'UnitController@saveEditUnit')->name('unit.edit');
+            Route::get('/unit', 'UnitController@viewUnit')->name('admin.unit.view');
+            Route::post('/unit/add', 'UnitController@addUnit')->name('admin.unit.add');
+            Route::post('/unit/delete/{id}', 'UnitController@delUnit')->name('admin.unit.delete');
+            Route::get('/unit/edit/{id}', 'UnitController@viewEditUnit')->name('admin.unit.edit');
+            Route::post('/unit/edit/{id}', 'UnitController@saveEditUnit')->name('admin.unit.edit');
 
-
+            Route::get('/users', 'UserController@viewUsers')->name('admin.users.view');
+            Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
+            Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
         });
     });
     Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
