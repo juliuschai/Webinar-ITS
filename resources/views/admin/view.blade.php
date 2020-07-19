@@ -71,7 +71,7 @@
 								id="penyelengaraAcaraType" type="text" class="form-control" 
 								value="{{ $booking['unit_type'] }}" disabled
 							>
-							<br />
+						<br>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
 								value="{{ $booking['unit'] }}" disabled
@@ -81,7 +81,7 @@
 
 					<div class="form-group row">
 						<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
-						<i class="fa fa-mobile fa-2x booking""></i>
+						<i class="fa fa-mobile fa-2x booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="noWa" type="tel" class="form-control"
@@ -110,6 +110,7 @@
 								id="penyelengaraAcaraType" type="text" class="form-control" 
 								value="{{ $booking['unit_type'] }}" disabled
 							>
+							<br>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
 								value="{{ $booking['unit'] }}" disabled

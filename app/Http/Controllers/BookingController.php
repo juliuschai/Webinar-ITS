@@ -118,7 +118,7 @@ class BookingController extends Controller
             $isAdmin = User::find(Auth::id())->isAdmin();
             $isOwner = $booking->isOwner(Auth::id());
             if ($isAdmin || $isOwner) {
-                $booking->setOrgFields($booking['org_id']);
+                $booking->setOrgFields($booking['unit_id']);
                 $booking->setUserFields($booking['user_id']);    
             }
         } else {
