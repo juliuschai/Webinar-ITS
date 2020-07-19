@@ -94,7 +94,7 @@
                     <i class="fa fa-user admin"></i>User
                   </a>
                   <div style="margin: 0" class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="l{{ url('logout') }}"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
+                    <a class="dropdown-item"  href="{{ url('logout') }}"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
                   </div>
                 </li>
 

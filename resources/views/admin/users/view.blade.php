@@ -1,8 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
-<div class="container">
+<!-- <div class="container"> -->
+<div class="right_col booking" role="main">
+	<div class="col-md-12 col-sm-12">
+	<h2 class="table-title">Daftar User</h2>
 	@if(session()->has('message'))
 	<div class="alert alert-success">
 			{{ session()->get('message') }}
@@ -34,26 +37,26 @@
 			<button class="btn btn-submit">Search</button>
 		</form>
 	</div>
-	<table class="table">
-		<thead class="thead-dark">
+	<table class="table table-bordered table-striped table-bordered table-hover">
+		<thead class="thead-custom-blue">
 			<tr>
-				<th scope="col">Nama</th>
-				<th scope="col">Email</th>
-				<th scope="col">Integra</th>
-				<th scope="col">Sivitas</th>
-				<th scope="col">Admin</th>
-				<th scope="col"></th>
+				<th class="text-center" scope="col">Nama</th>
+				<th class="text-center" scope="col">Email</th>
+				<th class="text-center" scope="col">Integra</th>
+				<th class="text-center" scope="col">Sivitas</th>
+				<th class="text-center" scope="col">Admin</th>
+				<th class="text-center" scope="col">Aksi</>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach ($users as $user)
 			<tr>
 				<td>{{ $user->nama }}</td>
-				<td>{{ $user->email }}</td>
-				<td>{{ $user->integra }}</td>
-				<td>{{ $user->sivitas }}</td>
-				<td>{{ $user->is_admin?'Admin':'User' }}</td>
-				<td>
+				<td class="text-center">{{ $user->email }}</td>
+				<td class="text-center">{{ $user->integra }}</td>
+				<td class="text-center">{{ $user->sivitas }}</td>
+				<td class="text-center">{{ $user->is_admin?'Admin':'User' }}</td>
+				<td class="text-center">
 					@if($user->is_admin)
 					<form method="POST" action="{{route('admin.users.revoke', ["id" => $user->id])}}">
 						<button type="submit" class="btn btn-warning">Non-Aktifkan Admin</button>
@@ -68,6 +71,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	</div>
 </div>
 
 {{ $users->appends(compact('nama', 'email', 'integra'))->links() }}

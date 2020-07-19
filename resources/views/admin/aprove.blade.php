@@ -5,7 +5,7 @@
     @if($isAdmin)
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-            <h2 class="table-title">List Webinar</h2>
+            <h2 class="table-title">Webinar</h2>
             <table class="table table-bordered table-striped table-bordered table-hover">
                 <thead class="thead-custom-blue">
                     <tr>
@@ -13,7 +13,6 @@
                     <th class="text-center" scope="col">Tanggal</th>
                     <th class="text-center" scope="col">Waktu</th>
                     <th class="text-center" scope="col">Nama Acara</th>
-                    <th class="text-center" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,25 +22,6 @@
                     <td class="text-center">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ $booking->nama_acara }}</td>
-                    <td class="text-center">
-                        <a href="{{ url('/booking/detail/'.$booking->id) }}">
-                        <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        </a>
-                        <a href="{{ url('/booking/edit/'.$booking->id) }}">
-                        <button type="button" class="btn btn-custom-warning" title="Edit Webinar">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        </a>
-                        <form action="{{ url('/booking/delete/'.$booking->id) }}" method="post" class="d-inline">    
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar {{$booking->nama_acara}} ?')" title="Hapus Webinar">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                        </form>
-                    </td>
                     </tr>
                     @endforeach
                 </tbody>

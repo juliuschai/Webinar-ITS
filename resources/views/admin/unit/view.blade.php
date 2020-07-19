@@ -1,8 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
-<div class="container">
+<div class="right_col booking" role="main">
+	<div class="col-md-12 col-sm-12">
+	<h2 class="table-title">Daftar Unit</h2>
 	@if(session()->has('message'))
 	<div class="alert alert-success">
 			{{ session()->get('message') }}
@@ -35,22 +37,22 @@
 			</div>
 		</form>
 	</div>
-	<table class="table">
-		<thead class="thead-dark">
+	<table class="table table-bordered table-striped table-bordered table-hover">
+		<thead class="thead-custom-blue">
 			<tr>
-				<th scope="col">Nama</th>
-				<th scope="col">Type</th>
-				<th scope="col"></th>
-				<th scope="col"></th>
+				<th class="text-center" scope="col">Nama</th>
+				<th class="text-center" scope="col">Type</th>
+				<th class="text-center" scope="col">Edit</th>
+				<th class="text-center" scope="col">Delete</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach ($units as $unit)
 			<tr>
-				<td>{{ $unit->nama }}</td>
-				<td>{{ $unit->unit_type }}</td>
-				<td><a href="{{route('admin.unit.edit', ['id'=>$unit->id])}}"><button class="btn btn-info">Edit</button></a></td>
-				<td>
+				<td class="text-center">{{ $unit->nama }}</td>
+				<td class="text-center">{{ $unit->unit_type }}</td>
+				<td class="text-center"><a href="{{route('admin.unit.edit', ['id'=>$unit->id])}}"><button class="btn btn-info">Edit</button></a></td>
+				<td class="text-center">
 					<form method="POST" action="{{route('admin.unit.delete', ["id" => $unit->id])}}">
 						@csrf
 						<button class="btn btn-danger">Delete</button>
@@ -60,6 +62,7 @@
 			@endforeach
 		</tbody>
 	</table>
+</div>
 </div>
 
 <!-- The Modal -->

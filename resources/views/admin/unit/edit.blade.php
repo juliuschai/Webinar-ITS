@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
-<div class="container">
+<div class="right_col booking" role="main">
+	<div class="col-md-12 col-sm-12">
 	<div class="form-group row col-md-12 col-sm-12">
 		<form method="POST" action="{{route('admin.unit.edit', ['id' => $unit->id])}}">
 			@csrf
@@ -27,5 +28,6 @@
 			</div>
 		</form>
 	</div>
+</div>
 </div>
 @endsection

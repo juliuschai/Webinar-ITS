@@ -2,10 +2,9 @@
 
 @section('content')
 
-    @if($isAdmin)
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-            <h2 class="table-title">Waiting List Webinar</h2>
+            <h2 class="table-title">Daftar Webinar</h2>
             <table class="table table-bordered table-striped table-bordered table-hover">
                 <thead class="thead-custom-blue">
                     <tr>
@@ -63,5 +62,4 @@
 	// idk what's not ready when the script is loaded with the html tho
 	setTimeout(onupdateWaktu, 500);
 </script>
-    @endif
 @endsection

@@ -63,13 +63,19 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ url('/admin/booking/list') }}">Waiting List Webinar</a></li>
-                      <li><a href="{{ url('/admin/booking/aprove') }}">List Webinar</a></li>
+                      <li><a href="{{ url('/admin/booking/list') }}">Daftar Webinar</a></li>
+                      <li><a href="{{ url('/admin/booking/aprove') }}">Webinar</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="calendar.html">Calendar</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-list"></i> Data <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ url('/users') }}">User</a></li>
+                      <li><a href="{{ url('/unit') }}">Unit</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Report <span class="fa fa-chevron-down"></span></a>
@@ -99,7 +105,7 @@
                     <i class="fa fa-user admin"></i>Admin
                   </a>
                   <div style="margin: auto" class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
+                    <a class="dropdown-item"  href="{{ url('logout') }}"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
                   </div>
                 </li>
 
