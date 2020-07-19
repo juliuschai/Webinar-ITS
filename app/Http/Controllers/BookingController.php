@@ -79,38 +79,32 @@ class BookingController extends Controller
     }
 
     public function waitingListBooking() {
-        Auth::id();
         $booking = Booking::select('id','waktu_mulai', 'nama_acara')
-                    ->where('disetujui', '=', NULL)
-                    ->get();
-        return view('booking.table', compact(['civitas', 'booking', 'id']));
-        $booking = Booking::all();
+            ->where('user_id', '=', Auth::id())
+            // ->where('disetujui', '=', NULL)
+            ->get();
+
+        // $booking = Booking::all();
         return view('booking.table', compact(['booking']));
     }
-
+/* 
     public function listBooking(Request $request) {
-        Auth::id();
         $booking = Booking::select('waktu_mulai', 'nama_acara')
-                            ->where('disetujui', '!=', NULL)
-                            ->get();
+            ->where('user_id', '=', Auth::id())
+            ->where('disetujui', '!=', NULL)
+            ->get();
 
         return view('booking.list', compact(['booking']));
     }
-
+ */
     public function detailBooking(Request $request) 
     { 
-        // $id = $request['id'];
-        // $booking = Booking::findOrFail($id);
-        // $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
-
-        // $civitas = Civitas::getCivitasList();
         $booking = Booking::all();
         return view('booking.detail', compact(['booking']));
         
     }
 
     public function deleteBooking(Request $request) {
-
         $id = $request['id'];
         Booking::destroy($id);
 
