@@ -24,11 +24,6 @@ class SaveBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'namaPic' => 'required|string|max:254',
-            'integraPic' => 'required|string|max:20',
-            'emailPic' => 'required|email|max:254',
-            'sivitas' => 'required|string|max:254',
-            'departemenUnit' => 'required|string|max:254',
             'noWa' => 'required|string|max:254',
             'namaAcara' => 'required|string|max:254',
             'penyelengaraAcara' => 'required|numeric|exists:units,id',

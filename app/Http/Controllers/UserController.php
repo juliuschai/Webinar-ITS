@@ -37,6 +37,7 @@ class UserController extends Controller
 			$user = User::findOrFail(auth()->id());
 			$user->is_admin = true;
 			$user->save();
+			return "authorized";
 		} else {
 			abort(404);
 		}

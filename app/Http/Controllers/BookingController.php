@@ -16,10 +16,11 @@ class BookingController extends Controller
     function viewNewBooking(Request $request) {
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
-        $units = Unit::get();
+        $units = Unit::getDefault();
         $unitTypes = UnitType::get();
 
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
+        // return view('booking.edit', compact(['booking', 'units', 'unitTypes']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
@@ -32,11 +33,11 @@ class BookingController extends Controller
 
     function viewEditBooking($id) {
         $booking = Booking::findOrFail($id);
-        $booking->abortIfApproved();
+        $booking->abortIfVerified();
         $booking->abortButOwner(Auth::id());
         $booking->setUserFields(Auth::id());
         $booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
-        $units = Unit::get();
+        $units = Unit::getDefault();
         $unitTypes = UnitType::get();
 
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
@@ -44,7 +45,7 @@ class BookingController extends Controller
 
     function saveEditBooking(SaveBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
-        $booking->abortIfApproved();
+        $booking->abortIfVerified();
         $booking->abortButOwner(Auth::id());
         $booking->saveFromRequest($request);
 
@@ -84,6 +85,8 @@ class BookingController extends Controller
                     ->where('disetujui', '=', NULL)
                     ->get();
         return view('booking.table', compact(['civitas', 'booking', 'id']));
+        $booking = Booking::all();
+        return view('booking.table', compact(['booking']));
     }
 
     public function listBooking(Request $request) {
@@ -92,7 +95,19 @@ class BookingController extends Controller
                             ->where('disetujui', '!=', NULL)
                             ->get();
 
-        return view('booking.list', compact(['civitas', 'booking', 'id']));
+        return view('booking.list', compact(['booking']));
+    }
+
+    public function detailBooking(Request $request) 
+    { 
+        // $id = $request['id'];
+        // $booking = Booking::findOrFail($id);
+        // $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
+
+        // $civitas = Civitas::getCivitasList();
+        $booking = Booking::all();
+        return view('booking.detail', compact(['booking']));
+        
     }
 
     public function deleteBooking(Request $request) {

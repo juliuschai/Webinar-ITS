@@ -52,10 +52,10 @@
             <br />
 
             <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
+            <!-- <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section"> -->
                 <!-- Home, List, Calendar, Report -->
-                <ul class="nav side-menu">
+                <!-- <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
@@ -76,7 +76,7 @@
                 </ul>
               </div>
 
-            </div>
+            </div> -->
             <!-- /sidebar menu -->
 
           </div>
@@ -107,17 +107,51 @@
 
 
         <!-- <main class="py-4"> -->
-        <main>
-            @yield('content')
-        </main>
+            <form id="signup" action="somewhere" method="POST">
+                <ul id="section-tabs">
+                  <li class="current active"><span>1.</span> Creds</li>
+                  <li><span>2.</span> Deets</li>
+                  <li><span>3.</span> Settings</li>
+                  <li><span>4.</span> Last Words</li>
+                </ul>
+              <div id="fieldsets">
+              <fieldset class="current">
+                <label for="email">Email:</label>
+                <input name="email" type="email" class="required email" />
+                <label name="password" for="password">Password:</label>
+                <input type="password" minlength="10" class="required">
+              </fieldset>
+              <fieldset class="next">
+                <label for="username">Username:</label>
+                <input name="username" type="text">
+                <label for="bio">Short Bio:</label>
+                <textarea name="bio" class="required"></textarea>
+              </fieldset>
+              <fieldset class="next">
+                <label for="interests">Basic Interests:</label>
+                <textarea name="bio"></textarea>
+                <p>Receive newsletter?<br>
+                  <input type="radio" name="newsletter" value="yes"><label for="newsletter">yes</label>
+                  <input type="radio" name="newsletter" value="no"><label for="newsletter">no</label>
+                </p>
+              </fieldset>
+              <fieldset class="next">
+                <label for="referrer">Referred by:</label>
+                <input type="text" name="referrer">
+                <label for="phone">Daytime Phone:</label>
+                <input type="tel" name="phone">
+              </fieldset>
+              <a class="btn" id="next">Next Section ▷</a>
+              <input type="submit" class="btn">
+              </div>
+            </form>
+            
 
         </div>
     </div>
 
         <!-- jQuery -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <!-- Bootstrap -->
         <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

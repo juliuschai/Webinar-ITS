@@ -24,10 +24,10 @@ class VerifyBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'verify' => 'required|string|in:accept,deny',
-            'alasan' => 'string|max:254',
-            'hostNama' => 'required_if:verify,accept|string|max:254',
-            'hostEmail' => 'required_if:verify,accept|string|max:254',
+            'verify' => 'required|string|in:setuju,tolak',
+            'alasan' => 'required_if:verify,tolak|string|max:254',
+            'hostNama' => 'required_if:verify,setuju|string|max:254',
+            'hostEmail' => 'required_if:verify,setuju|string|max:254',
         ];
     }
 }

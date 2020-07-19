@@ -25,7 +25,7 @@
 				<div class="col">
 					<select name="unitType" id="unitType" class="form-control">
 						@foreach ($types as $type)
-							<option value="{{$type->id}}">{{$type->nama}}</option>	
+							<option value="{{$type->id}}" {{$type->id == 3?'selected':''}}>{{$type->nama}}</option>	
 						@endforeach
 					</select>
 				</div>

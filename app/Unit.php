@@ -13,4 +13,11 @@ class Unit extends Model
             ->where('units.id', '=', $id)
             ->first('t.id')->id;
     }
+
+    /**
+     * Get Unit list with ascending names
+     */
+    static function getDefault() {
+        return Unit::orderBy('nama')->get();
+    }
 }

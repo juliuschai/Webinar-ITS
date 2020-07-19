@@ -1,8 +1,8 @@
-function acceptBooking() {
-	document.getElementById('verify').value = "accept";
+function setujuBooking() {
+	document.getElementById('verify').value = "setuju";
 	document.getElementsByTagName('form')[0].submit();
 }
-function denyBooking() {
-	document.getElementById('verify').value = "deny";
+function tolakBooking() {
+	document.getElementById('verify').value = "tolak";
 	document.getElementsByTagName('form')[0].submit();
 }
