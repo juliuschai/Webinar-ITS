@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/', 'UserController@checkLoggingIn');
-    // Route::get('test','UserController@testGet');
+    // Route::get('/tes', 'BookingController@tes')->name('booking.list');
     
     Route::get('login','UserController@login')->name('login');
     Route::get('logout','UserController@logout')->name('logout');
@@ -51,8 +51,15 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
     Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
     Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');
     Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
+    
+    // Admin
+    Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
+    Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
+    Route::get('/admin/booking/view/{id}', 'BookingController@adminViewBooking')->name('admin.view');
 });
 
+// Route::get('/booking/view/{id}', 'BookingController@viewBooking')->name('booking.view');
+// Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
 // Auth::routes();
 /* 
     Route::get('auth/check', function () {

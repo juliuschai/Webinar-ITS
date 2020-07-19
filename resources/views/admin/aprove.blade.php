@@ -1,10 +1,11 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
 
+    @if($isAdmin)
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-            <h2 class="table-title">Daftar Webinar</h2>
+            <h2 class="table-title">List Webinar</h2>
             <table class="table table-bordered table-striped table-bordered table-hover">
                 <thead class="thead-custom-blue">
                     <tr>
@@ -23,7 +24,7 @@
                     <td class="text-center">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ $booking->nama_acara }}</td>
                     <td class="text-center">
-                        <a href="{{ url('/booking/view/'.$booking->id) }}">
+                        <a href="{{ url('/booking/detail/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
                             <i class="fa fa-search"></i>
                         </button>
@@ -74,4 +75,5 @@
 	// idk what's not ready when the script is loaded with the html tho
 	setTimeout(onupdateWaktu, 500);
 </script>
+    @endif
 @endsection

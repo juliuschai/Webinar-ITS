@@ -20,6 +20,7 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
 
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
+        // return view('booking.edit', compact(['booking', 'units', 'unitTypes']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
@@ -78,11 +79,17 @@ class BookingController extends Controller
     }
 
     public function waitingListBooking() {
+        Auth::id();
+        $booking = Booking::select('id','waktu_mulai', 'nama_acara')
+                    ->where('disetujui', '=', NULL)
+                    ->get();
+        return view('booking.table', compact(['civitas', 'booking', 'id']));
         $booking = Booking::all();
         return view('booking.table', compact(['booking']));
     }
 
     public function listBooking(Request $request) {
+        Auth::id();
         $booking = Booking::select('waktu_mulai', 'nama_acara')
                             ->where('disetujui', '!=', NULL)
                             ->get();
@@ -109,4 +116,44 @@ class BookingController extends Controller
 
         return redirect('/booking/list')->with('status', 'Data Webinar Berhasil Dihapus!');
     }
+
+    //Admin
+
+    public function adminListBooking(Request $request) {
+        $booking = Booking::select('id','waktu_mulai', 'nama_acara')
+                            ->where('disetujui', '=', NULL)
+                            ->get();
+        $isAdmin = true;
+
+        return view('admin.table', compact(['civitas', 'booking', 'id', 'isAdmin']));
+    }
+
+    public function aproveBooking(Request $request) {
+        $booking = Booking::select('waktu_mulai', 'nama_acara')
+                            ->where('disetujui', '!=', NULL)
+                            ->get();
+        $isAdmin = true;
+
+        return view('admin.aprove', compact(['civitas', 'booking', 'id', 'isAdmin']));
+    }
+
+    function adminViewBooking($id) {
+        $booking = Booking::findOrFail($id);
+        if (Auth::check()) {
+            $isAdmin = User::find(Auth::id())->isAdmin();
+            $isOwner = $booking->isOwner(Auth::id());
+            if ($isAdmin || $isOwner) {
+                $booking->setOrgFields($booking['org_id']);
+                $booking->setUserFields($booking['user_id']);    
+            }
+        } else {
+            $isAdmin = false;
+            $isOwner = false;
+        }
+        return view(
+            'admin.view', 
+            compact(['booking', 'isOwner', 'isAdmin'])
+        );
+    }
+
 }
