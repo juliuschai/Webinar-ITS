@@ -71,7 +71,6 @@ class BookingController extends Controller
     }
 
     function verifyBooking(VerifyBookingRequest $request) {
-        User::findOrLogout(Auth::id())->abortButAdmin();
         $booking = Booking::findOrFail($request['id']);
         $booking->verifyRequest($request);
 

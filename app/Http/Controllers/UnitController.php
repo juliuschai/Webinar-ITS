@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Unit;
 use App\UnitType;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
 {
     function viewUnit() {
-        User::findOrLogout(Auth::id())->abortButAdmin();
         $units = Unit::join('unit_types as t', 't.id', '=', 'units.unit_type_id')
             ->select(['units.id', 'units.nama', 't.nama as unit_type'])
             ->orderBy('t.id')
@@ -22,7 +19,6 @@ class UnitController extends Controller
     }
 
     function addUnit(Request $request) {
-        User::findOrLogout(Auth::id())->abortButAdmin();
         $this->validate($request, [
             'unitNama' => 'required|string|max:254',
             'unitType' => 'required|numeric',
@@ -38,7 +34,6 @@ class UnitController extends Controller
     }
 
     function delUnit($id) {
-        User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $unit = $unit->nama;
         $unit_type = UnitType::findOrFail($unit->unit_type_id)->nama;
@@ -47,14 +42,12 @@ class UnitController extends Controller
     }
 
     function viewEditUnit($id) {
-        User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $types = UnitType::get();
         return view('unit.edit', compact('unit','types'));
     }
 
     function saveEditUnit($id, Request $request) {
-        User::findOrLogout(Auth::id())->abortButAdmin();
         $unit = Unit::findOrFail($id);
         $unit->nama = $request->unitNama;
         $unit = $unit->nama;
