@@ -12,6 +12,7 @@
                     <th class="text-center" scope="col">Tanggal</th>
                     <th class="text-center" scope="col">Waktu</th>
                     <th class="text-center" scope="col">Nama Acara</th>
+                    <th class="text-center" scope="col">Status</th>
                     <th class="text-center" scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -22,17 +23,26 @@
                     <td class="text-center">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center">{{ $booking->nama_acara }}</td>
+                    @if ($booking->disetujui == '0') 
+                    <td style="background-color: #FF6961;" class="text-center">Ditolak</td>
+                    @elseif ($booking->disetujui == '1') 
+                    <td style="background-color: #99d18f;" class="text-center">Disetujui</td>
+                    @else
+                    <td style="background-color: #FCF0CF;" class="text-center">Menunggu Konfirmasi</td>
+                    @endif
                     <td class="text-center">
+                    @if ($booking->disetujui == 'NULL' or $booking->disetujui == '1' or $booking->disetujui == '0')
                         <a href="{{ url('/booking/view/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
                             <i class="fa fa-search"></i>
                         </button>
                         </a>
+                    @elseif ($booking->disetujui == 'NULL')
                         <a href="{{ url('/booking/edit/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-warning" title="Edit Webinar">
                             <i class="fa fa-pencil"></i>
                         </button>
-                        </a>
+                        </a> 
                         <form action="{{ url('/booking/delete/'.$booking->id) }}" method="post" class="d-inline">    
                         @method('delete')
                         @csrf
@@ -40,6 +50,7 @@
                             <i class="fa fa-trash-o"></i>
                         </button>
                         </form>
+                    @endif
                     </td>
                     </tr>
                     @endforeach

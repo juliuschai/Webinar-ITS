@@ -2,8 +2,6 @@
 
 @section('content')
 
-<!-- <div class="container"> -->
-	<!-- <div class="row justify-content-center"> -->
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
@@ -98,7 +96,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-							<button type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
+							<button style="position: absolute;bottom: 15px;right: 50px;" type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
 							</div>
 						</div>
 
@@ -193,9 +191,7 @@
 						<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-									<!-- <button type="button" id="prevBtn" class="btn btn-submit" onclick="nextPrev(-1)">Previous</button> -->
-									<!-- <button type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button> -->
-									<button type="submit" id="submitBtn" class="btn btn-submit">
+									<button style="position: absolute;bottom: 15px;right: 50px;" type="submit" id="submitBtn" class="btn btn-submit">
 										@if(Route::is('booking.new'))
 										{{ __('Submit Booking') }}
 										@elseif(Route::is('booking.edit'))

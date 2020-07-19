@@ -64,8 +64,7 @@
                   <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ url('/booking/new') }}">Booking Webinar</a></li>
-                      <li><a href="{{ url('/booking/waitinglist') }}">Waiting List Webinar</a></li>
-                      <li><a href="{{ url('/booking/list') }}">List Webinar</a></li>
+                      <li><a href="{{ url('/booking/waitinglist') }}">Daftar Webinar</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>

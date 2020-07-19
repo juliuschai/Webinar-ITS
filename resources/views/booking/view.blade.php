@@ -22,8 +22,6 @@
 					<div class="form-group row">
 						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
 						<i tyle="padding-left: 1px" class="fa fa-user booking"></i>
-						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC Zoom') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
 								id="namaPic" type="text" class="form-control" 
@@ -35,8 +33,6 @@
 					<div class="form-group row">
 						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
 						<i class="fa fa-address-card booking"></i>
-						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC Zoom') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
 								id="integraPic" type="text" class="form-control" 
@@ -48,8 +44,6 @@
 					<div class="form-group row">
 						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
 						<i class="fa fa-envelope booking"></i>
-						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC Zoom') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
 								id="emailPic" type="text" class="form-control" 
@@ -111,8 +105,6 @@
 					<div class="form-group row">
 						<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Unit/Departemen') }}</label>
 						<i class="fa fa-building booking"></i>
-						<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
 						<div class="col-md-6">
 							<input 
 								id="penyelengaraAcaraType" type="text" class="form-control" 
@@ -159,7 +151,6 @@
 					<div class="form-group row">
 						<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
 						<i style="padding-left: 1px" class="fa fa-user booking"></i>
-						<!-- style="margin-left: 1px" -->
 						<div class="col-md-6">
 							<input 
 								id="namaAnda" type="text" class="form-control" 
@@ -202,10 +193,8 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Relay ke ITS TV') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
 						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
+						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
 							<div id="relayITSTV">{{ $booking['relay_ITSTV']?'Iya':'Tidak' }}</div>
 							<!-- <label for="iya">Iya</label>
@@ -289,16 +278,6 @@
 						</div>
 					</form>
 					@endif
-					<!-- @if($isOwner)
-					<div class="form-group row mb-0">
-							<div class="col-md-8 offset-md-4">
-								<button style="z-index: 9999" href="{{ url('/booking/waitinglist') }}" type="submit" class="btn btn-submit">
-									{{ __('Back') }}
-								</button>
-
-							</div>
-						</div>
-					@endif -->
 				</div>
 			</div>
 		</div>

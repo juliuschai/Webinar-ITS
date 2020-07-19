@@ -11153,9 +11153,9 @@ textarea + .valid {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   color: #fff;
-  position: absolute;
+  /* position: absolute;
   bottom: 15px;
-  right: 50px;
+  right: 50px; */
 }
 .btn:hover {
   background: #26a19a;

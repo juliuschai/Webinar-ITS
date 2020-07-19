@@ -20,7 +20,6 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
 
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
-        // return view('booking.edit', compact(['booking', 'units', 'unitTypes']));
     }
 
     function saveNewBooking(SaveBookingRequest $request) {
@@ -80,34 +79,11 @@ class BookingController extends Controller
     }
 
     public function waitingListBooking() {
-        Auth::id();
         $booking = Booking::select('id','waktu_mulai', 'nama_acara')
-                    ->where('disetujui', '=', NULL)
+                    ->where('user_id', '=', Auth::id())
                     ->get();
-        return view('booking.table', compact(['civitas', 'booking', 'id']));
-        $booking = Booking::all();
+
         return view('booking.table', compact(['booking']));
-    }
-
-    public function listBooking(Request $request) {
-        Auth::id();
-        $booking = Booking::select('waktu_mulai', 'nama_acara')
-                            ->where('disetujui', '!=', NULL)
-                            ->get();
-
-        return view('booking.list', compact(['booking']));
-    }
-
-    public function detailBooking(Request $request) 
-    { 
-        // $id = $request['id'];
-        // $booking = Booking::findOrFail($id);
-        // $booking['civitas'] = Civitas::getNamaFromId($booking['civitas_id']);
-
-        // $civitas = Civitas::getCivitasList();
-        $booking = Booking::all();
-        return view('booking.detail', compact(['booking']));
-        
     }
 
     public function deleteBooking(Request $request) {
@@ -131,7 +107,7 @@ class BookingController extends Controller
 
     public function aproveBooking(Request $request) {
         $booking = Booking::select('waktu_mulai', 'nama_acara')
-                            ->where('disetujui', '!=', NULL)
+                            ->where('disetujui', '=', 1)
                             ->get();
         $isAdmin = true;
 
