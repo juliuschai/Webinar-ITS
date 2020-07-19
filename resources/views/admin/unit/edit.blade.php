@@ -4,7 +4,7 @@
 
 <div class="container">
 	<div class="form-group row col-md-12 col-sm-12">
-		<form method="POST" action="{{route('unit.edit', ['id' => $unit->id])}}">
+		<form method="POST" action="{{route('admin.unit.edit', ['id' => $unit->id])}}">
 			@csrf
 			<div class="form-group row">
 				<label for="unitNama" class="col-md-4 col-form-label text-md-left">Nama:</label>

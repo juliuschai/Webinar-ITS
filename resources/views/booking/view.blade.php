@@ -20,7 +20,7 @@
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
-						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC') }}</label>
+						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC Zoom') }}</label>
 						<i tyle="padding-left: 1px" class="fa fa-user booking"></i>
 						<div class="col-md-6">
 							<input 
@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC') }}</label>
+						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC Zoom') }}</label>
 						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
 							<input 
@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC') }}</label>
+						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC Zoom') }}</label>
 						<i class="fa fa-envelope booking"></i>
 						<div class="col-md-6">
 							<input 
@@ -71,10 +71,10 @@
 								id="penyelengaraAcaraType" type="text" class="form-control" 
 								value="{{ $booking['unit_type'] }}" disabled
 							>
-							</br>
+							<br />
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
-								value="{{ $booking['unit_nama'] }}" disabled
+								value="{{ $booking['unit'] }}" disabled
 							>
 						</div>
 					</div>	
@@ -103,7 +103,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Unit/Departemen') }}</label>
+						<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
 						<i class="fa fa-building booking"></i>
 						<div class="col-md-6">
 							<input 
@@ -149,50 +149,6 @@
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
-						<label for="namaAnda" class="col-md-4 col-form-label text-md-left">{{ __('Nama Anda') }}</label>
-						<i style="padding-left: 1px" class="fa fa-user booking"></i>
-						<div class="col-md-6">
-							<input 
-								id="namaAnda" type="text" class="form-control" 
-								value="{{ $booking['reg_nama'] }}" disabled
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="emailITS" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}</label>
-						<i class="fa fa-envelope-o booking"></i>
-						<div class="col-md-6">
-							<input 
-								id="emailITS" type="email" class="form-control" 
-								value="{{ $booking['reg_email'] }}" disabled autocomplete="email"
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="userIntegra" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}</label>
-						<i class="fa fa-address-card booking"></i>
-						<div class="col-md-6">
-							<input 
-								id="userIntegra" type="text" class="form-control" 
-								value="{{ $booking['reg_integra'] }}" disabled
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="group" class="col-md-4 col-form-label text-md-left">{{ __('Group') }}</label>
-						<i class="fa fa-users booking"></i>
-						<div class="col-md-6">
-							<input 
-								id="group" type="text" class="form-control" 
-								value="{{ $booking['group'] }}" disabled
-							>
-						</div>
-					</div>
-
-					<div class="form-group row">
 						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
@@ -204,7 +160,7 @@
 
 					<div class="form-group row">
 						<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
+						<i class="fa fa-sticky-note-o  booking"></i>
 						<div class="col-md-6">
 							<div id="pesertaBanyak">{!! $booking['peserta_banyak']==false?'&le; 500':'501 - 1000' !!}</div>
 						</div>
@@ -213,7 +169,7 @@
 
 					<div class="form-group row">
 						<label for="disetujui" class="col-md-4 col-form-label text-md-left">{{ __('Current Approval Status') }}</label>
-						<i class="fa fa-address-card"></i>
+						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="disetujui" type="text" class="form-control" 
@@ -224,54 +180,37 @@
 
 					<div class="form-group row">
 						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
-						<i class="fa fa-sticky-note-o"></i>
+						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
 							<textarea id="alasan" type="text" class="form-control" disabled> {{ $booking['deskripsi_disetujui'] }}</textarea>
 						</div>
 					</div>
 					@endif
+
 					@if($isAdmin)
 					<form method="POST" action="{{ route('booking.verify') }}">
 						@csrf
 						<input name="id" type="hidden" value="{{ $booking['id'] }}">
-						<input id="verify" name="verify" type="hidden" value="">
+						<input name="verify" type="hidden" value="setuju">
 
 						<div class="form-group row">
-							<label for="hostNama" class="col-md-4 col-form-label text-md-left">{{ __('Host Name') }}</label>
-							<i class="fa fa-building"></i>
+							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Account') }}</label>
+							<i class="fa fa-envelope-o booking"></i>
 							<div class="col-md-6">
-								<input 
-									id="hostNama" type="text" class="form-control" name="hostNama" 
-									value="{{ old('hostNama')??$booking['api_host_nama'] }}" required
-								>
+								{{ isset($booking['api_host_email'])?'Last picked: '.$booking['api_host_email']:'' }}
+								<select name="hostEmail" id="hostEmail" class="form-control">
+									<option value="500 (1)">500 (1)</option>
+									<option value="500 (2)">500 (2)</option>
+									<option value="1000 (1)">1000 (1)</option>
+								</select>
 							</div>
 						</div>
-
-						<div class="form-group row">
-							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Email') }}</label>
-							<i class="fa fa-envelope-o"></i>
-							<div class="col-md-6">
-								<input 
-									id="hostEmail" type="email" class="form-control" name="hostEmail" 
-									value="{{ old('hostEmail')??$booking['api_host_email'] }}" required autocomplete="email"
-								>
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
-							<i class="fa fa-sticky-note-o"></i>
-							<div class="col-md-6">
-								<textarea id="alasan" type="text" class="form-control" name="alasan">{{ old('alasan') }}</textarea>
-							</div>
-						</div>
-	
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
-								<button type="button" class="btn btn-submit" onclick="setujuBooking()">
+								<button type="submit" class="btn btn-submit">
 									{{ __('Setujui Booking') }}
 								</button>
-								<button type="button" class="btn btn-danger" onclick="tolakBooking()">
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal" onclick="modalPopulate()">
 									{{ __('Tolak Booking') }}
 								</button>
 							</div>
@@ -282,9 +221,58 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-@if($isAdmin)
-<script src="{{ asset('js/booking/verify.js') }}" defer></script>
-@endif
+<!-- Modal -->
+<div class="modal fade" id="denyModal" tabindex="-1" role="dialog" aria-labelledby="denyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="denyModalLabel">Konfirmasi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<form action="{{route('booking.verify')}}" method="POST">
+				@csrf
+				<input name="id" type="hidden" value="{{ $booking['id'] }}">
+				<input name="verify" type="hidden" value="tolak">
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
+						<i class="fa fa-sticky-note-o booking"></i>
+						<div class="col-md-6">
+							<textarea id="alasan" type="text" class="form-control" name="alasan">{{ old('alasan') }}</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-danger">Tolak Booking</button>
+				</div>
+			</form>
+    </div>
+  </div>
+</div>
+
 <script src="{{ asset('js/booking/durasi.js') }}" defer></script>
+<script type="text/javascript" >
+	function modalPopulate() {
+		let unitNama = document.getElementById('unitNama').value;
+		let unitTypeSelElm = document.getElementById('unitType');
+		let unitType = unitTypeSelElm.options[unitTypeSelElm.selectedIndex].innerText;
+		if (unitTypeSelElm.selectedIndex == 0) {
+			alert("Mohon pilih tipe unit");
+			return;
+		}
+		let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
+		document.getElementById('confirmationText').innerText = text;
+		
+		document.getElementById('modalUnitNama').value = unitNama;
+		document.getElementById('modalUnitType').value = unitTypeSelElm.value;
+
+	}
+
+</script>
+
 @endsection

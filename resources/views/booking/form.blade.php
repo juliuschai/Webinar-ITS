@@ -75,17 +75,6 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="departemenUnit" class="col-md-4 col-form-label text-md-left">{{ __('Departemen/Unit') }}</label>
-								<i class="fa fa-building booking"></i>
-								<div class="col-md-6">
-									<input 
-										id="departemenUnit" type="text" class="form-control" name="departemenUnit" 
-										value="{{ old('departemenUnit')??$booking['unit'] }}" required
-									>
-								</div>
-							</div>	
-
-							<div class="form-group row">
 								<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
 								<i class="fa fa-mobile fa-2x booking"></i>
 								<div class="col-md-6">

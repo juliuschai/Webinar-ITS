@@ -56,6 +56,10 @@ class User extends Authenticatable
         return $this['id'] == $id;
     }
 
+    /**
+     * This is to handle if there's an error with 
+     * the currently logged in user credentials
+     */
     static function findOrLogout($id) {
         $user = User::find($id);
         if ($user == null) {
