@@ -1,3 +1,5 @@
+@auth
+<?php echo "masuk" ?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -134,4 +136,9 @@
     </div>
 </body>
 </html>
+@else
+<script type="text/javascript">
+    window.location = "{{ url('login') }}";
+</script>
+@endauth
 
