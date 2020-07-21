@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/', 'UserController@checkLoggingIn');
     // Route::get('/tes', 'BookingController@tes')->name('booking.list');
+    Route::get('calendar/event', 'BookingController@getEvents')->name('calendar.event');
     
     Route::get('login','UserController@login')->name('login');
     Route::get('logout','UserController@logout')->name('logout');
