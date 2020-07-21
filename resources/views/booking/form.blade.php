@@ -31,7 +31,7 @@
 
 						<div class="tab">
 							<div class="form-group row">
-								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red">*</p></label>
+								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -42,7 +42,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}<p style="color: red">*</p></label>
+								<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-address-card booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -53,7 +53,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}<p style="color: red">*</p></label>
+								<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-envelope booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -64,7 +64,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}<p style="color: red">*</p></label>
+								<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-users booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -75,7 +75,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}<p style="color: red">*</p></label>
+								<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-mobile fa-2x booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -91,7 +91,7 @@
 
 						<div class="tab">
 							<div class="form-group row">
-								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red">*</p></label>
+								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -102,7 +102,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}<p style="color: red">*</p></label>
+								<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-user-circle booking"></i>
 								<div class="col-md-6">
 									<input id="unitDatas" hidden
@@ -120,7 +120,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}<p style="color: red">*</p></label>
+								<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-calendar-o booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -131,7 +131,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}<p style="color: red">*</p></label>
+								<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-calendar booking"></i>
 								<div class="col-md-6">
 									<input 
@@ -142,7 +142,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}<p style="color: red">*</p></label>
+								<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-clock-o booking"></i>
 								<div class="col-md-6">
 									<input id="durasi" type="text" style="width:200px;" class="form-control d-inline" value="" onchange="onupdateDurasi()">
@@ -165,7 +165,7 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}<p style="color: red">*</p></label>
+								<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}<p style="color: red" class="d-inline">*</p></label>
 								<div class="col-md-6">
 									<input 
 										id="500" type="radio" class="form-radio" name="pesertaBanyak" 
@@ -180,7 +180,7 @@
 						<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-								<!-- <button style="position: absolute;bottom: 15px;right: 100px;" type="button" id="prevBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Next</button> -->
+								<!-- <button style="position: absolute;bottom: 15px;right: 100px;" type="button" id="prevBgit tn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Next</button> -->
 									<button style="position: absolute;bottom: 15px;right: 50px;" type="submit" id="submitBtn" class="btn btn-submit">
 										@if(Route::is('booking.new'))
 										{{ __('Submit Booking') }}
