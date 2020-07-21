@@ -37,7 +37,10 @@ class OIDCHelper extends OpenIDConnectClient {
 
 	static function login() {
 		// Only run if user is not logged in
+		\Log::info('OIDCHelper login called');
 		if (!session()->has('id_token')) {
+			\Log::info('user doesnt have id_token, logging in');
+			Auth::logout();
 			$oidc = OIDCHelper::OIDLogin();
 			$attr = $oidc->requestUserInfo();
 
@@ -59,7 +62,9 @@ class OIDCHelper extends OpenIDConnectClient {
 			$user->save();
 
 			Auth::login($user);
+			\Log::info('user is now logged in? '.Auth::check());
 		}
+		\Log::info('OIDCHelper login finished');
 	}
 
 	static function logout() {

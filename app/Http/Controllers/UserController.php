@@ -13,7 +13,9 @@ class UserController extends Controller
 	}
 
 	function login(Request $request) {
+		\Log::info('UserController login function called');
 		OIDCHelper::login();
+		\Log::info('UserController redirecting to /');
 		return redirect('/');
 	}
 
@@ -24,9 +26,12 @@ class UserController extends Controller
 	}
 
 	function checkLoggingIn(Request $request) {
+		\Log::info('user is at /');
 		if (empty($request->all())) {
+			\Log::info('user doesnt have any request arguments, returning calendar view');
 			return view('calendar.calendar');
 		} else {
+			\Log::info('user have request arguments, loggin user in');
 			return $this->login($request);
 		}
 	}
