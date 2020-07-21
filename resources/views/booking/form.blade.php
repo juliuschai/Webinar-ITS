@@ -29,7 +29,7 @@
 					@endif
 						@csrf
 
-						<div class="tab">
+						<div id="one" class="tab">
 							<div class="form-group row">
 								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
@@ -89,7 +89,7 @@
 							</div>
 						</div>
 
-						<div class="tab">
+						<div id="two" class="tab">
 							<div class="form-group row">
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
@@ -180,7 +180,7 @@
 						<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-								<!-- <button style="position: absolute;bottom: 15px;right: 100px;" type="button" id="prevBgit tn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Next</button> -->
+								<button style="position: absolute;bottom: 15px;right: 200px;" type="button" id="prevvBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Previous</button>
 									<button style="position: absolute;bottom: 15px;right: 50px;" type="submit" id="submitBtn" class="btn btn-submit">
 										@if(Route::is('booking.new'))
 										{{ __('Submit Booking') }}
