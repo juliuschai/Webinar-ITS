@@ -4614,17 +4614,21 @@ var EventRenderer = /** @class */ (function () {
         var hasEventRenderHandlers = this.view.hasPublicHandlers('eventRender');
         var html = '';
         var renderedSegs = [];
-        var i;
         if (segs.length) { // don't build an empty html string
             // build a large concatenation of event segment HTML
-            for (i = 0; i < segs.length; i++) {
+            for (let i = 0; i < segs.length; i++) {
                 this.beforeFgSegHtml(segs[i]);
                 html += this.fgSegHtml(segs[i], disableResizing);
             }
             // Grab individual elements from the combined HTML string. Use each as the default rendering.
             // Then, compute the 'el' for each segment. An el might be null if the eventRender callback returned false.
+            console.log('html');
+            console.log(html);
             $(html).each(function (i, node) {
+                console.log($(html));
                 var seg = segs[i];
+                console.log(`index: ${i}`);
+                console.log(seg);
                 var el = $(node);
                 if (hasEventRenderHandlers) { // optimization
                     el = _this.filterEventRenderEl(seg.footprint, el);

@@ -8,6 +8,7 @@ use App\Http\Requests\VerifyBookingRequest;
 use App\Unit;
 use App\UnitType;
 use App\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,11 +54,11 @@ class BookingController extends Controller
 
     function viewBooking($id) {
         $booking = Booking::findOrFail($id);
+        $booking->setOrgFields($booking['unit_id']);
         if (Auth::check()) {
             $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
             $isOwner = $booking->isOwner(Auth::id());
             if ($isAdmin || $isOwner) {
-                $booking->setOrgFields($booking['unit_id']);
                 $booking->setUserFields($booking['user_id']);    
             }
         } else {
@@ -131,4 +132,29 @@ class BookingController extends Controller
         );
     }
 
+    function getEvents() {
+        $extra = new Booking();
+        $extra->id = 0;
+        $extra->title = 'start';
+        $extra->start = (new DateTime)->setTimestamp(1);
+        $extra->end = (new DateTime)->setTimestamp(2);
+        $extra2 = new Booking();
+        $extra2->id = -1;
+        $extra2->title = 'end';
+        $extra2->start = (new DateTime)->setTimestamp(2000000000);
+        $extra2->end = (new DateTime)->setTimestamp(2000000001);
+        $extras = collect([$extra, $extra2]);
+        $bookings = Booking::where('disetujui', true)
+            ->get([
+                'id', 
+                'nama_acara as title',
+                'waktu_mulai as start', 
+                'waktu_akhir as end'
+            ]);
+        foreach ($bookings as $booking) {
+            $booking['color'] = "#fae9e8";
+        }
+        $end = $bookings->merge($extras);
+        return json_encode($end);
+    }
 }
