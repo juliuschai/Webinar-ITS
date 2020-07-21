@@ -14,7 +14,7 @@ class UserController extends Controller
 
 	function login(Request $request) {
 		OIDCHelper::login();
-		return redirect()->route('home');
+		return redirect('/');
 	}
 
 	function logout(Request $request) {

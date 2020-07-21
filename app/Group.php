@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+    protected $fillable = [
+        'nama',
+    ];
+
     public $timestamps = false;
     /**
      * Get namas of all group from database

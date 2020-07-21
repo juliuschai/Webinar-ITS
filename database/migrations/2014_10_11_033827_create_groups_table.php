@@ -16,7 +16,7 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->string('nama', 12);
+            $table->string('nama');
         });
         DB::table('groups')->insert([
             ['nama' => 'Dosen'],
