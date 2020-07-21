@@ -50085,3 +50085,17 @@ function nextPrev(n) {
 
   showTab(currentTab);
 }
+
+// $('#nextBtn').blur(function(event) {
+//   event.target.checkValidity();
+// }).bind('invalid', function(event) {
+//   setTimeout(function() { $(event.target).focus();}, 50);
+// });
+
+// $('input').on('blur keyup', function() {
+//   if ($("#one").valid()) {
+//       $('#nextBtn').prop('disabled', false);  
+//   } else {
+//       $('#nextBtn').prop('disabled', 'disabled');
+//   }
+// });
