@@ -37,29 +37,27 @@ class OIDCHelper extends OpenIDConnectClient {
 
 	static function login() {
 		// Only run if user is not logged in
-		if (!session()->has('id_token')) {
-			$oidc = OIDCHelper::OIDLogin();
-			$attr = $oidc->requestUserInfo();
+		\Log::info('OIDCHelper login called, user logging in');
+		$oidc = OIDCHelper::OIDLogin();
+		$attr = $oidc->requestUserInfo();
 
-			// check if there is a user with role that's not empty array
-			if ($attr->role != []) { 
-				\Log::info('new Attribute role: '.$attr->role);
-			}
-
-			$user = User::firstOrNew([
-				// PROD:switch start
-				// 'email' => $attr->email,
-				'email' => $attr->email??$attr->alternate_email,
-				// PROD:switch start
-			]);
-			$user->nama = $attr->name;
-			$user->integra = $attr->reg_id;
-			$groupStr = OIDCHelper::groupToString($attr->group);
-			$user->group_id = Group::findOrCreateGetId($groupStr);
-			$user->save();
-
-			Auth::login($user);
+		// check if there is a user with role that's not empty array
+		if ($attr->role != []) { 
+			\Log::info('new Attribute role: '.$attr->role);
 		}
+
+		$user = User::firstOrNew([
+			'email' => $attr->email??$attr->alternate_email,
+		]);
+		$user->nama = $attr->name;
+		$user->integra = $attr->reg_id;
+		$groupStr = OIDCHelper::groupToString($attr->group);
+		$user->group_id = Group::findOrCreateGetId($groupStr);
+		$user->save();
+
+		Auth::login($user);
+		\Log::info('user is now logged in? '.Auth::check());
+		\Log::info('OIDCHelper login finished');
 	}
 
 	static function logout() {
