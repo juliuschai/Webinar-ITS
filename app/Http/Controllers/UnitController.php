@@ -20,7 +20,7 @@ class UnitController extends Controller
         $units = $query->select(['u.id', 'u.nama', 't.nama as unit_type'])
             ->orderBy('t.id')
             ->orderBy('u.nama')
-            ->paginate('20');
+            ->paginate('10');
 
         $types = UnitType::get();
         return view('admin.unit.view', compact('units', 'types', 'unit_nama', 'type_id'));

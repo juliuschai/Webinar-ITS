@@ -24,8 +24,7 @@
 					@if(Route::is('booking.new'))
 					<form id="bookingForm" method="POST" action="{{ route('booking.new') }}" enctype="multipart/form-data">
 					@elseif(Route::is('booking.edit'))
-					<form id="bookingForm" method="POST" action="{{ route('booking.edit') }}" enctype="multipart/form-data">
-						<input name="id" type="hidden" value="{{ $booking['id'] }}">
+					<form id="bookingForm" method="POST" action="{{ route('booking.edit', ['id' => $booking->id]) }}" enctype="multipart/form-data">
 					@endif
 						@csrf
 

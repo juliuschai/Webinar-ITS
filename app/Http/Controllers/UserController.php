@@ -59,7 +59,7 @@ class UserController extends Controller
 			->where('u.email', 'LIKE', '%'.$email.'%')
 			->where('u.integra', 'LIKE', '%'.$integra.'%')
 			->select(['u.id', 'u.email', 'u.nama', 'u.integra', 'g.nama as sivitas', 'u.is_admin'])
-			->paginate(20);
+			->paginate(10);
 
 		return view('admin.users.view', compact('users', 'nama', 'email', 'integra'));
 	}
