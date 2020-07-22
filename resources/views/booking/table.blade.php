@@ -31,13 +31,18 @@
                     <td style="background-color: #FCF0CF;" class="text-center">Menunggu Konfirmasi</td>
                     @endif
                     <td class="text-center">
-                    @if ($booking->disetujui == 'NULL' or $booking->disetujui == '1' or $booking->disetujui == '0')
+                    @if ($booking->disetujui == '1' || $booking->disetujui == '0')
                         <a href="{{ url('/booking/view/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
                             <i class="fa fa-search"></i>
                         </button>
                         </a>
-                    @elseif ($booking->disetujui == 'NULL')
+                    @elseif ($booking->disetujui == NULL)
+                        <a href="{{ url('/booking/view/'.$booking->id) }}">
+                        <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        </a>
                         <a href="{{ url('/booking/edit/'.$booking->id) }}">
                         <button type="button" class="btn btn-custom-warning" title="Edit Webinar">
                             <i class="fa fa-pencil"></i>

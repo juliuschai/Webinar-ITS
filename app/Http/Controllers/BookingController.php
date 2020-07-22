@@ -87,7 +87,7 @@ class BookingController extends Controller
     }
 
     public function waitingListBooking() {
-        $booking = Booking::select('id','waktu_mulai', 'nama_acara')
+        $booking = Booking::select('id','waktu_mulai', 'nama_acara', 'disetujui')
                     ->where('user_id', '=', Auth::id())
                     ->get();
 
