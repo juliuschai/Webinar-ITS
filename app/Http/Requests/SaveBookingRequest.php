@@ -26,6 +26,7 @@ class SaveBookingRequest extends FormRequest
         return [
             'noWa' => 'required|string|max:254',
             'namaAcara' => 'required|string|max:254',
+            'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg',
             'penyelengaraAcara' => 'required|numeric|exists:units,id',
             'waktuMulai' => 'required|date|after:now',
             'waktuSelesai' => 'required|date|after:waktuMulai',
