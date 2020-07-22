@@ -22,9 +22,9 @@
 					@endif
 
 					@if(Route::is('booking.new'))
-					<form id="bookingForm" method="POST" action="{{ route('booking.new') }}">
+					<form id="bookingForm" method="POST" action="{{ route('booking.new') }}" enctype="multipart/form-data">
 					@elseif(Route::is('booking.edit'))
-					<form id="bookingForm" method="POST" action="{{ route('booking.edit') }}">
+					<form id="bookingForm" method="POST" action="{{ route('booking.edit') }}" enctype="multipart/form-data">
 						<input name="id" type="hidden" value="{{ $booking['id'] }}">
 					@endif
 						@csrf
@@ -113,9 +113,25 @@
 									>
 									<select name="penyelengaraAcaraTypes" id="penyelengaraAcaraTypes" class="form-control">
 									</select>
-									</br>
+									<br>
 									<select name="penyelengaraAcara" id="penyelengaraAcara" class="form-control">
 									</select>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="dokumenPendukung" class="col-md-4 col-form-label text-md-left">{{ __('File Pendukung') }}</label>
+								<i class="fa fa-user-circle booking"></i>
+								<div class="col-md-6">
+									<input id="dokumenPendukung" type="file" name="dokumenPendukung" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<i class="fa fa-user-circle booking"></i>
+								<div class="col-md-6">
+									<a href=""><button>View</button></a>
+									<a href=""><button>Download</button></a>
 								</div>
 							</div>
 
@@ -160,7 +176,7 @@
 								</div>
 								<div class="col-md-6">
 									<sub class="">Silahkan menghubungi Unit Komunikasi Publik (UKP) pada <a href="https://servicedesk.its.ac.id/" target="_blank">
-									</br>servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
+									<br>servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
 								</div>	
 							</div>
 
