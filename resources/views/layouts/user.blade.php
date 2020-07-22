@@ -59,7 +59,8 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.html" disable>Dashboard</a></li>
+                      <!-- <li><a type=""href="index.html" disabled>Dashboard</a></li> -->
+                      <li><a type="button" disabled>Dashboard</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
@@ -70,7 +71,7 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">Calendar</a></li>
+                      <li><a href="{{ url('/') }}">Calendar</a></li>
                     </ul>
                   </li>
                 </ul>
