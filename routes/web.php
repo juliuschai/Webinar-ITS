@@ -43,13 +43,13 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
         
         Route::group(['middleware' => 'owneroradmin'], function () {
-            Route::get('storage/dokumen/get/{bookingId}', 'FileController@getDokumen')->name('dokumen.get');
-            Route::get('storage/dokumen/download/{bookingId}', 'FileController@downloadDokumen')->name('dokumen.download');
-            Route::get('storage/dokumen/delete/{bookingId}', 'FileController@deleteDokumen')->name('dokumen.delete');
+            Route::get('storage/dokumen/get/{id}', 'FileController@getDokumen')->name('dokumen.get');
+            Route::get('storage/dokumen/download/{id}', 'FileController@downloadDokumen')->name('dokumen.download');
         });
         // TODO: admin middleware
         Route::group(['middleware' => 'admin'], function () {
-            Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
+            Route::post('/booking/setuju/{id}', 'BookingController@acceptBooking')->name('booking.accept');
+            Route::post('/booking/tolak/{id}', 'BookingController@denyBooking')->name('booking.deny');
 
             Route::get('/unit', 'UnitController@viewUnit')->name('admin.unit.view');
             Route::post('/unit/add', 'UnitController@addUnit')->name('admin.unit.add');
@@ -61,10 +61,13 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
             Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
 
+            // ToDelete:Route::get('storage/dokumen/delete/{id}', 'FileController@deleteDokumen')->name('dokumen.delete');
+
             // Admin
             Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
             Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
             Route::get('/admin/booking/view/{id}', 'BookingController@adminViewBooking')->name('admin.view');
+
         });
     });
 });

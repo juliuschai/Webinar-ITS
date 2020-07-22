@@ -87,18 +87,16 @@ class Booking extends Model
         }
     }
 
+    function acceptBooking($request) {
+        $this->disetujui = true;
+        $this->api_host_email = $request->hostEmail;
+        $this->deskripsi_disetujui = null;
+        $this->save();
+    }
 
-    function verifyRequest($request) {
-        if ($request->verify == 'setuju') {
-            $this->disetujui = true;
-            $this->api_host_nama = $request->hostNama;
-            $this->api_host_email = $request->hostEmail;
-        } else if ($request->verify == 'tolak') {
-            $this->disetujui = false;
-            $this->api_host_nama = null;
-            $this->api_host_email = null;
-        }
-
+    function denyBooking($request) {
+        $this->disetujui = false;
+        $this->api_host_email = null;
         $this->deskripsi_disetujui = $request->alasan;
         $this->save();
     }

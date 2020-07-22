@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\Http\Requests\AcceptBookingRequest;
+use App\Http\Requests\DenyBookingRequest;
 use App\Http\Requests\SaveBookingRequest;
-use App\Http\Requests\VerifyBookingRequest;
 use App\Unit;
 use App\UnitType;
 use App\User;
@@ -70,9 +71,17 @@ class BookingController extends Controller
         );
     }
 
-    function verifyBooking(VerifyBookingRequest $request) {
+    
+    function acceptBooking(AcceptBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
-        $booking->verifyRequest($request);
+        $booking->acceptBooking($request);
+
+        return redirect()->route('booking.view', ['id'=>$request['id']]);
+    }
+
+    function denyBooking(DenyBookingRequest $request) {
+        $booking = Booking::findOrFail($request['id']);
+        $booking->denyBooking($request);
 
         return redirect()->route('booking.view', ['id'=>$request['id']]);
     }

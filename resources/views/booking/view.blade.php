@@ -122,8 +122,8 @@
 						<label class="col-md-4 col-form-label text-md-left"></label>
 						<i class="fa fa-user-circle booking"></i>
 						<div class="col-md-6">
-							<a href="{{route('dokumen.get', ['bookingId' => $booking->id])}}" target="_blank"><button type="button">View</button></a>
-							<a href="{{route('dokumen.download', ['bookingId' => $booking->id])}}" target="_blank"><button type="button">Download</button></a>
+							<a href="{{route('dokumen.get', ['id' => $booking->id])}}" target="_blank"><button type="button">View</button></a>
+							<a href="{{route('dokumen.download', ['id' => $booking->id])}}" target="_blank"><button type="button">Download</button></a>
 						</div>
 					</div>
 					@endif
@@ -199,11 +199,8 @@
 					@endif
 
 					@if($isAdmin)
-					<form method="POST" action="{{ route('booking.verify') }}">
+					<form method="POST" action="{{ route('booking.accept', ['id' => $booking->id]) }}">
 						@csrf
-						<input name="id" type="hidden" value="{{ $booking->id }}">
-						<input name="verify" type="hidden" value="setuju">
-
 						<div class="form-group row">
 							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Account') }}</label>
 							<i class="fa fa-envelope-o booking"></i>
@@ -244,7 +241,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
-			<form action="{{route('booking.verify')}}" method="POST">
+			<form action="{{route('booking.deny', ['id' => $booking->id])}}" method="POST">
 				@csrf
 				<input name="id" type="hidden" value="{{ $booking->id }}">
 				<input name="verify" type="hidden" value="tolak">

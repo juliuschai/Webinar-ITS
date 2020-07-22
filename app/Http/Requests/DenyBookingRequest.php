@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyBookingRequest extends FormRequest
+class DenyBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class VerifyBookingRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class VerifyBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'verify' => 'required|string|in:setuju,tolak',
-            'alasan' => 'required_if:verify,tolak|string|max:254',
-            'hostEmail' => 'required_if:verify,setuju|string|max:254',
+            'alasan' => 'required|string|max:254',
         ];
     }
 }

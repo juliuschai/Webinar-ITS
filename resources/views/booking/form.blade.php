@@ -132,8 +132,8 @@
 								<label class="col-md-4 col-form-label text-md-left"></label>
 								<i class="fa fa-user-circle booking"></i>
 								<div class="col-md-6">
-									<a href="{{route('dokumen.get', ['bookingId' => $booking->id])}}" target="_blank"><button type="button">View</button></a>
-									<a href="{{route('dokumen.download', ['bookingId' => $booking->id])}}" target="_blank"><button type="button">Download</button></a>
+									<a href="{{route('dokumen.get', ['id' => $booking->id])}}" target="_blank"><button type="button">View</button></a>
+									<a href="{{route('dokumen.download', ['id' => $booking->id])}}" target="_blank"><button type="button">Download</button></a>
 								</div>
 							</div>
 							@endif
