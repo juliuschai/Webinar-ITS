@@ -121,9 +121,9 @@
 
 							<div class="form-group row">
 								<label for="dokumenPendukung" class="col-md-4 col-form-label text-md-left">{{ __('File Pendukung') }}</label>
-								<i class="fa fa-user-circle booking"></i>
+								<i class="fa fa-file booking"></i>
 								<div class="col-md-6">
-									<input id="dokumenPendukung" type="file" name="dokumenPendukung" class="form-control">
+									<input style="border: none; margin-left: -12px;" id="dokumenPendukung" type="file" name="dokumenPendukung" class="form-control">
 								</div>
 							</div>
 
@@ -139,7 +139,7 @@
 							@endif
 
 							<div class="form-group row">
-								<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}<p style="color: red" class="d-inline">*</p></label>
+								<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-calendar-o booking"></i>
 								<div class="col-md-6">
 									<input 

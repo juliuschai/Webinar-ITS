@@ -11944,3 +11944,13 @@ input#relayITSTV {
 /* .js-calendar {
   z-index: 9999 !important;
 } */
+
+/* Booking View */
+
+.btn-file {
+  background-color: #0067ac !important; color: white !important;
+  /* background-color: black !important; */
+  
+  /* margin: auto; */
+  /* margin-left: 50px; */
+}
