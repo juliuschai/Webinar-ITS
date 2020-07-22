@@ -81,7 +81,7 @@
 
 					<div class="form-group row">
 						<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
-						<i class="fa fa-mobile fa-2x booking""></i>
+						<i class="fa fa-mobile fa-2x booking"></i>
 						<div class="col-md-6">
 							<input 
 								id="noWa" type="tel" class="form-control"
