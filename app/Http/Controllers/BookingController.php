@@ -109,7 +109,7 @@ class BookingController extends Controller
                             ->get();
         $isAdmin = true;
 
-        return view('admin.table', compact(['civitas', 'booking', 'id', 'isAdmin']));
+        return view('admin.table', compact(['booking', 'isAdmin']));
     }
 
     public function aproveBooking(Request $request) {
@@ -118,26 +118,7 @@ class BookingController extends Controller
                             ->get();
         $isAdmin = true;
 
-        return view('admin.aprove', compact(['civitas', 'booking', 'id', 'isAdmin']));
-    }
-
-    function adminViewBooking($id) {
-        $booking = Booking::findOrFail($id);
-        if (Auth::check()) {
-            $isAdmin = User::find(Auth::id())->isAdmin();
-            $isOwner = $booking->isOwner(Auth::id());
-            if ($isAdmin || $isOwner) {
-                $booking->setOrgFields($booking['unit_id']);
-                $booking->setUserFields($booking['user_id']);    
-            }
-        } else {
-            $isAdmin = false;
-            $isOwner = false;
-        }
-        return view(
-            'admin.view', 
-            compact(['booking', 'isOwner', 'isAdmin'])
-        );
+        return view('admin.aprove', compact(['booking', 'isAdmin']));
     }
 
     function getEvents() {

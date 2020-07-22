@@ -18,7 +18,7 @@ class AdminOrOwnerMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $booking = Booking::findOrFail($request->bookingId);
+        $booking = Booking::findOrFail($request->id);
         $user = User::findOrLogout(Auth::id());
         if(!($user->isAdmin() || $user->isOwner($booking->user_id))) {abort(403);}
         $request->merge(compact('booking'));

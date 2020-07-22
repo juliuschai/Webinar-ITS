@@ -52,6 +52,7 @@
 
             <br />
 
+            @auth
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
@@ -65,8 +66,12 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                      <li><a href="{{ url('/booking/new') }}">Booking Webinar</a></li>
+                      <li><a href="{{ url('/booking/waitinglist') }}">Daftar Tunggu Webinar</a></li>
+                      @if(auth()->user()->isAdmin())
                       <li><a href="{{ url('/admin/booking/list') }}">Daftar Webinar</a></li>
                       <li><a href="{{ url('/admin/booking/aprove') }}">Webinar</a></li>
+                      @endif
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>
@@ -75,6 +80,7 @@
                       <li><a type="button" disabled>Calendar</a></li>
                     </ul>
                   </li>
+                  @if(auth()->user()->isAdmin())
                   <li><a><i class="fa fa-list"></i> Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ url('/users') }}">User</a></li>
@@ -87,10 +93,12 @@
                       <li><a type="button" disabled>Tables</a></li>
                     </ul>
                   </li>
+                  @endif
                 </ul>
               </div>
 
             </div>
+            @endauth
             <!-- /sidebar menu -->
 
           </div>
@@ -106,7 +114,13 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a style="color: white; text-decoration: none;" href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                    @auth
+                    @if(auth()->user()->isAdmin())
                     <i class="fa fa-user admin"></i>Admin
+                    @else
+                    <i class="fa fa-user admin"></i>User
+                    @endif
+                    @endauth
                   </a>
                   <div style="margin: auto" class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="{{ url('logout') }}"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
