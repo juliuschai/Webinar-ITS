@@ -42,12 +42,6 @@ class User extends Authenticatable
         return $this->id == $id;
     }
     
-    function abortButAdmin() {
-        if (!$this->isAdmin()) {
-            abort(403);
-        }
-    }
-
     function isAdmin() {
         return $this['is_admin'];
     }

@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain'))->group(function () {
     Route::get('/', 'UserController@checkLoggingIn');
+/*     Route::get('temp', function() {
+        $booking = \App\Booking::find(1);
+        $booking->file_pendukung = 'jpg';
+        $booking->save();
+    }); */
     // Route::get('/tes', 'BookingController@tes')->name('booking.list');
     Route::get('calendar/event', 'BookingController@getEvents')->name('calendar.event');
     
@@ -34,9 +38,15 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
         Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
 
+        
         Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
         Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
-
+        
+        Route::group(['middleware' => 'owneroradmin'], function () {
+            Route::get('storage/dokumen/get/{bookingId}', 'FileController@getDokumen')->name('dokumen.get');
+            Route::get('storage/dokumen/download/{bookingId}', 'FileController@downloadDokumen')->name('dokumen.download');
+            Route::get('storage/dokumen/delete/{bookingId}', 'FileController@deleteDokumen')->name('dokumen.delete');
+        });
         // TODO: admin middleware
         Route::group(['middleware' => 'admin'], function () {
             Route::post('/booking/verify', 'BookingController@verifyBooking')->name('booking.verify');
@@ -57,21 +67,4 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::get('/admin/booking/view/{id}', 'BookingController@adminViewBooking')->name('admin.view');
         });
     });
-    // Route::get('/booking/list', 'BookingController@listBooking')->name('booking.list');
-    
 });
-
-// Route::get('/booking/view/{id}', 'BookingController@viewBooking')->name('booking.view');
-// Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
-// Auth::routes();
-/* 
-    Route::get('auth/check', function () {
-        $ret['test'] = session('test');
-        $ret['check'] = auth()->check();
-        $ret['id'] = auth()->id();
-        $ret['user'] = auth()->user();
-        $ret['isset'] = (null !== session('id_token'));
-        $ret['id_token'] = session('id_token');
-        var_dump($ret);
-    });
- */

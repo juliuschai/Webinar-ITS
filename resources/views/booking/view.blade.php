@@ -25,7 +25,7 @@
 						<div class="col-md-6">
 							<input 
 								id="namaPic" type="text" class="form-control" 
-								value="{{ $booking['nama_pic'] }}" disabled
+								value="{{ $booking->nama_pic }}" disabled
 							>
 						</div>
 					</div>
@@ -36,7 +36,7 @@
 						<div class="col-md-6">
 							<input 
 								id="integraPic" type="text" class="form-control" 
-								value="{{ $booking['integra_pic'] }}" disabled
+								value="{{ $booking->integra_pic }}" disabled
 							>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 						<div class="col-md-6">
 							<input 
 								id="emailPic" type="text" class="form-control" 
-								value="{{ $booking['email_pic'] }}" disabled
+								value="{{ $booking->email_pic }}" disabled
 							>
 						</div>
 					</div>
@@ -58,7 +58,7 @@
 						<div class="col-md-6">
 							<input 
 								id="sivitas" type="text" class="form-control" 
-								value="{{ $booking['sivitas'] }}" disabled
+								value="{{ $booking->sivitas }}" disabled
 							>
 						</div>
 					</div>
@@ -69,12 +69,12 @@
 						<div class="col-md-6">
 							<input 
 								id="penyelengaraAcaraType" type="text" class="form-control" 
-								value="{{ $booking['unit_type'] }}" disabled
+								value="{{ $booking->unit_type }}" disabled
 							>
 							<br />
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
-								value="{{ $booking['unit'] }}" disabled
+								value="{{ $booking->unit }}" disabled
 							>
 						</div>
 					</div>	
@@ -85,7 +85,7 @@
 						<div class="col-md-6">
 							<input 
 								id="noWa" type="tel" class="form-control"
-								value="{{ $booking['no_wa'] }}" disabled
+								value="{{ $booking->no_wa }}" disabled
 							>
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 						<div class="col-md-6">
 							<input 
 								id="namaAcara" type="text" class="form-control" 
-								value="{{ $booking['nama_acara'] }}" disabled
+								value="{{ $booking->nama_acara }}" disabled
 							>
 						</div>
 					</div>
@@ -108,14 +108,25 @@
 						<div class="col-md-6">
 							<input 
 								id="penyelengaraAcaraType" type="text" class="form-control" 
-								value="{{ $booking['unit_type'] }}" disabled
+								value="{{ $booking->unit_type }}" disabled
 							>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
-								value="{{ $booking['unit'] }}" disabled
+								value="{{ $booking->unit }}" disabled
 							>
 						</div>
 					</div>	
+
+					@if(isset($booking->file_pendukung))
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-left"></label>
+						<i class="fa fa-user-circle booking"></i>
+						<div class="col-md-6">
+							<a href="{{route('dokumen.get', ['bookingId' => $booking->id])}}" target="_blank"><button type="button">View</button></a>
+							<a href="{{route('dokumen.download', ['bookingId' => $booking->id])}}" target="_blank"><button type="button">Download</button></a>
+						</div>
+					</div>
+					@endif
 
 					<div class="form-group row">
 						<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
@@ -123,7 +134,7 @@
 						<div class="col-md-6">
 							<input 
 								id="waktuMulai" type="datetime-local" class="form-control" 
-								value="{{ $booking['waktu_mulai'] }}" disabled
+								value="{{ $booking->waktu_mulai }}" disabled
 							>
 						</div>
 					</div>
@@ -134,7 +145,7 @@
 						<div class="col-md-6">
 							<input 
 								id="waktuSelesai" type="datetime-local" class="form-control" 
-								value="{{ $booking['waktu_akhir'] }}" onchange="onupdateWaktu()" disabled
+								value="{{ $booking->waktu_akhir }}" onchange="onupdateWaktu()" disabled
 							>
 						</div>
 					</div>
@@ -152,7 +163,7 @@
 						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
-							<div id="relayITSTV">{{ $booking['relay_ITSTV']?'Iya':'Tidak' }}</div>
+							<div id="relayITSTV">{{ $booking->relay_ITSTV?'Iya':'Tidak' }}</div>
 							<!-- <label for="iya">Iya</label>
 							<label for="tidak">Tidak</label> -->
 						</div>
@@ -162,7 +173,7 @@
 						<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
 						<i class="fa fa-sticky-note-o  booking"></i>
 						<div class="col-md-6">
-							<div id="pesertaBanyak">{!! $booking['peserta_banyak']==false?'&le; 500':'501 - 1000' !!}</div>
+							<div id="pesertaBanyak">{!! $booking->peserta_banyak==false?'&le; 500':'501 - 1000' !!}</div>
 						</div>
 						{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 					</div>
@@ -173,7 +184,7 @@
 						<div class="col-md-6">
 							<input 
 								id="disetujui" type="text" class="form-control" 
-								value="{{ null!==$booking['disetujui'] ? ($booking['disetujui']?'Disetjui':'Ditolak'):'' }}" disabled
+								value="{{ null!==$booking->disetujui ? ($booking->disetujui?'Disetjui':'Ditolak'):'' }}" disabled
 							>
 						</div>
 					</div>
@@ -182,7 +193,7 @@
 						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
-							<textarea id="alasan" type="text" class="form-control" disabled> {{ $booking['deskripsi_disetujui'] }}</textarea>
+							<textarea id="alasan" type="text" class="form-control" disabled> {{ $booking->deskripsi_disetujui }}</textarea>
 						</div>
 					</div>
 					@endif
@@ -190,14 +201,14 @@
 					@if($isAdmin)
 					<form method="POST" action="{{ route('booking.verify') }}">
 						@csrf
-						<input name="id" type="hidden" value="{{ $booking['id'] }}">
+						<input name="id" type="hidden" value="{{ $booking->id }}">
 						<input name="verify" type="hidden" value="setuju">
 
 						<div class="form-group row">
 							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Account') }}</label>
 							<i class="fa fa-envelope-o booking"></i>
 							<div class="col-md-6">
-								{{ isset($booking['api_host_email'])?'Last picked: '.$booking['api_host_email']:'' }}
+								{{ isset($booking->api_host_email)?'Last picked: '.$booking->api_host_email:'' }}
 								<select name="hostEmail" id="hostEmail" class="form-control">
 									<option value="500 (1)">500 (1)</option>
 									<option value="500 (2)">500 (2)</option>
@@ -235,7 +246,7 @@
 			</div>
 			<form action="{{route('booking.verify')}}" method="POST">
 				@csrf
-				<input name="id" type="hidden" value="{{ $booking['id'] }}">
+				<input name="id" type="hidden" value="{{ $booking->id }}">
 				<input name="verify" type="hidden" value="tolak">
 				<div class="modal-body">
 					<div class="form-group row">

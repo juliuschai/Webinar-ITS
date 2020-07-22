@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\FileHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
@@ -15,14 +16,14 @@ class Booking extends Model
     /**
      * waktu_mulai accessor
      */
-    public function getWaktuMulaiAttribute($value) {
+    function getWaktuMulaiAttribute($value) {
         return Booking::getFormattedTimeOrNull($value);
     }
 
     /**
      * waktu_akhir accessor
      */
-    public function getWaktuAkhirAttribute($value) {
+    function getWaktuAkhirAttribute($value) {
         return Booking::getFormattedTimeOrNull($value);
     }
 
@@ -35,14 +36,17 @@ class Booking extends Model
     }
 
     /**
-     * Parses request based on booking.form view 
-     * saves parsed data in current booking model instance  
+     * Parses request based on booking.form view (SaveBookingRequest) 
+     * to a booking model instance. Also needs owner user_id
+     * @* @param Request request request data from booking.form view (SaveBookingRequest)
+     * @* @param int user_id id of booking owner (currently logged in user)
      */
-    public function saveFromRequest($request) {
+    function saveFromRequest($request, $user_id) {
         // True if checkbox checked, false not checked
         $relayITSTV = $request->has('relayITSTV'); 
         $peserta_banyak = $request->pesertaBanyak == 500 ? false:true;
 
+        $this->user_id = $user_id;
         $this->no_wa = $request->noWa;
         $this->nama_acara = $request->namaAcara;
         $this->unit_id = $request->penyelengaraAcara;
@@ -50,10 +54,41 @@ class Booking extends Model
         $this->waktu_akhir = $request->waktuSelesai;
         $this->relay_ITSTV = $relayITSTV;
         $this->peserta_banyak = $peserta_banyak;
+        // If there's a new file being uploaded
+        if ($request->has('dokumenPendukung')) {
+            // If current booking already has a file pendukung
+            if (isset($this->file_pendukung)) {
+                // Delete old file, save new file
+                FileHelper::deleteDokumenOrFail($this->file_pendukung);
+            }
+            $this->saveFileFromRequest($request);
+        }
         $this->save();
     }
 
-    public function verifyRequest($request) {
+    function saveFileFromRequest($request) {
+        $file = $request->file('dokumenPendukung');
+        $this->file_pendukung = $file->store('dokumen', 'local');
+    }
+
+    /**
+     * Generate file name for file pendukung
+     */
+    function generateFilename() {
+        if (isset($this->file_pendukung)) {
+            $user = User::findOrFail($this->user_id);
+            $unit_nama = Unit::findOrFail($this->unit_id)->nama;
+            $when = date("Y-m-d_Hi", strtotime($this->waktu_mulai));
+            $fileExt = pathinfo($this->file_pendukung, PATHINFO_EXTENSION);
+            $fileName = $user->integra.'_'.$user->email.'_'.$unit_nama.'_'.$when.'.'.$fileExt;
+            return $fileName;
+        } else {
+            return null;
+        }
+    }
+
+
+    function verifyRequest($request) {
         if ($request->verify == 'setuju') {
             $this->disetujui = true;
             $this->api_host_nama = $request->hostNama;
@@ -68,7 +103,7 @@ class Booking extends Model
         $this->save();
     }
 
-    public function setUserFields($id) {
+    function setUserFields($id) {
         $user = User::findOrFail($id);
         $this->integra_pic = $user->nama;
         $this->nama_pic = $user->integra;
@@ -76,7 +111,7 @@ class Booking extends Model
         $this->sivitas = Group::getNamaFromId($user->group_id);
     }
 
-    public function setOrgFields($id) {
+    function setOrgFields($id) {
         $unit = Unit::join('unit_types as t', 't.id', '=', 'units.unit_type_id')
             ->where('units.id', '=', $id)
             ->first(['units.nama as nama', 't.nama as type']);
@@ -84,11 +119,7 @@ class Booking extends Model
         $this->unit = $unit->nama;
     }
 
-    public function setUserId($id) {
-        $this->user_id = $id;
-    }
-
-    public function abortIfVerified() {
+    function abortIfVerified() {
         if ($this->disetujui != null) {
             abort(403);
         }
@@ -99,7 +130,7 @@ class Booking extends Model
      * owned by the current user 
      * @return void
      */ 
-    public function abortButOwner($id) {
+    function abortButOwner($id) {
         if (!$this->isOwner($id)) {
             abort(403);
         }
@@ -109,7 +140,7 @@ class Booking extends Model
      * Check if user is owner of booking
      * @return boolean
      */ 
-    public function isOwner($id) {
+    function isOwner($id) {
         return $this->user_id == $id;
     }
 }

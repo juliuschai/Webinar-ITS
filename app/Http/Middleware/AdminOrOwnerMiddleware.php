@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Booking;
 use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class AdminOrOwnerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,9 +18,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!User::findOrLogout(Auth::id())->isAdmin()) {
-            abort(403);
-        }
+        $booking = Booking::findOrFail($request->bookingId);
+        $user = User::findOrLogout(Auth::id());
+        if(!($user->isAdmin() || $user->isOwner($booking->user_id))) {abort(403);}
+        $request->merge(compact('booking'));
         return $next($request);
     }
 }
