@@ -27,8 +27,8 @@
 					<form id="bookingForm" method="POST" action="{{ route('booking.edit', ['id' => $booking->id]) }}" enctype="multipart/form-data">
 					@endif
 						@csrf
-
 						<div id="one" class="tab">
+							<div>Jika data yang terlampir belum sesuai dengan data myITS SSO, silahkan login ulang dan coba lagi</div>
 							<div class="form-group row">
 								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
