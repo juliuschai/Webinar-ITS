@@ -79,6 +79,13 @@ class BookingController extends Controller
         return redirect()->route('booking.view', ['id'=>$request['id']]);
     }
 
+    function cancelBooking(Request $request) {
+        $booking = Booking::findOrFail($request['id']);
+        $booking->cancelBooking($request);
+
+        return redirect()->route('booking.view', ['id'=>$request['id']]);
+    }
+
     function denyBooking(DenyBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
         $booking->denyBooking($request);
