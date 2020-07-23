@@ -35,18 +35,21 @@ class Booking extends Model
         }
     }
 
+    function setUserId($user_id) {
+        $this->user_id = $user_id;
+    }
+
     /**
      * Parses request based on booking.form view (SaveBookingRequest) 
      * to a booking model instance. Also needs owner user_id
      * @* @param Request request request data from booking.form view (SaveBookingRequest)
      * @* @param int user_id id of booking owner (currently logged in user)
      */
-    function saveFromRequest($request, $user_id) {
+    function saveFromRequest($request) {
         // True if checkbox checked, false not checked
         $relayITSTV = $request->has('relayITSTV'); 
         $peserta_banyak = $request->pesertaBanyak == 500 ? false:true;
 
-        $this->user_id = $user_id;
         $this->nama_acara = $request->namaAcara;
         $this->unit_id = $request->penyelengaraAcara;
         $this->waktu_mulai = $request->waktuMulai;

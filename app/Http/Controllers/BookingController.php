@@ -26,7 +26,8 @@ class BookingController extends Controller
 
     function saveNewBooking(SaveBookingRequest $request) {
         $booking = new Booking();
-        $booking->saveFromRequest($request, Auth::id());
+        $booking->setUserId(Auth::id());
+        $booking->saveFromRequest($request);
 
         return redirect()->route('booking.view', ['id'=>$booking['id']]);
     }
@@ -34,8 +35,7 @@ class BookingController extends Controller
     function viewEditBooking($id) {
         $booking = Booking::findOrFail($id);
         $booking->abortIfVerified();
-        $booking->abortButOwner(Auth::id());
-        $booking->setUserFields(Auth::id());
+        $booking->setUserFields($booking->user_id);
         $booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
         $units = Unit::getDefault();
         $unitTypes = UnitType::get();
@@ -46,8 +46,7 @@ class BookingController extends Controller
     function saveEditBooking(SaveBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
         $booking->abortIfVerified();
-        $booking->abortButOwner(Auth::id());
-        $booking->saveFromRequest($request, Auth::id());
+        $booking->saveFromRequest($request);
 
         return redirect()->route('booking.view', ['id'=>$request['id']]);
     }
