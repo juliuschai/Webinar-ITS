@@ -79,10 +79,9 @@
 						<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
-							<input 
-								id="namaAcara" type="text" class="form-control" 
-								value="{{ $booking->nama_acara }}" disabled
-							>
+							<textarea rows="2" cols="30" 
+								id="namaAcara" type="text" class="form-control" disabled>{{ $booking->nama_acara }}
+							</textarea>
 						</div>
 					</div>
 
