@@ -39,6 +39,7 @@ class UserController extends Controller
 			$user->save();
 			return "authorized";
 		} else {
+			// If it's past this month, disable route
 			abort(404);
 		}
 	}

@@ -83,7 +83,7 @@
 									>
 								</div>
 								<div class="col-md-6">
-									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Data Profil SSO</sub>
+									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Menu Settings myITS SSO</sub>
 								</div>	
 							</div>
 							<div class="form-group row">

@@ -9,7 +9,7 @@ class FileHelper {
 		if (Storage::disk('local')->exists($filename)){
 			return Storage::disk('local')->response($filename);
 		} else {
-			abort(404);
+			abort(404, 'File tidak ditemukan di server');
 		}
 	}
 
@@ -17,7 +17,7 @@ class FileHelper {
 		if (Storage::disk('local')->exists($filename)){
 			return Storage::disk('local')->download($filename, $userFilename);
 		} else {
-			abort(404);
+			abort(404, 'File tidak ditemukan di server');
 		}
 	}
 
@@ -25,7 +25,7 @@ class FileHelper {
 		if (Storage::disk('local')->exists($filename)){
 			return Storage::disk('local')->delete($filename);
 		} else {
-			abort(404);
+			abort(404, 'File tidak ditemukan di server');
 		}
 	}
 

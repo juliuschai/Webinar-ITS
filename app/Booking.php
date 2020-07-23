@@ -129,7 +129,7 @@ class Booking extends Model
 
     function abortIfVerified() {
         if ($this->disetujui != null) {
-            abort(403);
+            abort(403, 'Booking yang sudah di verify tidak bisa di edit');
         }
     }
 
@@ -140,7 +140,7 @@ class Booking extends Model
      */ 
     function abortButOwner($id) {
         if (!$this->isOwner($id)) {
-            abort(403);
+            abort(403, 'Anda bukan pemilik dari booking ini');
         }
     }
 
