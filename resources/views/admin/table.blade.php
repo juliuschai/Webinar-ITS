@@ -45,7 +45,7 @@
                             <i class="fa fa-pencil"></i>
                         </button>
                         </a> 
-                        <form action="{{ url('/booking/delete/'.$booking->id) }}" method="post" class="d-inline">    
+                        <form action="{{ url('/admin/booking/delete/'.$booking->id) }}" method="post" class="d-inline">    
                         @method('delete')
                         @csrf
                         <button style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar {{$booking->nama_acara}} ?')" title="Hapus Webinar">

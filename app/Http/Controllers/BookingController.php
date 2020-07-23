@@ -110,6 +110,13 @@ class BookingController extends Controller
         return redirect()->route('booking.list');
     }
 
+    public function adminDeleteBooking(Request $request) {
+        $id = $request['id'];
+        Booking::destroy($id);
+
+        return redirect()->route('admin.list');
+    }
+
     //Admin
 
     public function adminListBooking(Request $request) {
