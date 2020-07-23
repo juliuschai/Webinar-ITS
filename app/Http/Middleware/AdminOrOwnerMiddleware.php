@@ -20,7 +20,7 @@ class AdminOrOwnerMiddleware
     {
         $booking = Booking::findOrFail($request->id);
         $user = User::findOrLogout(Auth::id());
-        if(!($user->isAdmin() || $user->isOwner($booking->user_id))) {abort(403);}
+        if(!($user->isAdmin() || $user->isOwner($booking->user_id))) {abort(403, 'Anda bukan admin atau pemilik booking ini');}
         $request->merge(compact('booking'));
         return $next($request);
     }

@@ -29,9 +29,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
 
         Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
         Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
-        Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
-        Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
-
+        
         
         Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
         Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
@@ -39,6 +37,9 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         Route::group(['middleware' => 'owneroradmin'], function () {
             Route::get('storage/dokumen/get/{id}', 'FileController@getDokumen')->name('dokumen.get');
             Route::get('storage/dokumen/download/{id}', 'FileController@downloadDokumen')->name('dokumen.download');
+
+            Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
+            Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
         });
 
         Route::group(['middleware' => 'admin'], function () {
@@ -47,13 +48,13 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::post('/unit/delete/{id}', 'UnitController@delUnit')->name('admin.unit.delete');
             Route::get('/unit/edit/{id}', 'UnitController@viewEditUnit')->name('admin.unit.edit');
             Route::post('/unit/edit/{id}', 'UnitController@saveEditUnit')->name('admin.unit.edit');
-
+            
             Route::get('/users', 'UserController@viewUsers')->name('admin.users.view');
             Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
             Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
-
+            
             // ToDelete:Route::get('storage/dokumen/delete/{id}', 'FileController@deleteDokumen')->name('dokumen.delete');
-
+            
             // Admin
             Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
             Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');

@@ -5,10 +5,6 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-					<!-- <ul id="section-tabs">
-							<li id="ho" class="current active">Data PIC Zoom</li>
-							<li id="hi">Informasi</li>
-					</ul> -->
 
 				<div class="card-body">
 					@if ($errors->any())
@@ -27,14 +23,14 @@
 					<form id="bookingForm" method="POST" action="{{ route('booking.edit', ['id' => $booking->id]) }}" enctype="multipart/form-data">
 					@endif
 						@csrf
-
 						<div id="one" class="tab">
+							
+							<ul id="section-tabs">
+								<li style="margin-left: -20px;" id="ho" class="current active">Data PIC Zoom</li>
+								<li style="margin-right: -20px;"id="hi">Informasi</li>
+							</ul>
 
-						<ul id="section-tabs">
-							<li style="margin-left: -20px;" id="ho" class="current active">Data PIC Zoom</li>
-							<li style="margin-right: -20px;"id="hi">Informasi</li>
-						</ul>
-
+							<div>Jika data yang terlampir belum sesuai dengan data myITS SSO, silahkan login ulang dan coba lagi</div>
 							<div class="form-group row">
 								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
@@ -89,7 +85,7 @@
 									>
 								</div>
 								<div class="col-md-6">
-									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Data Profil SSO</sub>
+									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Menu Settings myITS SSO</sub>
 								</div>	
 							</div>
 							<div class="form-group row">

@@ -35,18 +35,21 @@ class Booking extends Model
         }
     }
 
+    function setUserId($user_id) {
+        $this->user_id = $user_id;
+    }
+
     /**
      * Parses request based on booking.form view (SaveBookingRequest) 
      * to a booking model instance. Also needs owner user_id
      * @* @param Request request request data from booking.form view (SaveBookingRequest)
      * @* @param int user_id id of booking owner (currently logged in user)
      */
-    function saveFromRequest($request, $user_id) {
+    function saveFromRequest($request) {
         // True if checkbox checked, false not checked
         $relayITSTV = $request->has('relayITSTV'); 
         $peserta_banyak = $request->pesertaBanyak == 500 ? false:true;
 
-        $this->user_id = $user_id;
         $this->nama_acara = $request->namaAcara;
         $this->unit_id = $request->penyelengaraAcara;
         $this->waktu_mulai = $request->waktuMulai;
@@ -109,8 +112,8 @@ class Booking extends Model
 
     function setUserFields($id) {
         $user = User::findOrFail($id);
-        $this->integra_pic = $user->nama;
-        $this->nama_pic = $user->integra;
+        $this->integra_pic = $user->integra;
+        $this->nama_pic = $user->nama;
         $this->email_pic = $user->email;
         $this->no_wa = $user->no_wa;
         $this->sivitas = Group::getNamaFromId($user->group_id);
@@ -126,7 +129,7 @@ class Booking extends Model
 
     function abortIfVerified() {
         if ($this->disetujui != null) {
-            abort(403);
+            abort(403, 'Booking yang sudah di verify tidak bisa di edit');
         }
     }
 
@@ -137,7 +140,7 @@ class Booking extends Model
      */ 
     function abortButOwner($id) {
         if (!$this->isOwner($id)) {
-            abort(403);
+            abort(403, 'Anda bukan pemilik dari booking ini');
         }
     }
 

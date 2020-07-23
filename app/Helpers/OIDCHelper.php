@@ -53,9 +53,15 @@ class OIDCHelper extends OpenIDConnectClient {
 		// ToDelete:
 		$user->sub = $attr->sub;
 		
+		if (!isset($attr->email)) {
+			abort(403, 'Primary Email harus diisi, Update Primary Email dari menu Settings myITS SSO');
+		}
 		$user->email = $attr->email;
 		$user->nama = $attr->name;
 		$user->integra = $attr->reg_id;
+		if (!isset($attr->phone)) {
+			abort(403, 'No. WA harus diisi, Update No. WA dari menu Settings myITS SSO');
+		}
 		$user->no_wa = $attr->phone;
 		$groupStr = OIDCHelper::groupToString($attr->group);
 		$user->group_id = Group::findOrCreateGetId($groupStr);
