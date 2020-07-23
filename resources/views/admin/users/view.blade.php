@@ -59,7 +59,10 @@
 				<td class="text-center">
 					@if($user->is_admin)
 					<form method="POST" action="{{route('admin.users.revoke', ["id" => $user->id])}}">
-						<button type="submit" class="btn btn-warning">Non-Aktifkan Admin</button>
+						<button style="padding: 3px 8px; font-size: 11pt;" type="submit" class="btn btn-info">
+						<i class="fa fa-times"></i>
+							Non-Aktifkan Admin
+						</button>
 					@else
 					<form method="POST" action="{{route('admin.users.give', ['id' => $user->id])}}">
 						<button type="submit" class="btn btn-danger">Aktifkan Admin</button>

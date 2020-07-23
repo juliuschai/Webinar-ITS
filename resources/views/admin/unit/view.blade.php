@@ -31,13 +31,14 @@
 			</div>
 			<div class="col">
 				<button class="btn btn-success" onclick="search()">Search</button>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal" onclick="modalPopulate()">
+				<button style="padding: 3px 8px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal" onclick="modalPopulate()">
 					Tambah Unit
 				</button>
 			</div>
 		</form>
 	</div>
-	<table class="table table-bordered table-striped table-bordered table-hover">
+	<!-- <table id="sortData" class="table table-bordered table-striped table-bordered table-hover"> -->
+	<table id="sortData" class="table table-bordered">
 		<thead class="thead-custom-blue">
 			<tr>
 				<th class="text-center" scope="col">Nama</th>
@@ -49,13 +50,21 @@
 		<tbody>
 			@foreach ($units as $unit)
 			<tr>
-				<td class="text-center">{{ $unit->nama }}</td>
-				<td class="text-center">{{ $unit->unit_type }}</td>
-				<td class="text-center"><a href="{{route('admin.unit.edit', ['id'=>$unit->id])}}"><button class="btn btn-info">Edit</button></a></td>
-				<td class="text-center">
+				<td class="text-center py-2">{{ $unit->nama }}</td>
+				<td class="text-center py-2">{{ $unit->unit_type }}</td>
+				<td class="text-center py-2">
+					<a href="{{route('admin.unit.edit', ['id'=>$unit->id])}}">
+						<button style="padding: 3px 8px; font-size: 11pt;" class="btn btn-custom-warning">
+						<i class="fa fa-pencil-square-o"></i> Edit
+						</button>
+					</a>
+				</td>
+				<td class="text-center py-2">
 					<form method="POST" action="{{route('admin.unit.delete', ["id" => $unit->id])}}">
 						@csrf
-						<button class="btn btn-danger">Delete</button>
+						<button style="padding: 3px 8px; font-size: 11pt;" class="btn btn-custom-danger">
+							<i class="fa fa-trash-o"></i> Delete
+						</button>
 					</form>
 				</td>
 			</tr>

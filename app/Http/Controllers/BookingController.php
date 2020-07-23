@@ -87,8 +87,11 @@ class BookingController extends Controller
     }
 
     public function waitingListBooking() {
-        $booking = Booking::select('id','waktu_mulai', 'nama_acara', 'disetujui')
-                    ->where('user_id', '=', Auth::id())
+
+        $booking = \DB::table('bookings')
+                    ->join('units', 'units.id', '=', 'bookings.unit_id')
+                    ->where('bookings.user_id', '=', Auth::id())
+                    ->select('bookings.*', 'units.*')
                     ->get();
 
         return view('booking.table', compact(['booking']));
@@ -104,18 +107,22 @@ class BookingController extends Controller
     //Admin
 
     public function adminListBooking(Request $request) {
-        $booking = Booking::select('id','waktu_mulai', 'nama_acara')
-                            ->where('disetujui', '=', NULL)
-                            ->get();
-        $isAdmin = true;
 
-        return view('admin.table', compact(['booking', 'isAdmin']));
+        $booking = \DB::table('bookings')
+        ->join('units', 'units.id', '=', 'bookings.unit_id')
+        ->select('bookings.*', 'units.*')
+        ->get();
+
+        return view('admin.table', compact(['booking']));
     }
 
     public function aproveBooking(Request $request) {
-        $booking = Booking::select('waktu_mulai', 'nama_acara')
-                            ->where('disetujui', '=', 1)
-                            ->get();
+        $booking = \DB::table('bookings')
+        ->join('units', 'units.id', '=', 'bookings.unit_id')
+        ->where('bookings.disetujui', '=', '1')
+        ->select('bookings.*', 'units.*')
+        ->get();
+
         $isAdmin = true;
 
         return view('admin.aprove', compact(['booking', 'isAdmin']));
