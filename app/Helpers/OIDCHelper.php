@@ -12,12 +12,12 @@ class OIDCHelper extends OpenIDConnectClient {
 	static function OIDLogin() {
 		try {
 			$oidc = new OpenIDConnectClient(
-				'https://dev-my.its.ac.id', // authorization_endpoint
+				env('OIDC_PROVIDER'), // authorization_endpoint
 				env('OIDC_CLIENT_ID'), // Client ID
 				env('OIDC_CLIENT_SECRET') // Client Secret
 			);
 			$oidc->setRedirectURL(env('OIDC_LOGIN_REDIRECT')); // must be the same as you registered
-			$oidc->addScope('email group profile role openid'); //must be the same as you registered
+			$oidc->addScope(env('OIDC_SCOPE')); //must be the same as you registered
 
 			// PROD: Remove
 			$oidc->setVerifyHost(false);
