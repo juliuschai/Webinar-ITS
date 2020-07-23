@@ -25,7 +25,7 @@
                     <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->created_at)) }}</td>
                     <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center px-0">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
-                    <td class="text-center px-0">{{ $booking->nama_acara }}</td>
+                    <td class="fixed col-sm-3 text-center px-0">{{ $booking->nama_acara }}</td>
                     <td class="text-center px-0">{{ $booking->nama }}</td>
                     @if ($booking->disetujui == '0') 
                     <td style="background-color: #FF6961; padding: 8px 8px;" class="text-center">Ditolak</td>
