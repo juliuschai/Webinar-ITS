@@ -91,7 +91,7 @@ class BookingController extends Controller
         $booking = \DB::table('bookings')
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->where('bookings.user_id', '=', Auth::id())
-                    ->select('bookings.*', 'units.*')
+                    ->select('bookings.*', 'units.nama')
                     ->get();
 
         return view('booking.table', compact(['booking']));
@@ -110,7 +110,7 @@ class BookingController extends Controller
 
         $booking = \DB::table('bookings')
         ->join('units', 'units.id', '=', 'bookings.unit_id')
-        ->select('bookings.*', 'units.*')
+        ->select('bookings.*', 'units.nama')
         ->get();
 
         return view('admin.table', compact(['booking']));
@@ -120,7 +120,7 @@ class BookingController extends Controller
         $booking = \DB::table('bookings')
         ->join('units', 'units.id', '=', 'bookings.unit_id')
         ->where('bookings.disetujui', '=', '1')
-        ->select('bookings.*', 'units.*')
+        ->select('bookings.*', 'units.nama')
         ->get();
 
         $isAdmin = true;
