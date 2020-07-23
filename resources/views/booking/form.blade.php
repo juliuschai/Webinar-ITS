@@ -24,7 +24,7 @@
 					@endif
 						@csrf
 						<div id="one" class="tab">
-							
+
 							<ul id="section-tabs">
 								<li style="margin-left: -20px;" id="ho" class="current active">Data PIC Zoom</li>
 								<li style="margin-right: -20px;"id="hi">Informasi</li>
@@ -103,10 +103,10 @@
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="namaAcara" type="text" class="form-control" name="namaAcara" 
-										value="{{ old('namaAcara')??$booking['nama_acara'] }}" required
-									>
+									<textarea style="resize: none;" rows="2" cols="30" 
+										name="namaAcara" id="namaAcara" type="text" class="form-control" 
+										value="{{ old('namaAcara')??$booking['nama_acara'] }}" required>
+									</textarea>
 								</div>
 							</div>
 
