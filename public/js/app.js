@@ -50048,19 +50048,21 @@ $(document).ready(function () {
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
-// showTab(1);
 
 function showTab(n) {
   // This function will display the specified tab of the form ...
   var x = document.getElementsByClassName("tab");
+
   x[n].style.display = "block";
   x[n+1].style.display = "none";
   // ... and fix the Previous/Next buttons:
   if (n == 0) {
     document.getElementById("prevBtn").style.display = "none";
+
     // document.getElementById("nextBtn").innerHTML = "Next";
   } else {
     document.getElementById("prevBtn").style.display = "inline";
+
   }
   // if (n == (x.length - 1)) {
   //   document.getElementById("nextBtn").innerHTML = "Submit";
@@ -50074,14 +50076,10 @@ function showTab(n) {
 function nextPrev(n) {
 
   var x = document.getElementsByClassName("tab");
-  // var s = document.getElementById("section-tabs");
 
   x[currentTab].style.display = "none";
 
   currentTab = currentTab + n;
-
-  $("#satu").removeClass("current active");
-  $("#dua").addClass("current active");
 
   showTab(currentTab);
 }

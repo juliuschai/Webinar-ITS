@@ -5,10 +5,10 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-					<ul id="section-tabs">
-							<li id="satu" class="current active">Data PIC Zoom</li>
-							<li id="dua">Informasi</li>
-					</ul>
+					<!-- <ul id="section-tabs">
+							<li id="ho" class="current active">Data PIC Zoom</li>
+							<li id="hi">Informasi</li>
+					</ul> -->
 
 				<div class="card-body">
 					@if ($errors->any())
@@ -29,6 +29,12 @@
 						@csrf
 
 						<div id="one" class="tab">
+
+						<ul id="section-tabs">
+							<li style="margin-left: -20px;" id="ho" class="current active">Data PIC Zoom</li>
+							<li style="margin-right: -20px;"id="hi">Informasi</li>
+						</ul>
+
 							<div class="form-group row">
 								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
@@ -92,6 +98,11 @@
 						</div>
 
 						<div id="two" class="tab">
+						<ul id="section-tabs">
+							<li style="margin-left: -20px;" id="ho">Data PIC Zoom</li>
+							<li style="margin-right: -20px;"id="hi" class="current active">Informasi</li>
+						</ul>
+
 							<div class="form-group row">
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
