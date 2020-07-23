@@ -24,7 +24,6 @@ class SaveBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'noWa' => 'required|string|max:254',
             'namaAcara' => 'required|string|max:254',
             'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg',
             'penyelengaraAcara' => 'required|numeric|exists:units,id',
