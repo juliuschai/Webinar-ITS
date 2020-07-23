@@ -59,6 +59,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
             Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');
             Route::post('/admin/booking/setuju/{id}', 'BookingController@acceptBooking')->name('booking.accept');
+            Route::post('/admin/booking/cancel/{id}', 'BookingController@cancelBooking')->name('booking.cancel');
             Route::post('/admin/booking/tolak/{id}', 'BookingController@denyBooking')->name('booking.deny');
         });
     });

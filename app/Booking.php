@@ -93,6 +93,13 @@ class Booking extends Model
         $this->save();
     }
 
+    function cancelBooking($request) {
+        $this->disetujui = null;
+        $this->api_host_email = null;
+        $this->deskripsi_disetujui = null;
+        $this->save();
+    }
+
     function denyBooking($request) {
         $this->disetujui = false;
         $this->api_host_email = null;

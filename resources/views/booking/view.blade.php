@@ -199,15 +199,50 @@
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
+								@if($booking->disetujui == false || $booking->disetujui == null)
 								<button type="submit" class="btn btn-submit">
 									{{ __('Setujui Booking') }}
 								</button>
+								@endif
+								@if($booking->disetujui == true)
+								<button type="button" class="btn btn-warning" onclick="cancelBooking()">
+									{{ __('Cancel Booking') }}
+								</button>
+								@endif
+								@if($booking->disetujui == false || $booking->disetujui == null)
 								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal" onclick="modalPopulate()">
 									{{ __('Tolak Booking') }}
 								</button>
+								@endif
 							</div>
 						</div>
 					</form>
+						@if($booking->disetujui == true)
+						<form id="cancelForm" method="POST" action="{{ route('booking.cancel', ['id' => $booking->id]) }}">
+							@csrf
+						</form>
+						@endif
+						<script type="text/javascript" >
+							function cancelBooking() {
+								document.getElementById('cancelForm').submit();
+							}
+							function modalPopulate() {
+								let unitNama = document.getElementById('unitNama').value;
+								let unitTypeSelElm = document.getElementById('unitType');
+								let unitType = unitTypeSelElm.options[unitTypeSelElm.selectedIndex].innerText;
+								if (unitTypeSelElm.selectedIndex == 0) {
+									alert("Mohon pilih tipe unit");
+									return;
+								}
+								let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
+								document.getElementById('confirmationText').innerText = text;
+								
+								document.getElementById('modalUnitNama').value = unitNama;
+								document.getElementById('modalUnitType').value = unitTypeSelElm.value;
+						
+							}
+						
+						</script>
 					@endif
 				</div>
 			</div>
@@ -248,23 +283,4 @@
 </div>
 
 <script src="{{ asset('js/booking/durasi.js') }}" defer></script>
-<script type="text/javascript" >
-	function modalPopulate() {
-		let unitNama = document.getElementById('unitNama').value;
-		let unitTypeSelElm = document.getElementById('unitType');
-		let unitType = unitTypeSelElm.options[unitTypeSelElm.selectedIndex].innerText;
-		if (unitTypeSelElm.selectedIndex == 0) {
-			alert("Mohon pilih tipe unit");
-			return;
-		}
-		let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
-		document.getElementById('confirmationText').innerText = text;
-		
-		document.getElementById('modalUnitNama').value = unitNama;
-		document.getElementById('modalUnitType').value = unitTypeSelElm.value;
-
-	}
-
-</script>
-
 @endsection
