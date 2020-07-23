@@ -108,7 +108,7 @@ class BookingController extends Controller
         $id = $request['id'];
         Booking::destroy($id);
 
-        return redirect('/booking/list')->with('status', 'Data Webinar Berhasil Dihapus!');
+        return redirect()->route('booking.list');
     }
 
     //Admin

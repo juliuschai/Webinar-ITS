@@ -94,6 +94,7 @@
 								id="penyelengaraAcaraType" type="text" class="form-control" 
 								value="{{ $booking->unit_type }}" disabled
 							>
+						</br>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
 								value="{{ $booking->unit }}" disabled
@@ -167,8 +168,8 @@
 						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
 							<input 
-								id="disetujui" type="text" class="form-control" 
-								value="{{ null!==$booking->disetujui ? ($booking->disetujui?'Disetjui':'Ditolak'):'' }}" disabled
+								id="disetujui" type="text" class="form-control" s
+								value="{{ null!==$booking->disetujui ? ($booking->disetujui?'Disetujui':'Ditolak'):'' }}" disabled
 							>
 						</div>
 					</div>
