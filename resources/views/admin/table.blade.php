@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach( $booking as $booking)
+                    @foreach( $bookings as $booking)
                     <tr>
                     <th class="text-center px-0" scope="row">{{ $loop->iteration }}</th>
                     <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->created_at)) }}</td>
@@ -86,4 +86,7 @@
 	// idk what's not ready when the script is loaded with the html tho
 	setTimeout(onupdateWaktu, 500);
 </script>
+
+{{ $bookings->links() }}
+
 @endsection

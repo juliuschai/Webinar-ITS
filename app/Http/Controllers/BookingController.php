@@ -94,13 +94,13 @@ class BookingController extends Controller
 
     public function waitingListBooking() {
 
-        $booking = \DB::table('bookings')
+        $bookings = \DB::table('bookings')
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->where('bookings.user_id', '=', Auth::id())
                     ->select('bookings.*', 'units.nama')
-                    ->get();
+                    ->paginate('10');
 
-        return view('booking.table', compact(['booking']));
+        return view('booking.table', compact(['bookings']));
     }
 
     public function deleteBooking(Request $request) {
@@ -121,24 +121,24 @@ class BookingController extends Controller
 
     public function adminListBooking(Request $request) {
 
-        $booking = \DB::table('bookings')
+        $bookings = \DB::table('bookings')
         ->join('units', 'units.id', '=', 'bookings.unit_id')
         ->select('bookings.*', 'units.nama')
-        ->get();
+        ->paginate('10');
 
-        return view('admin.table', compact(['booking']));
+        return view('admin.table', compact(['bookings']));
     }
 
     public function aproveBooking(Request $request) {
-        $booking = \DB::table('bookings')
+        $bookings = \DB::table('bookings')
         ->join('units', 'units.id', '=', 'bookings.unit_id')
         ->where('bookings.disetujui', '=', '1')
         ->select('bookings.*', 'units.nama')
-        ->get();
+        ->paginate('10');
 
         $isAdmin = true;
 
-        return view('admin.aprove', compact(['booking', 'isAdmin']));
+        return view('admin.aprove', compact(['bookings', 'isAdmin']));
     }
 
     function getEvents() {

@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach( $booking as $booking)
+                    @foreach( $bookings as $booking)
                     <tr>
                     <th class="text-center px-0" scope="row">{{ $loop->iteration }}</th>
                     <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->created_at)) }}</td>
@@ -125,5 +125,7 @@
         $('#sortData').DataTable();
     });
 </script>
+
+{{ $bookings->links() }}
 
 @endsection
