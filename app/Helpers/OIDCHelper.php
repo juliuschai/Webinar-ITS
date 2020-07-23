@@ -69,7 +69,7 @@ class OIDCHelper extends OpenIDConnectClient {
 				session()->save();
 
 				$oidc = new OpenIDConnectClient(
-					'https://dev-my.its.ac.id', // authorization_endpoint
+					env('OIDC_PROVIDER'), // authorization_endpoint
 					env('OIDC_CLIENT_ID'), // Client ID
 					env('OIDC_CLIENT_SECRET') // Client Secret
 				);
