@@ -64,22 +64,6 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="penyelengaraAcara" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
-						<i class="fa fa-user-circle booking"></i>
-						<div class="col-md-6">
-							<input 
-								id="penyelengaraAcaraType" type="text" class="form-control" 
-								value="{{ $booking->unit_type }}" disabled
-							>
-							<br />
-							<input 
-								id="penyelengaraAcara" type="text" class="form-control" 
-								value="{{ $booking->unit }}" disabled
-							>
-						</div>
-					</div>	
-
-					<div class="form-group row">
 						<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
 						<i class="fa fa-mobile fa-2x booking"></i>
 						<div class="col-md-6">
@@ -103,7 +87,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="unitDepartemen" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
+						<label for="penyelengaraAcaraType" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
 						<i class="fa fa-building booking"></i>
 						<div class="col-md-6">
 							<input 

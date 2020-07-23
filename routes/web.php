@@ -15,13 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain'))->group(function () {
-    Route::get('/', 'UserController@checkLoggingIn');
-/*     Route::get('temp', function() {
-        $booking = \App\Booking::find(1);
-        $booking->file_pendukung = 'jpg';
-        $booking->save();
-    }); */
-    // Route::get('/tes', 'BookingController@tes')->name('booking.list');
+    Route::get('/', 'UserController@checkLoggingIn')->name('calendar.view');
     Route::get('calendar/event', 'BookingController@getEvents')->name('calendar.event');
     
     Route::get('login','UserController@login')->name('login');
@@ -46,7 +40,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::get('storage/dokumen/get/{id}', 'FileController@getDokumen')->name('dokumen.get');
             Route::get('storage/dokumen/download/{id}', 'FileController@downloadDokumen')->name('dokumen.download');
         });
-        // TODO: admin middleware
+
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/unit', 'UnitController@viewUnit')->name('admin.unit.view');
             Route::post('/unit/add', 'UnitController@addUnit')->name('admin.unit.add');

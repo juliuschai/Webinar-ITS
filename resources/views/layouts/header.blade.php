@@ -11,9 +11,10 @@
     <title>{{ config('app.name', 'Aplikasi Booking Webinar') }}</title>
 
     <!-- Scripts -->
-    <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
+
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
@@ -29,7 +30,6 @@
     <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/js/plugins/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -64,30 +64,30 @@
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <!-- <li><a href="index.html" disable>Dashboard</a></li> -->
-                      <li><a type="button" disabled>Dashboard</a></li>
+                      <li><a href="{{ route('calendar.view') }}">Dashboard</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ url('/booking/new') }}">Booking Webinar</a></li>
-                      <li><a href="{{ url('/booking/waitinglist') }}">Daftar Tunggu Webinar</a></li>
+                      <li><a href="{{ route('booking.new') }}">Booking Webinar</a></li>
+                      <li><a href="{{ route('booking.list') }}">Daftar Tunggu Webinar</a></li>
                       @if(auth()->user()->isAdmin())
-                      <li><a href="{{ url('/admin/booking/list') }}">Daftar Webinar</a></li>
-                      <li><a href="{{ url('/admin/booking/aprove') }}">Webinar</a></li>
+                      <li><a href="{{ route('admin.list') }}">Daftar Webinar</a></li>
+                      <li><a href="{{ route('admin.aprove') }}">Webinar</a></li>
                       @endif
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <!-- <li><a href="calendar.html" disable>Calendar</a></li> -->
-                      <li><a type="button" disabled>Calendar</a></li>
+                      <li><a href="{{ route('calendar.view') }}">Calendar</a></li>
                     </ul>
                   </li>
                   @if(auth()->user()->isAdmin())
                   <li><a><i class="fa fa-list"></i> Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ url('/users') }}">User</a></li>
-                      <li><a href="{{ url('/unit') }}">Unit</a></li>
+                      <li><a href="{{ route('admin.users.view') }}">User</a></li>
+                      <li><a href="{{ route('admin.unit.view') }}">Unit</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Report <span class="fa fa-chevron-down"></span></a>
@@ -126,7 +126,7 @@
                     @endauth
                   </a>
                   <div style="margin: auto" class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="{{ url('logout') }}"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
+                    <a class="dropdown-item"  href="{{ route('logout') }}"><i class="fa fa-sign-out pull-right"></i>Log Out</a>
                   </div>
                 </li>
 
@@ -158,18 +158,12 @@
 
         <!-- Page JS Plugins -->
         <!-- <script src="{{ asset('assets/js/plugins/jquery-ui/jquery-ui.min.js') }}" defer></script> -->
-        <script src="{{ asset('assets/js/plugins/moment/moment.min.js') }}" defer></script>
-        <script src="{{ asset('assets/js/plugins/fullcalendar/fullcalendar.min.js') }}" defer></script>
-
-        <!-- Page JS Code -->
-        <script src="{{ asset('assets/js/pages/be_comp_calendar.min.js') }}" defer></script>
-
     </div>
 </body>
 </html>
 @else
 <script type="text/javascript">
-    window.location = "{{ url('login') }}";
+    window.location = "{{ route('login') }}";
 </script>
 @endauth
 
