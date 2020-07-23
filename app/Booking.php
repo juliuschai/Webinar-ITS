@@ -112,8 +112,8 @@ class Booking extends Model
 
     function setUserFields($id) {
         $user = User::findOrFail($id);
-        $this->integra_pic = $user->nama;
-        $this->nama_pic = $user->integra;
+        $this->integra_pic = $user->integra;
+        $this->nama_pic = $user->nama;
         $this->email_pic = $user->email;
         $this->no_wa = $user->no_wa;
         $this->sivitas = Group::getNamaFromId($user->group_id);

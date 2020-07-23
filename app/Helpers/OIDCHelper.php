@@ -53,6 +53,9 @@ class OIDCHelper extends OpenIDConnectClient {
 		// ToDelete:
 		$user->sub = $attr->sub;
 		
+		if (!isset($attr->email)) {
+			abort(403, 'Primary Email harus diisi, Update Primary Email dari menu Settings myITS SSO');
+		}
 		$user->email = $attr->email;
 		$user->nama = $attr->name;
 		$user->integra = $attr->reg_id;
