@@ -47,7 +47,6 @@ class Booking extends Model
         $peserta_banyak = $request->pesertaBanyak == 500 ? false:true;
 
         $this->user_id = $user_id;
-        $this->no_wa = $request->noWa;
         $this->nama_acara = $request->namaAcara;
         $this->unit_id = $request->penyelengaraAcara;
         $this->waktu_mulai = $request->waktuMulai;
@@ -106,6 +105,7 @@ class Booking extends Model
         $this->integra_pic = $user->nama;
         $this->nama_pic = $user->integra;
         $this->email_pic = $user->email;
+        $this->no_wa = $user->no_wa;
         $this->sivitas = Group::getNamaFromId($user->group_id);
     }
 

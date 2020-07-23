@@ -37,27 +37,31 @@ class OIDCHelper extends OpenIDConnectClient {
 
 	static function login() {
 		// Only run if user is not logged in
-		\Log::info('OIDCHelper login called, user logging in');
 		$oidc = OIDCHelper::OIDLogin();
 		$attr = $oidc->requestUserInfo();
 
-		// check if there is a user with role that's not empty array
-		if ($attr->role != []) { 
-			\Log::info('new Attribute role: '.$attr->role);
-		}
-
 		$user = User::firstOrNew([
-			'email' => $attr->email??$attr->alternate_email,
+			/* // ToDelete: if email of user is already in database, edit the current user (add 
+			sub and no_wa to current user) This only needs to run until all users in db has sub id
+			(Because email field was used an identifer before "OpenID sub field update")
+			 */
+			'email' => $attr->email,
+		], [
+			// Find user by sub field from OpenID
+			'sub' => $attr->sub,
 		]);
+		// ToDelete:
+		$user->sub = $attr->sub;
+		
+		$user->email = $attr->email;
 		$user->nama = $attr->name;
 		$user->integra = $attr->reg_id;
+		$user->no_wa = $attr->phone;
 		$groupStr = OIDCHelper::groupToString($attr->group);
 		$user->group_id = Group::findOrCreateGetId($groupStr);
 		$user->save();
 
 		Auth::login($user);
-		\Log::info('user is now logged in? '.Auth::check());
-		\Log::info('OIDCHelper login finished');
 	}
 
 	static function logout() {

@@ -78,10 +78,13 @@
 								<i class="fa fa-mobile fa-2x booking"></i>
 								<div class="col-md-6">
 									<input 
-										id="noWa" type="tel" class="form-control" name="noWa" autocomplete="tel" placeholder="Contoh: 089605606878"
-										value="{{ old('noWa')??$booking['no_wa'] }}" required autofocus
+										id="noWa" type="text" class="form-control"
+										value="{{ old('noWa')??$booking['no_wa'] }}" disabled
 									>
 								</div>
+								<div class="col-md-6">
+									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Data Profil SSO</sub>
+								</div>	
 							</div>
 							<div class="form-group row">
 							<button style="position: absolute;bottom: 15px;right: 50px;" type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
