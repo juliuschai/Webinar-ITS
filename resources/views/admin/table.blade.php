@@ -21,7 +21,7 @@
                 <tbody>
                     @foreach( $bookings as $booking)
                     <tr>
-                    <th class="text-center px-0" scope="row">{{ $loop->iteration }}</th>
+                    <th class="text-center px-0" scope="row">{{ $loop->iteration+(($bookings->currentPage()-1)*10) }}</th>
                     <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->created_at)) }}</td>
                     <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
                     <td class="text-center px-0">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
