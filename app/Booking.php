@@ -13,28 +13,6 @@ class Booking extends Model
         'waktu_akhir' => 'datetime',
     ];
 
-    /**
-     * waktu_mulai accessor
-     */
-    function getWaktuMulaiAttribute($value) {
-        return Booking::getFormattedTimeOrNull($value);
-    }
-
-    /**
-     * waktu_akhir accessor
-     */
-    function getWaktuAkhirAttribute($value) {
-        return Booking::getFormattedTimeOrNull($value);
-    }
-
-    static function getFormattedTimeOrNull($value) {
-        if (!$value) {
-            return null;
-        } else {
-            return date('Y-m-d\TH:i', strtotime($value));
-        }
-    }
-
     function setUserId($user_id) {
         $this->user_id = $user_id;
     }

@@ -24,7 +24,6 @@ function validateWaktu() {
 	let beginDate = new Date(beginElm.value);
 	let endDate = new Date(endElm.value);
 	let diffMins = (endDate.getTime() - beginDate.getTime())/60/1000;
-	alert(diffMins)
 	validation.diff = diffMins >= 30;
 	validation.start = beginDate > new Date();
 	return validation.check();

@@ -117,7 +117,7 @@
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
 							<input 
-								id="waktuMulai" type="datetime-local" class="form-control" 
+								id="waktuMulai" type="text" class="form-control" 
 								value="{{ $booking->waktu_mulai }}" disabled
 							>
 						</div>
