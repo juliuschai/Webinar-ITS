@@ -122,17 +122,8 @@
 							>
 						</div>
 					</div>
-
-					<div class="form-group row">
-						<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}</label>
-						<i class="fa fa-calendar booking"></i>
-						<div class="col-md-6">
-							<input 
-								id="waktuSelesai" type="datetime-local" class="form-control" 
-								value="{{ $booking->waktu_akhir }}" onchange="onupdateWaktu()" disabled
-							>
-						</div>
-					</div>
+					
+					<input id="waktuSelesai" type="hidden" name="waktuSelesai" value="{{ old('waktuSelesai')??$booking['waktu_akhir'] }}" required>
 
 					<div class="form-group row">
 						<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
@@ -282,5 +273,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/booking/durasi.js') }}" defer></script>
+<script src="{{ asset('js/booking/durasiView.js') }}" defer></script>
 @endsection
