@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\Http\Requests\AcceptBookingRequest;
 use App\Http\Requests\DenyBookingRequest;
-use App\Http\Requests\SaveBookingRequest;
+use App\Http\Requests\NewBookingRequest;
+use App\Http\Requests\EditBookingRequest;
 use App\Unit;
 use App\UnitType;
 use App\User;
@@ -24,7 +25,7 @@ class BookingController extends Controller
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
     }
 
-    function saveNewBooking(SaveBookingRequest $request) {
+    function saveNewBooking(NewBookingRequest $request) {
         $booking = new Booking();
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($request);
@@ -43,7 +44,7 @@ class BookingController extends Controller
         return view('booking.form', compact(['booking', 'units', 'unitTypes']));
     }
 
-    function saveEditBooking(SaveBookingRequest $request) {
+    function saveEditBooking(EditBookingRequest $request) {
         $booking = Booking::findOrFail($request['id']);
         $booking->abortIfVerified();
         $booking->saveFromRequest($request);

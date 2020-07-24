@@ -82,7 +82,7 @@ function populateWaktus() {
 		beginDate = new Date();
 		
 		durHour = 0;
-		durMin = 30;
+		durMin = 0;
 	}
 	if (beginDate.getMinutes()<30) {
 		beginDate.setMinutes(0);
