@@ -220,4 +220,5 @@
 <!-- </div> -->
 <script src="{{ asset('js/booking/durasiForm.js') }}" defer></script>
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
+<script src="{{ asset('js/booking/tabControls.js') }}" defer></script>
 @endsection
