@@ -34,6 +34,7 @@ class Booking extends Model
         $this->waktu_akhir = $request->waktuSelesai;
         $this->relay_ITSTV = $relayITSTV;
         $this->peserta_banyak = $peserta_banyak;
+        $this->disetujui = null;
         // If there's a new file being uploaded
         if ($request->has('dokumenPendukung')) {
             // If current booking already has a file pendukung
