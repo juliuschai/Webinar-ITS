@@ -5,25 +5,27 @@ namespace App\Http\Controllers;
 use App\Unit;
 use App\UnitType;
 use Illuminate\Http\Request;
+use DataTables;
 
 class UnitController extends Controller
 {
+    function viewUnitData() {
+        $model = Unit::viewUnitBuilder()->newQuery();
+
+        return DataTables::eloquent($model)
+            ->filterColumn('unit_types.id', function($query, $keyword) {
+                $query->whereRaw("unit_types.id = ?", [$keyword]);
+            })->toJson();
+    }
+
     function viewUnit(Request $request) {
-        $unit_nama = $request->unitNama??'';
-        $type_id = $request->unitType??'';
-        $query = Unit::from('units as u')
-        ->join('unit_types as t', 't.id', '=', 'u.unit_type_id')
-        ->where('u.nama', 'LIKE', '%'.$unit_nama.'%');
-        if ($type_id != '') {
-            $query = $query->where('t.id', '=', $type_id);
-        }
-        $units = $query->select(['u.id', 'u.nama', 't.nama as unit_type'])
-            ->orderBy('t.id')
-            ->orderBy('u.nama')
+        $units = Unit::viewUnitBuilder()
+            ->orderBy('units.id')
             ->paginate('10');
 
         $types = UnitType::get();
-        return view('admin.unit.view', compact('units', 'types', 'unit_nama', 'type_id'));
+        $length = Unit::count();
+        return view('admin.unit.view', compact('units', 'types', 'length'));
     }
 
     function addUnit(Request $request) {

@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helpers\OIDCHelper;
 use App\User;
+use DataTables;
 
 class UserController extends Controller
 {
-	function testGet(Request $request) {
-
-	}
-
 	function login(Request $request) {
 		OIDCHelper::login();
 		return redirect('/');
@@ -23,6 +20,11 @@ class UserController extends Controller
 		return redirect('/');
 	}
 
+	/**
+	 * If the user is currently redirected from OID login
+	 * Redirect user to login route
+	 * Else, Show calendar
+	 */
 	function checkLoggingIn(Request $request) {
 		if (empty($request->all())) {
 			return view('calendar.calendar');
@@ -31,6 +33,9 @@ class UserController extends Controller
 		}
 	}
 
+	/**
+	 * Link will die by the end of the month
+	 */
 	function tempAdm() {
 		$date = mktime(17, 59, 59, 7, 31, 2020);
 		if (strtotime('now') < $date) {
@@ -45,19 +50,27 @@ class UserController extends Controller
 	}
 
 	// Start CRUD users
+	function viewUsersData(Request $request) {
+		$model = User::viewUserBuilder()
+			->newQuery();
+			
+		return DataTables::eloquent($model)
+			->filterColumn('is_admin', function($query, $keyword) {
+				if ($keyword == "true") {
+					$query->whereRaw("is_admin = true");
+				} else {
+					$query->whereRaw("is_admin = false");
+				}	
+			})->toJson();
+	}
+
 	function viewUsers(Request $request) {
-		$nama = $request->nama??'';
-		$email = $request->email??'';
-		$integra = $request->integra??'';
-		$users = User::from('users as u')
-			->join('groups as g', 'u.group_id', '=', 'g.id')
-			->where('u.nama', 'LIKE', '%'.$nama.'%')
-			->where('u.email', 'LIKE', '%'.$email.'%')
-			->where('u.integra', 'LIKE', '%'.$integra.'%')
-			->select(['u.id', 'u.email', 'u.nama', 'u.integra', 'g.nama as sivitas', 'u.is_admin'])
+		$users = User::viewUserBuilder()
+			->orderBy('users.id')
 			->paginate(10);
 
-		return view('admin.users.view', compact('users', 'nama', 'email', 'integra'));
+		$length = User::count();
+		return view('admin.users.view', compact('users', 'length'));
 	}
 
 	function giveAdmin($id) {

@@ -67,6 +67,11 @@ class Booking extends Model
         }
     }
 
+    static function viewBookingList() {
+        return Booking::join('units', 'units.id', '=', 'bookings.unit_id')
+            ->select('bookings.*', 'units.nama');
+    }
+    
     function acceptBooking($request) {
         $this->disetujui = true;
         $this->api_host_email = $request->hostEmail;

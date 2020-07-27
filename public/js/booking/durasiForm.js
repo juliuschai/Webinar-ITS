@@ -110,12 +110,8 @@ function updateWaktu() {
 	let endDate = new Date(beginDate);
 	endDate.setHours(endDate.getHours()+parseInt(durHourSel.value), endDate.getMinutes()+parseInt(durMinSel.value), 0);
 
-	beginElm.value = new Date(beginDate-getTimeZoneOffsetInMs()).toISOString().substring(0, 16);
-	endElm.value = new Date(endDate-getTimeZoneOffsetInMs()).toISOString().substring(0, 16);
-}
-
-function getTimeZoneOffsetInMs() {
-	return new Date().getTimezoneOffset() * 60 * 1000;
+	beginElm.value = new Date(beginDate).toLocaleString();
+	endElm.value = new Date(endDate).toLocaleString();
 }
 
 function submitForm() {
