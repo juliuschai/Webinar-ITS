@@ -38,8 +38,10 @@ class OIDCHelper extends OpenIDConnectClient {
 	static function login() {
 		// Only run if user is not logged in
 		$oidc = OIDCHelper::OIDLogin();
+		if (!$oidc || !method_exists($oidc, 'requestUserInfo')) {
+			return redirect()->route('login');
+		}
 		$attr = $oidc->requestUserInfo();
-
 		$user = User::firstOrNew([
 			/* // ToDelete: if email of user is already in database, edit the current user (add 
 			sub and no_wa to current user) This only needs to run until all users in db has sub id
