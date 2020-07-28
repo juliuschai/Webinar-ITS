@@ -38,6 +38,9 @@ class OIDCHelper extends OpenIDConnectClient {
 	static function login() {
 		// Only run if user is not logged in
 		$oidc = OIDCHelper::OIDLogin();
+		if (!$oidc) {
+			return redirect()->route('login');
+		}
 		$attr = $oidc->requestUserInfo();
 
 		$user = User::firstOrNew([
