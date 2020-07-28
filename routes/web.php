@@ -30,26 +30,28 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
         Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
         
-        
+        Route::get('/booking/list/data', 'BookingController@listBookingData')->name('list.data');
         Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
-        Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
+        Route::post('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
         
         Route::group(['middleware' => 'owneroradmin'], function () {
             Route::get('storage/dokumen/get/{id}', 'FileController@getDokumen')->name('dokumen.get');
             Route::get('storage/dokumen/download/{id}', 'FileController@downloadDokumen')->name('dokumen.download');
 
             Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
-            Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
+            Route::post('/booking/edit/{id}', 'BookingController@saveEditBooking')->name('booking.edit');
         });
 
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/unit', 'UnitController@viewUnit')->name('admin.unit.view');
+            Route::get('/unit/data', 'UnitController@viewUnitData')->name('admin.unit.view.data');
             Route::post('/unit/add', 'UnitController@addUnit')->name('admin.unit.add');
             Route::post('/unit/delete/{id}', 'UnitController@delUnit')->name('admin.unit.delete');
             Route::get('/unit/edit/{id}', 'UnitController@viewEditUnit')->name('admin.unit.edit');
             Route::post('/unit/edit/{id}', 'UnitController@saveEditUnit')->name('admin.unit.edit');
             
             Route::get('/users', 'UserController@viewUsers')->name('admin.users.view');
+            Route::get('/users/data', 'UserController@viewUsersData')->name('admin.users.view.data');
             Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
             Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
             
@@ -57,8 +59,10 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             
             // Admin
             Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
+            Route::get('/admin/booking/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');
+            Route::get('/admin/booking/list/aprove', 'BookingController@adminAproveBookingData')->name('admin.list.aprove');
             Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
-            Route::delete('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
+            Route::post('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
             Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');
             Route::post('/admin/booking/setuju/{id}', 'BookingController@acceptBooking')->name('booking.accept');
             Route::post('/admin/booking/cancel/{id}', 'BookingController@cancelBooking')->name('booking.cancel');

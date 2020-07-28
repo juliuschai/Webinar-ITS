@@ -4,89 +4,128 @@
 
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-            <h2 class="table-title">Daftar Webinar</h2>
-            <table class="table table-bordered table-striped table-bordered table-hover">
-                <thead class="thead-custom-blue">
-                    <tr>
-                    <th class="text-center" scope="col">#</th>
-                    <th class="text-center" scope="col">Tanggal Booking</th>
-                    <th class="text-center" scope="col">Tanggal Webinar</th>
-                    <th class="text-center" scope="col">Waktu</th>
-                    <th class="text-center" scope="col">Nama Acara</th>
-                    <th class="text-center" scope="col">Penyelenggara Acara</th>
-                    <th class="text-center" scope="col">Status</th>
-                    <th class="text-center" scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach( $bookings as $booking)
-                    <tr>
-                    <th class="text-center px-0" scope="row">{{ $loop->iteration+(($bookings->currentPage()-1)*10) }}</th>
-                    <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->created_at)) }}</td>
-                    <td class="text-center px-0">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
-                    <td class="text-center px-0">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
-                    <td class="text-center px-0" style="width: 30%">{{ $booking->nama_acara }}</td>
-                    <td class="text-center px-0">{{ $booking->nama }}</td>
-                    @if ($booking->disetujui == '0') 
-                    <td style="background-color: #FF6961; padding: 8px 8px;" class="text-center">Ditolak</td>
-                    @elseif ($booking->disetujui == '1') 
-                    <td style="background-color: #99d18f; padding: 8px 8px;" class="text-center">Disetujui</td>
-                    @else
-                    <td style="background-color: #FCF0CF; padding: 8px 8px;" class="text-center">Menunggu</br>Konfirmasi</td>
-                    @endif
-                    <td class="text-center" style="width: 13%; padding: 5px 8px;">
-                        <a href="{{ url('/booking/view/'.$booking->id) }}">
-                        <button style="padding: 3px 8px" type="button" class="btn btn-custom-primary" title="Detail Webinar">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        </a>
-                        <a href="{{ url('/booking/edit/'.$booking->id) }}">
-                        <button style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        </a> 
-                        <form action="{{ url('/admin/booking/delete/'.$booking->id) }}" method="post" class="d-inline">    
-                        @method('delete')
-                        @csrf
-                        <button style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar {{$booking->nama_acara}} ?')" title="Hapus Webinar">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                        </form>
-                    </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+			<h2 class="table-title">Daftar Webinar</h2>
+			<!-- Tempaltes -->
+			<!-- Disetujui templates -->
+			<div id="ditolakStatus" style="display: none;">
+				<div style="background-color: #FF6961; padding: 8px 8px; margin: 0px" class="text-center">
+					Ditolak
+				</div>
+			</div>
+			<!-- Status templates -->
+			<div id="ditolakStatus" style="display: none;">
+				<div style="background-color: #FF6961; padding: 8px 8px; margin: 0px" class="text-center">
+					Ditolak
+				</div>
+			</div>
+			<div id="disetujuiStatus" style="display: none;">
+				<div style="background-color: #99d18f; padding: 8px 8px; margin: 0px" class="text-center">
+					Disetujui
+				</div>
+			</div>
+			<div id="menungguStatus" style="display: none;">
+				<div style="background-color: #FCF0CF; padding: 8px 8px; margin: 0px" class="text-center">
+					Menunggu<br>Konfirmasi
+				</div>
+			</div>
+			<!-- Action button templates -->
+			<div id="viewBtnTemplate" style="display: none;">
+				<a href="{{ route('booking.view', ['id'=>0]) }}">
+				<button style="padding: 3px 8px" type="button" class="btn btn-custom-primary" title="Detail Webinar">
+					<i class="fa fa-search"></i>
+				</button>
+				</a>
+			</div>
+			<div id="editBtnTemplate" style="display: none;">
+				<a href="{{ route('booking.edit', ['id'=>0]) }}">
+				<button style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
+					<i class="fa fa-pencil"></i>
+				</button>
+				</a> 
+			</div>
+			<div id="delBtnTemplate" style="display: none;">
+				<form action="{{ route('booking.delete', ['id'=>0]) }}" method="post" class="d-inline">    
+					@csrf
+					<button style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
+						<i class="fa fa-trash-o"></i>
+					</button>
+				</form>
+			</div>
+			<!-- Disable Button -->
+			<div id="editBtnDisable" style="display: none;">
+				<a href="{{ route('booking.edit', ['id'=>0]) }}">
+				<button disabled style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
+					<i class="fa fa-pencil"></i>
+				</button>
+				</a> 
+			</div>
+			<div id="delBtnDisable" style="display: none;">
+				<form action="{{ route('booking.delete',['id'=>0]) }}" method="delete" class="d-inline">    
+					@csrf
+					<button disabled style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
+						<i class="fa fa-trash-o"></i>
+					</button>
+				</form>
+			</div>
+			<table 
+				id="bookingTable"
+				class="table table-bordered table-striped table-bordered table-hover"
+				data-ajaxurl="{{route('admin.list.data')}}"
+			>
+				<thead class="thead-custom-blue">
+					<tr>
+					<th class="text-center" scope="col">Id</th>
+					<th class="text-center" scope="col">Tanggal Booking</th>
+					<th class="text-center" scope="col">Tanggal Webinar</th>
+					<th class="text-center" scope="col">Waktu</th>
+					<th class="text-center" scope="col">Nama Acara</th>
+					<th class="text-center" scope="col">Penyelenggara Acara</th>
+					<th class="text-center" scope="col">Status</th>
+					<th class="text-center" scope="col">Aksi</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach( $bookings as $booking)
+					<tr>
+						<td>{{$booking->id}}</td>
+						<td>{{$booking->created_at}}</td>
+						<td>{{$booking->waktu_mulai}}</td>
+						<td>{{$booking->waktu_mulai}}</td>
+						<td>{{$booking->nama_acara}}</td>
+						<td>{{$booking->nama}}</td>
+						<td></td>
+						<td></td>
+					</tr>
+					@endforeach
+				</tbody>
+				<tfoot class="thead-custom-blue">
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th><input type="text" placeholder="Search Nama Acara"></th>
+						<th><input type="text" placeholder="Search Penyelenggara Acara"></th>
+						<th>
+							<select id="searchStatus">
+								<option>Semua</option>
+								<option value="none">Menggungu Konfirmasi</option>
+								<option value="false">Ditolak</option>
+								<option value="true">Disetujui</option>
+							</select>
+						</th>
+						<th></th>
+					</tr>
+				</tfoot>
+			</table>
 		</div>
 	</div>
 <!-- </div> -->
-<script defer>
+@endsection
 
-	function getTimeZoneOffsetInMs() {
-		return new Date().getTimezoneOffset() * -60 * 1000;
-	}
-	
-	function onupdateDurasi() {
-		let start = new Date(document.getElementById('waktuMulai').value);
-		let hours = document.getElementById('durasi').value;
-
-		let end = new Date(start.getTime() + getTimeZoneOffsetInMs() + parseFloat(hours)*3600*1000);
-		document.getElementById('waktuSelesai').value = end.toISOString().substring(0, 16);
-	}
-
-	function onupdateWaktu() {
-		let start = new Date(document.getElementById('waktuMulai').value);
-		let end = new Date(document.getElementById('waktuSelesai').value);
-
-		document.getElementById('durasi').value = (end-start)/3600/1000;
-	}
-	
-	// Even though the script is already at the bottom of the page and inputs are already loaded,
-	// Seems like the function still needs to wait until document is ready
-	// idk what's not ready when the script is loaded with the html tho
-	setTimeout(onupdateWaktu, 500);
-</script>
-
-{{ $bookings->links() }}
-
+@section('scripts')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" defer/>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js" defer></script>
+<script src="{{asset('js/util/datatablesPlugin.js') }}" defer></script>
+<script src="{{asset('js/booking/table/view.js') }}" defer></script>
 @endsection

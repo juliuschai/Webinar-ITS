@@ -32,10 +32,7 @@
     <link href="{{ asset('assets/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> -->
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> -->
 
 </head>
 <body>
@@ -148,7 +145,6 @@
         <!-- jQuery -->
         <!-- <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}" defer></script> -->
 
-        @yield('scripts')
 
         <!-- Bootstrap -->
         <!-- <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
@@ -159,6 +155,7 @@
         <!-- Page JS Plugins -->
         <!-- <script src="{{ asset('assets/js/plugins/jquery-ui/jquery-ui.min.js') }}" defer></script> -->
     </div>
+  @yield('scripts')
 </body>
 </html>
 @else
