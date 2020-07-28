@@ -108,11 +108,11 @@ class BookingController extends Controller
 		$id = $request['id'];
 		Booking::destroy($id);
 
-		if(Route::is('booking.list')){
+		// if(Route::is('booking.list')){
 			return redirect()->route('booking.list');
-		} else if(Route::is('admin.list')){
-			return redirect()->route('admin.list');
-		}
+		// } else if(Route::is('admin.list')){
+			// return redirect()->route('admin.list');
+		// }
 	}
 
 	public function adminDeleteBooking(Request $request) {
