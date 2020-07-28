@@ -13,28 +13,6 @@ class Booking extends Model
         'waktu_akhir' => 'datetime',
     ];
 
-    /**
-     * waktu_mulai accessor
-     */
-    function getWaktuMulaiAttribute($value) {
-        return Booking::getFormattedTimeOrNull($value);
-    }
-
-    /**
-     * waktu_akhir accessor
-     */
-    function getWaktuAkhirAttribute($value) {
-        return Booking::getFormattedTimeOrNull($value);
-    }
-
-    static function getFormattedTimeOrNull($value) {
-        if (!$value) {
-            return null;
-        } else {
-            return date('Y-m-d\TH:i', strtotime($value));
-        }
-    }
-
     function setUserId($user_id) {
         $this->user_id = $user_id;
     }
@@ -112,8 +90,8 @@ class Booking extends Model
 
     function setUserFields($id) {
         $user = User::findOrFail($id);
-        $this->integra_pic = $user->nama;
-        $this->nama_pic = $user->integra;
+        $this->integra_pic = $user->integra;
+        $this->nama_pic = $user->nama;
         $this->email_pic = $user->email;
         $this->no_wa = $user->no_wa;
         $this->sivitas = Group::getNamaFromId($user->group_id);
@@ -129,7 +107,7 @@ class Booking extends Model
 
     function abortIfVerified() {
         if ($this->disetujui != null) {
-            abort(403);
+            abort(403, 'Booking yang sudah di verify tidak bisa di edit');
         }
     }
 
@@ -140,7 +118,7 @@ class Booking extends Model
      */ 
     function abortButOwner($id) {
         if (!$this->isOwner($id)) {
-            abort(403);
+            abort(403, 'Anda bukan pemilik dari booking ini');
         }
     }
 

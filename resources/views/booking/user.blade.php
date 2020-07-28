@@ -157,7 +157,7 @@
                                     <label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
                                     <i class="fa fa-calendar-o booking"></i>
                                     <div class="col-md-6">
-                                        <input id="waktuMulai" type="datetime-local" class="form-control" name="waktuMulai" value="{{ old('waktuMulai') }}" required>
+                                        <input id="waktuMulai" type="text" class="form-control" name="waktuMulai" value="{{ old('waktuMulai') }}" required>
                                     </div>
                                 </div>
 
@@ -173,7 +173,7 @@
                                     <label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}</label>
                                     <i class="fa fa-calendar booking"></i>
                                     <div class="col-md-6">
-                                        <input id="waktuSelesai" type="datetime-local" class="form-control" name="waktuSelesai" value="{{ old('waktuSelesai') }}" required>
+                                        <input id="waktuSelesai" type="text" class="form-control" name="waktuSelesai" value="{{ old('waktuSelesai') }}" required>
                                     </div>
                                 </div>
 

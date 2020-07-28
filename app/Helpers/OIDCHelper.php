@@ -38,8 +38,10 @@ class OIDCHelper extends OpenIDConnectClient {
 	static function login() {
 		// Only run if user is not logged in
 		$oidc = OIDCHelper::OIDLogin();
+		if (!$oidc || !method_exists($oidc, 'requestUserInfo')) {
+			return redirect()->route('login');
+		}
 		$attr = $oidc->requestUserInfo();
-
 		$user = User::firstOrNew([
 			/* // ToDelete: if email of user is already in database, edit the current user (add 
 			sub and no_wa to current user) This only needs to run until all users in db has sub id
@@ -53,9 +55,15 @@ class OIDCHelper extends OpenIDConnectClient {
 		// ToDelete:
 		$user->sub = $attr->sub;
 		
+		if (!$attr->email) {
+			abort(403, 'Primary Email harus diisi, Update Primary Email dari menu Settings myITS SSO');
+		}
 		$user->email = $attr->email;
 		$user->nama = $attr->name;
 		$user->integra = $attr->reg_id;
+		if (!$attr->phone) {
+			abort(403, 'No. WA harus diisi, Update No. WA dari menu Settings myITS SSO');
+		}
 		$user->no_wa = $attr->phone;
 		$groupStr = OIDCHelper::groupToString($attr->group);
 		$user->group_id = Group::findOrCreateGetId($groupStr);

@@ -11057,7 +11057,7 @@ fieldset.next {
   font-size: 0.8em;
   height: 50px;
   position: relative;
-  /* margin-top: -50px; */
+  margin-top: -50px;
   /* margin-bottom: 50px; */
   /* margin: 0; */
   margin-left: 0;

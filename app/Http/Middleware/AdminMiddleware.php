@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (!User::findOrLogout(Auth::id())->isAdmin()) {
-            abort(403);
+            abort(403, 'Anda bukan admin');
         }
         return $next($request);
     }

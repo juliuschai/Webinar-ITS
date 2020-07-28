@@ -5,10 +5,6 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-					<ul id="section-tabs">
-							<li id="satu" class="current active">Data PIC Zoom</li>
-							<li id="dua">Informasi</li>
-					</ul>
 
 				<div class="card-body">
 					@if ($errors->any())
@@ -27,8 +23,14 @@
 					<form id="bookingForm" method="POST" action="{{ route('booking.edit', ['id' => $booking->id]) }}" enctype="multipart/form-data">
 					@endif
 						@csrf
-
 						<div id="one" class="tab">
+
+							<ul id="section-tabs">
+								<li style="margin-left: -20px;" id="ho" class="current active">Data PIC Zoom</li>
+								<li style="margin-right: -20px;"id="hi">Informasi</li>
+							</ul>
+
+							<div>Jika data yang terlampir belum sesuai dengan data myITS SSO, silahkan login ulang dan coba lagi</div>
 							<div class="form-group row">
 								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
@@ -83,7 +85,7 @@
 									>
 								</div>
 								<div class="col-md-6">
-									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Data Profil SSO</sub>
+									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Menu Settings myITS SSO</sub>
 								</div>	
 							</div>
 							<div class="form-group row">
@@ -92,14 +94,19 @@
 						</div>
 
 						<div id="two" class="tab">
+						<ul id="section-tabs">
+							<li style="margin-left: -20px;" id="ho">Data PIC Zoom</li>
+							<li style="margin-right: -20px;"id="hi" class="current active">Informasi</li>
+						</ul>
+
 							<div class="form-group row">
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="namaAcara" type="text" class="form-control" name="namaAcara" 
-										value="{{ old('namaAcara')??$booking['nama_acara'] }}" required
-									>
+									<textarea style="resize: none;" rows="2" cols="30" 
+										name="namaAcara" id="namaAcara" type="text" class="form-control" 
+										required>{{ old('namaAcara')??$booking['nama_acara'] }}
+									</textarea>
 								</div>
 							</div>
 
@@ -141,24 +148,11 @@
 							@endif
 
 							<div class="form-group row">
-								<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
+								<label for="mulaiDateElm" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-calendar-o booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="waktuMulai" type="datetime-local" class="form-control" name="waktuMulai" 
-										value="{{ old('waktuMulai')??$booking['waktu_mulai'] }}" required
-									>
-								</div>
-							</div>
-
-							<div class="form-group row">
-								<label for="waktuSelesai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Selesai Webinar') }}<p style="color: red" class="d-inline">*</p></label>
-								<i class="fa fa-calendar booking"></i>
-								<div class="col-md-6">
-									<input 
-										id="waktuSelesai" type="datetime-local" class="form-control" name="waktuSelesai" 
-										value="{{ old('waktuSelesai')??$booking['waktu_akhir'] }}" onchange="onupdateWaktu()" required
-									>
+									<input id="mulaiDateElm" type="date" class="form-control" name="mulaiDateElm" onchange="updateWaktu()">
+									<select name="mulaiTimeSelect" id="mulaiTimeSelect" onchange="updateWaktu()"></select>
 								</div>
 							</div>
 
@@ -166,10 +160,14 @@
 								<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-clock-o booking"></i>
 								<div class="col-md-6">
-									<input id="durasi" type="text" style="width:200px;" class="form-control d-inline" value="" onchange="onupdateDurasi()">
-										Jam
+									<select name="durHour" id="durHour" onchange="updateWaktu()"></select> jam
+									<select name="durMinute" id="durMinute" onchange="updateWaktu()"></select> menit
+									{{-- <input id="durasi" type="text" style="width:200px;" class="form-control d-inline" value="" onchange="onupdateDurasi()">
+										Jam --}}
 								</div>
 							</div>
+							<input id="waktuMulai" type="hidden" name="waktuMulai" value="{{ old('waktuMulai')??$booking['waktu_mulai'] }}" required>
+							<input id="waktuSelesai" type="hidden" name="waktuSelesai" value="{{ old('waktuSelesai')??$booking['waktu_akhir'] }}" required>
 
 							<div class="form-group row">
 								<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
@@ -201,15 +199,14 @@
 						<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-								<button style="position: absolute;bottom: 15px;right: 200px;" type="button" id="prevvBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Previous</button>
-									<button style="position: absolute;bottom: 15px;right: 50px;" type="submit" id="submitBtn" class="btn btn-submit">
+									<button style="position: absolute;bottom: 15px;right: 200px;" type="button" id="prevvBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Previous</button>
+									<button style="position: absolute;bottom: 15px;right: 50px;" type="button" id="submitBtn" class="btn btn-submit" onclick="submitForm()">
 										@if(Route::is('booking.new'))
 										{{ __('Submit Booking') }}
 										@elseif(Route::is('booking.edit'))
 										{{ __('Edit Booking') }}
 										@endif
 									</button>
-
 								</div>
 							</div>
 						</div>
@@ -221,6 +218,7 @@
 		</div>
 	</div>
 <!-- </div> -->
-<script src="{{ asset('js/booking/durasi.js') }}" defer></script>
+<script src="{{ asset('js/booking/durasiForm.js') }}" defer></script>
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
+<script src="{{ asset('js/booking/tabControls.js') }}" defer></script>
 @endsection
