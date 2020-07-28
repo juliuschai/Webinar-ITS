@@ -30,7 +30,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         Route::get('/booking/new', 'BookingController@viewNewBooking')->name('booking.new');
         Route::post('/booking/new', 'BookingController@saveNewBooking')->name('booking.new');
         
-        
+        Route::get('/booking/list/data', 'BookingController@listBookingData')->name('list.data');
         Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
         Route::post('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
         
@@ -60,6 +60,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             // Admin
             Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
             Route::get('/admin/booking/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');
+            Route::get('/admin/booking/list/aprove', 'BookingController@adminAproveBookingData')->name('admin.list.aprove');
             Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
             Route::post('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
             Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');

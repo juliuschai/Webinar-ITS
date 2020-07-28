@@ -108,7 +108,11 @@ class BookingController extends Controller
 		$id = $request['id'];
 		Booking::destroy($id);
 
-		return redirect()->route('booking.list');
+		if(Route::is('booking.list')){
+			return redirect()->route('booking.list');
+		} else if(Route::is('admin.list')){
+			return redirect()->route('admin.list');
+		}
 	}
 
 	public function adminDeleteBooking(Request $request) {
@@ -116,6 +120,33 @@ class BookingController extends Controller
 		Booking::destroy($id);
 
 		return redirect()->route('admin.list');
+	}
+
+	function adminAproveBookingData() {
+		$model = Booking::viewBookingList()
+			->where('bookings.disetujui', '=', '1')
+			->newQuery();
+
+		return DataTables::eloquent($model)
+			->toJson();
+	}
+
+	function listBookingData() {
+		$model = Booking::viewBookingList()
+			->where('bookings.user_id', '=', Auth::id())
+			->newQuery();
+
+		return DataTables::eloquent($model)
+			->filterColumn('disetujui', function($query, $keyword) {
+				if ($keyword == "true") {
+					$query->whereRaw("disetujui = true");
+				} else if ($keyword == "false"){
+					$query->whereRaw("disetujui = false");
+				} else if ($keyword == "none"){
+					$query->whereRaw("disetujui IS NULL");
+				}	
+			})
+			->toJson();
 	}
 
 	//Admin
@@ -138,19 +169,17 @@ class BookingController extends Controller
 
 	public function adminListBooking(Request $request) {
 		$bookings = Booking::viewBookingList()
-			->paginate('10');
+					->paginate('10');
 
 		return view('admin.table', compact(['bookings']));
 	}
 
 	public function aproveBooking(Request $request) {
 		$bookings = Booking::viewBookingList()
-		->where('bookings.disetujui', '=', '1')
-		->paginate('10');
+					->where('bookings.disetujui', '=', '1')
+					->paginate('10');
 
-		$isAdmin = true;
-
-		return view('admin.aprove', compact(['bookings', 'isAdmin']));
+		return view('admin.aprove', compact(['bookings']));
 	}
 
 	function getEvents() {

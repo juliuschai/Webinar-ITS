@@ -37,7 +37,7 @@
 			</div>
 			<div id="editBtnTemplate" style="display: none;">
 				<a href="{{ route('booking.edit', ['id'=>0]) }}">
-				<button id="editBtn" disabled="disabled" style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
+				<button id="editBtn" style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
 					<i class="fa fa-pencil"></i>
 				</button>
 				</a> 
@@ -69,7 +69,7 @@
 			<table 
 				id="bookingTable"
 				class="table table-bordered table-striped table-bordered table-hover"
-				data-ajaxurl="{{route('admin.list.data')}}"
+				data-ajaxurl="{{route('list.data')}}"
 			>
 				<thead class="thead-custom-blue">
 					<tr>
@@ -81,7 +81,6 @@
 					<th class="text-center" scope="col">Penyelenggara Acara</th>
 					<th class="text-center" scope="col">Status</th>
                     <th class="text-center" scope="col">Aksi</th>
-                    <!-- <th class="text-center" scope="col">Aksi</th> -->
 					</tr>
 				</thead>
 				<tbody>

@@ -2,7 +2,6 @@
 
 @section('content')
 
-    @if($isAdmin)
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<h2 class="table-title">Webinar</h2>
@@ -65,7 +64,7 @@
 			<table 
 				id="bookingTable"
 				class="table table-bordered table-striped table-bordered table-hover"
-				data-ajaxurl="{{route('admin.list.data')}}"
+				data-ajaxurl="{{route('admin.list.aprove')}}"
 			>
 				<thead class="thead-custom-blue">
 					<tr>
@@ -101,21 +100,13 @@
 						<th></th>
 						<th><input type="text" placeholder="Search Nama Acara"></th>
 						<th><input type="text" placeholder="Search Penyelenggara Acara"></th>
-						<th>
-							<select id="searchStatus">
-								<option>Semua</option>
-								<option value="none">Menggungu Konfirmasi</option>
-								<option value="false">Ditolak</option>
-								<option value="true">Disetujui</option>
-							</select>
-						</th>
+						<th></th>
 						<th></th>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 	</div>
-    @endif
 <!-- </div> -->
 @endsection
 

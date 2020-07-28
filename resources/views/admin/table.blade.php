@@ -44,7 +44,7 @@
 				</a> 
 			</div>
 			<div id="delBtnTemplate" style="display: none;">
-				<form action="{{ route('admin.delete', ['id'=>0]) }}" method="post" class="d-inline">    
+				<form action="{{ route('booking.delete', ['id'=>0]) }}" method="post" class="d-inline">    
 					@csrf
 					<button style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
 						<i class="fa fa-trash-o"></i>
@@ -60,7 +60,7 @@
 				</a> 
 			</div>
 			<div id="delBtnDisable" style="display: none;">
-				<form action="{{ route('admin.delete',['id'=>0]) }}" method="delete" class="d-inline">    
+				<form action="{{ route('booking.delete',['id'=>0]) }}" method="delete" class="d-inline">    
 					@csrf
 					<button disabled style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
 						<i class="fa fa-trash-o"></i>

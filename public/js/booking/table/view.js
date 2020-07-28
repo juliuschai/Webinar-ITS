@@ -119,6 +119,7 @@ bookingTableElm.DataTable({
 					resultHTML += viewBtn.createButton(full.id).html();
 					resultHTML += disableEdit.html();
 					resultHTML += disableDel.html();
+					
 					return resultHTML;
 				} else if (data.disetujui == false || data.disetujui == null) {
 					let resultHTML = '';
