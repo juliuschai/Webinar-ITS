@@ -32,14 +32,14 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         
         
         Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
-        Route::delete('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
+        Route::post('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
         
         Route::group(['middleware' => 'owneroradmin'], function () {
             Route::get('storage/dokumen/get/{id}', 'FileController@getDokumen')->name('dokumen.get');
             Route::get('storage/dokumen/download/{id}', 'FileController@downloadDokumen')->name('dokumen.download');
 
             Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
-            Route::post('/booking/edit', 'BookingController@saveEditBooking')->name('booking.edit');
+            Route::post('/booking/edit/{id}', 'BookingController@saveEditBooking')->name('booking.edit');
         });
 
         Route::group(['middleware' => 'admin'], function () {
@@ -61,7 +61,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
             Route::get('/admin/booking/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');
             Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
-            Route::delete('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
+            Route::post('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
             Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');
             Route::post('/admin/booking/setuju/{id}', 'BookingController@acceptBooking')->name('booking.accept');
             Route::post('/admin/booking/cancel/{id}', 'BookingController@cancelBooking')->name('booking.cancel');

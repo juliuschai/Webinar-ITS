@@ -6,6 +6,12 @@
 		<div class="col-md-12 col-sm-12">
 			<h2 class="table-title">Daftar Webinar</h2>
 			<!-- Tempaltes -->
+			<!-- Disetujui templates -->
+			<div id="ditolakStatus" style="display: none;">
+				<div style="background-color: #FF6961; padding: 8px 8px; margin: 0px" class="text-center">
+					Ditolak
+				</div>
+			</div>
 			<!-- Status templates -->
 			<div id="ditolakStatus" style="display: none;">
 				<div style="background-color: #FF6961; padding: 8px 8px; margin: 0px" class="text-center">
@@ -38,9 +44,25 @@
 				</a> 
 			</div>
 			<div id="delBtnTemplate" style="display: none;">
-				<form action="{{ route('admin.delete',['id'=>0]) }}" method="delete" class="d-inline">    
+				<form action="{{ route('admin.delete', ['id'=>0]) }}" method="post" class="d-inline">    
 					@csrf
 					<button style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
+						<i class="fa fa-trash-o"></i>
+					</button>
+				</form>
+			</div>
+			<!-- Disable Button -->
+			<div id="editBtnDisable" style="display: none;">
+				<a href="{{ route('booking.edit', ['id'=>0]) }}">
+				<button disabled style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
+					<i class="fa fa-pencil"></i>
+				</button>
+				</a> 
+			</div>
+			<div id="delBtnDisable" style="display: none;">
+				<form action="{{ route('admin.delete',['id'=>0]) }}" method="delete" class="d-inline">    
+					@csrf
+					<button disabled style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
 						<i class="fa fa-trash-o"></i>
 					</button>
 				</form>
