@@ -23,9 +23,6 @@ class OIDCHelper extends OpenIDConnectClient {
 			$oidc->setVerifyHost(false);
 			$oidc->setVerifyPeer(false);
 
-			if (!session()->has('openid_connect_state')) {
-				return redirect()->route('login');
-			}	
 			$oidc->authenticate(); //call the main function of myITS SSO login
 			session(['id_token' => $oidc->getIdToken()]);
 			session()->save();
