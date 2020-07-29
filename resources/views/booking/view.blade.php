@@ -190,25 +190,22 @@
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
-								@if($booking->disetujui == false || $booking->disetujui == null)
+								@if($booking->disetujui === null)
 								<button type="submit" class="btn btn-submit">
 									{{ __('Setujui Booking') }}
 								</button>
-								@endif
-								@if($booking->disetujui == true)
-								<button type="button" class="btn btn-warning" onclick="cancelBooking()">
-									{{ __('Cancel Booking') }}
-								</button>
-								@endif
-								@if($booking->disetujui == false || $booking->disetujui == null)
 								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal" onclick="modalPopulate()">
 									{{ __('Tolak Booking') }}
+								</button>
+								@else
+								<button type="button" class="btn btn-warning" onclick="cancelBooking()">
+									{{ __('Cancel Booking') }}
 								</button>
 								@endif
 							</div>
 						</div>
 					</form>
-						@if($booking->disetujui == true)
+					@if($booking->disetujui !== null)
 						<form id="cancelForm" method="POST" action="{{ route('booking.cancel', ['id' => $booking->id]) }}">
 							@csrf
 						</form>

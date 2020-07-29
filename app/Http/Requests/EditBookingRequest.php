@@ -25,7 +25,7 @@ class EditBookingRequest extends FormRequest
     {
         return [
             'namaAcara' => 'required|string|max:254',
-            'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg',
+            'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg,png|max:2000',
             'penyelengaraAcara' => 'required|numeric|exists:units,id',
             'waktuMulai' => 'required|date|after:now',
             'waktuSelesai' => 'required|date|after:waktuMulai',
