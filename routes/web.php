@@ -32,7 +32,6 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         
         Route::get('/booking/list/data', 'BookingController@listBookingData')->name('list.data');
         Route::get('/booking/waitinglist', 'BookingController@waitingListBooking')->name('booking.list');
-        Route::post('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
         
         Route::group(['middleware' => 'owneroradmin'], function () {
             Route::get('storage/dokumen/get/{id}', 'FileController@getDokumen')->name('dokumen.get');
@@ -40,6 +39,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
 
             Route::get('/booking/edit/{id}', 'BookingController@viewEditBooking')->name('booking.edit');
             Route::post('/booking/edit/{id}', 'BookingController@saveEditBooking')->name('booking.edit');
+            Route::post('/booking/delete/{id}', 'BookingController@deleteBooking')->name('booking.delete');
         });
 
         Route::group(['middleware' => 'admin'], function () {
