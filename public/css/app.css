@@ -11766,6 +11766,7 @@ input#relayITSTV {
   color: #fff !important;
   background-color: #f0ad4e !important;
   border-color: #eea236 !important;
+  margin-left: 3px !important;
 }
 
 .btn-custom-warning:hover {
@@ -11957,15 +11958,31 @@ input#relayITSTV {
 
 /* Table */
 
-/* table.dataTable thead .sorting:after,
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_asc:before,
-table.dataTable thead .sorting_asc_disabled:after,
-table.dataTable thead .sorting_asc_disabled:before,
-table.dataTable thead .sorting_desc:after,
-table.dataTable thead .sorting_desc:before,
-table.dataTable thead .sorting_desc_disabled:after,
-table.dataTable thead .sorting_desc_disabled:before {
-bottom: .5em;
-} */
+#bookingTable td:nth-child(1){
+  width: 5% !important;
+}
+
+#bookingTable td:nth-child(2){
+  width: 5% !important;
+}
+
+#bookingTable td:nth-child(3){
+  width: 5% !important;
+}
+
+#bookingTable td:nth-child(4){
+  width: 23% !important;
+}
+
+#bookingTable td:nth-child(5){
+  width: 20% !important;
+}
+
+#bookingTable td:nth-child(6){
+  width: 10% !important;
+}
+
+#bookingTable td:nth-child(7){
+  width: 13% !important;
+  padding: 5px 8px;
+}

@@ -108,7 +108,7 @@
 						<th>
 							<select id="searchStatus">
 								<option>Semua</option>
-								<option value="none">Menggungu Konfirmasi</option>
+								<option value="none">Menunggu Konfirmasi</option>
 								<option value="false">Ditolak</option>
 								<option value="true">Disetujui</option>
 							</select>
