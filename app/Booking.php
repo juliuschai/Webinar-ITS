@@ -34,6 +34,7 @@ class Booking extends Model
         $this->waktu_akhir = $request->waktuSelesai;
         $this->relay_ITSTV = $relayITSTV;
         $this->peserta_banyak = $peserta_banyak;
+        $this->disetujui = null;
         // If there's a new file being uploaded
         if ($request->has('dokumenPendukung')) {
             // If current booking already has a file pendukung
@@ -67,6 +68,11 @@ class Booking extends Model
         }
     }
 
+    static function viewBookingList() {
+        return Booking::join('units', 'units.id', '=', 'bookings.unit_id')
+            ->select('bookings.*', 'units.nama');
+    }
+    
     function acceptBooking($request) {
         $this->disetujui = true;
         $this->api_host_email = $request->hostEmail;

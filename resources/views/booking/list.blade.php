@@ -36,30 +36,4 @@
 		</div>
 	</div>
 <!-- </div> -->
-<script defer>
-
-	function getTimeZoneOffsetInMs() {
-		return new Date().getTimezoneOffset() * -60 * 1000;
-	}
-	
-	function onupdateDurasi() {
-		let start = new Date(document.getElementById('waktuMulai').value);
-		let hours = document.getElementById('durasi').value;
-
-		let end = new Date(start.getTime() + getTimeZoneOffsetInMs() + parseFloat(hours)*3600*1000);
-		document.getElementById('waktuSelesai').value = end.toISOString().substring(0, 16);
-	}
-
-	function onupdateWaktu() {
-		let start = new Date(document.getElementById('waktuMulai').value);
-		let end = new Date(document.getElementById('waktuSelesai').value);
-
-		document.getElementById('durasi').value = (end-start)/3600/1000;
-	}
-	
-	// Even though the script is already at the bottom of the page and inputs are already loaded,
-	// Seems like the function still needs to wait until document is ready
-	// idk what's not ready when the script is loaded with the html tho
-	setTimeout(onupdateWaktu, 500);
-</script>
 @endsection

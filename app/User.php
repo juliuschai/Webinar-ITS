@@ -38,6 +38,14 @@ class User extends Authenticatable
         // 'email_verified_at' => 'datetime',
     ];
 
+    static function viewUserBuilder() {
+        return User::join('groups', 'group_id', '=', 'groups.id')
+            ->select([
+                'users.id', 'email', 'users.nama',
+                'integra', 'groups.nama as sivitas', 'is_admin'
+            ]);
+    }
+
     function checkId($id) {
         return $this->id == $id;
     }
