@@ -129,13 +129,24 @@
 							</div>
 
 							<div class="form-group row">
-								<label for="dokumenPendukung" class="col-md-4 col-form-label text-md-left">{{ __('File Pendukung') }}</label>
+								<label for="dokumenPendukung" class="col-md-4 col-form-label text-md-left">{{ __('File Pendukung') }}
+									@if(!$booking->file_pendukung)
+									<p style="color: red" class="d-inline">*</p>
+									@endif
+								</label>
 								<i class="fa fa-file booking"></i>
 								<div class="col-md-6">
 									<input style="border: none; margin-left: -12px;" id="dokumenPendukung" type="file" name="dokumenPendukung" class="form-control">
 								</div>
+								<div class="col-md-6">
+									<sub class="">Max size: 2 mb, format pdf,png,jpg,jpeg</sub>
+									@if($booking->file_pendukung)
+									<br><sub class="">File pendukung tidak perlu di upload ulang, kecuali jika file pendukung ingin diganti</sub>
+									@endif
+									</sub>
+								</div>
 							</div>
-
+							
 							@if(isset($booking->file_pendukung))
 							<div class="form-group row">
 								<label class="col-md-4 col-form-label text-md-left"></label>
