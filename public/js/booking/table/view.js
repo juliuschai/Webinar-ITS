@@ -28,7 +28,7 @@ bookingTableElm.DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: bookingTableElm.data('ajaxurl'),
-	// deferLoading: bookingTableElm.data("length"),
+	deferLoading: bookingTableElm.data("length"),
 	columnDefs:[
 		{
 			"targets": 0,
@@ -97,7 +97,7 @@ bookingTableElm.DataTable({
 			"searchable": true,
 			"visible": true,
 			"render": function(data, type, full, meta) {
-				if (data == null) {
+				if (data === null||data === "") {
 					return menungguStatus.clone().show().html();
 				} else if (data == true) {
 					return disetujuiStatus.clone().show().html();
@@ -114,20 +114,18 @@ bookingTableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function (data, type, full, meta) {
+				let resultHTML = '<div style="white-space: nowrap;">'
 				if (data.disetujui == true) {
-					let resultHTML = '';
 					resultHTML += viewBtn.createButton(full.id).html();
 					resultHTML += disableEdit.html();
 					resultHTML += disableDel.html();
-					
-					return resultHTML;
 				} else if (data.disetujui == false || data.disetujui == null) {
-					let resultHTML = '';
 					resultHTML += viewBtn.createButton(full.id).html();
 					resultHTML += editBtn.createButton(full.id).html();
 					resultHTML += delBtn.createButton(full.id).html();
-					return resultHTML;
 				}
+				resultHTML += '</div>'
+				return resultHTML;
 			}
 		},
 	],

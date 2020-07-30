@@ -49,9 +49,9 @@
 						<i class="fa fa-trash-o"></i>
 					</button>
 				</form>
-            </div>
-            <!-- Disable Button -->
-            <div id="editBtnDisable" style="display: none;">
+			</div>
+			<!-- Disable Button -->
+			<div id="editBtnDisable" style="display: none;">
 				<a href="{{ route('booking.edit', ['id'=>0]) }}">
 				<button disabled style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
 					<i class="fa fa-pencil"></i>
@@ -69,6 +69,7 @@
 			<table 
 				id="bookingTable"
 				class="table table-bordered table-striped table-bordered table-hover"
+				data-length="{{ $length }}"
 				data-ajaxurl="{{route('list.data')}}"
 			>
 				<thead class="thead-custom-blue">
@@ -80,7 +81,7 @@
 					<th class="text-center" scope="col">Nama Acara</th>
 					<th class="text-center" scope="col">Penyelenggara Acara</th>
 					<th class="text-center" scope="col">Status</th>
-                    <th class="text-center" scope="col">Aksi</th>
+					<th class="text-center" scope="col">Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -92,8 +93,8 @@
 						<td>{{$booking->waktu_mulai}}</td>
 						<td>{{$booking->nama_acara}}</td>
 						<td>{{$booking->nama}}</td>
+						<td>{{$booking->disetujui}}</td>
 						<td></td>
-                        <td></td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -108,7 +109,7 @@
 						<th>
 							<select id="searchStatus">
 								<option>Semua</option>
-								<option value="none">Menggungu Konfirmasi</option>
+								<option value="none">Menunggu Konfirmasi</option>
 								<option value="false">Ditolak</option>
 								<option value="true">Disetujui</option>
 							</select>

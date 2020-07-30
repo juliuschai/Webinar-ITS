@@ -100,8 +100,9 @@ class BookingController extends Controller
 					->where('bookings.user_id', '=', Auth::id())
 					->select('bookings.*', 'units.nama')
 					->paginate('10');
-
-		return view('booking.table', compact(['bookings']));
+		$length = Booking::where('bookings.user_id', '=', Auth::id())
+			->count();
+		return view('booking.table', compact(['bookings', 'length']));
 	}
 
 	public function deleteBooking(Request $request) {
@@ -171,7 +172,8 @@ class BookingController extends Controller
 		$bookings = Booking::viewBookingList()
 					->paginate('10');
 
-		return view('admin.table', compact(['bookings']));
+		$length = Booking::count();
+		return view('admin.table', compact(['bookings', 'length']));
 	}
 
 	public function aproveBooking(Request $request) {
@@ -179,21 +181,12 @@ class BookingController extends Controller
 					->where('bookings.disetujui', '=', '1')
 					->paginate('10');
 
-		return view('admin.aprove', compact(['bookings']));
+			$length = Booking::where('bookings.disetujui', '=', '1')
+				->count();
+		return view('admin.aprove', compact(['bookings', 'length']));
 	}
 
 	function getEvents() {
-/*         $extra = new Booking();
-		$extra->id = 0;
-		$extra->title = 'start';
-		$extra->start = (new DateTime)->setTimestamp(1);
-		$extra->end = (new DateTime)->setTimestamp(2);
-		$extra2 = new Booking();
-		$extra2->id = -1;
-		$extra2->title = 'end';
-		$extra2->start = (new DateTime)->setTimestamp(2000000000);
-		$extra2->end = (new DateTime)->setTimestamp(2000000001);
-		$extras = collect([$extra, $extra2]); */
 		$bookings = Booking::where('disetujui', true)
 			->get([
 				'id', 
@@ -204,7 +197,7 @@ class BookingController extends Controller
 		foreach ($bookings as $booking) {
 			$booking['color'] = "#fae9e8";
 		}
-		// $end = $bookings->merge($extras);
+
 		return json_encode($bookings);
 	}
 }
