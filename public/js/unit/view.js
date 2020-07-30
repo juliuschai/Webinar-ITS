@@ -83,18 +83,12 @@ unitTableElm.DataTable({
 	}
 });
 
-function modalPopulate() {
-	let unitNama = document.getElementById('unitNama').value;
+function checkEmpty() {
 	let unitTypeSelElm = document.getElementById('unitType');
-	let unitType = unitTypeSelElm.options[unitTypeSelElm.selectedIndex].innerText;
-	if (unitTypeSelElm.selectedIndex == 0) {
+	if (unitTypeSelElm.value == "") {
 		alert("Mohon pilih tipe unit");
 		return;
 	}
-	let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
-	document.getElementById('confirmationText').innerText = text;
-	
-	document.getElementById('modalUnitNama').value = unitNama;
-	document.getElementById('modalUnitType').value = unitTypeSelElm.value;
+	document.getElementById('submitForm').submit();
 
 }
