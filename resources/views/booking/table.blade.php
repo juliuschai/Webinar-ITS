@@ -69,6 +69,7 @@
 			<table 
 				id="bookingTable"
 				class="table table-bordered table-striped table-bordered table-hover"
+				data-length="{{ $length }}"
 				data-ajaxurl="{{route('list.data')}}"
 			>
 				<thead class="thead-custom-blue">
@@ -80,7 +81,7 @@
 					<th class="text-center" scope="col">Nama Acara</th>
 					<th class="text-center" scope="col">Penyelenggara Acara</th>
 					<th class="text-center" scope="col">Status</th>
-                    <th class="text-center" scope="col">Aksi</th>
+					<th class="text-center" scope="col">Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -92,8 +93,8 @@
 						<td>{{$booking->waktu_mulai}}</td>
 						<td>{{$booking->nama_acara}}</td>
 						<td>{{$booking->nama}}</td>
+						<td>{{$booking->disetujui}}</td>
 						<td></td>
-                        <td></td>
 					</tr>
 					@endforeach
 				</tbody>

@@ -67,11 +67,11 @@ unitTableElm.DataTable({
 		// Apply the search
 		this.api().columns().every( function () {
 			var column = this;
-			$('input', this.footer()).on('keyup change clear', function() {
+			$('input', this.footer()).on('keyup change clear', $.debounce(250, true, function(e) {
 				if (column.search() !== this.value) {
 					column.search(this.value).draw();
 				}
-			});
+			}));
 
 			$('select', this.footer()).on('change', function () {
 				// let val = $.fn.dataTable.util.escapeRegex($(this).val());
