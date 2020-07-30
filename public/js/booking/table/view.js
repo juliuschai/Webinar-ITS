@@ -114,20 +114,18 @@ bookingTableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function (data, type, full, meta) {
+				let resultHTML = '<div style="white-space: nowrap;">'
 				if (data.disetujui == true) {
-					let resultHTML = '';
 					resultHTML += viewBtn.createButton(full.id).html();
 					resultHTML += disableEdit.html();
 					resultHTML += disableDel.html();
-					
-					return resultHTML;
 				} else if (data.disetujui == false || data.disetujui == null) {
-					let resultHTML = '';
 					resultHTML += viewBtn.createButton(full.id).html();
 					resultHTML += editBtn.createButton(full.id).html();
 					resultHTML += delBtn.createButton(full.id).html();
-					return resultHTML;
 				}
+				resultHTML += '</div>'
+				return resultHTML;
 			}
 		},
 	],

@@ -49,9 +49,9 @@
 						<i class="fa fa-trash-o"></i>
 					</button>
 				</form>
-            </div>
-            <!-- Disable Button -->
-            <div id="editBtnDisable" style="display: none;">
+			</div>
+			<!-- Disable Button -->
+			<div id="editBtnDisable" style="display: none;">
 				<a href="{{ route('booking.edit', ['id'=>0]) }}">
 				<button disabled style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
 					<i class="fa fa-pencil"></i>
