@@ -21,15 +21,16 @@ class BookingController extends Controller
 		$booking->setUserFields(Auth::id());
 		$units = Unit::getDefault();
 		$unitTypes = UnitType::get();
-
-		return view('booking.form', compact(['booking', 'units', 'unitTypes']));
+		$booking_times = null;
+		return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
 	}
 
 	function saveNewBooking(NewBookingRequest $request) {
+	// function saveNewBooking(Request $request) {
 		$booking = new Booking();
+		// dd($request->bookingTimes);
 		$booking->setUserId(Auth::id());
 		$booking->saveFromRequest($request);
-
 		return redirect()->route('booking.view', ['id'=>$booking['id']]);
 	}
 
@@ -40,8 +41,8 @@ class BookingController extends Controller
 		$booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
 		$units = Unit::getDefault();
 		$unitTypes = UnitType::get();
-
-		return view('booking.form', compact(['booking', 'units', 'unitTypes']));
+		$booking_times = $booking->getTimes();
+		return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
 	}
 
 	function saveEditBooking(EditBookingRequest $request) {
@@ -65,9 +66,9 @@ class BookingController extends Controller
 			$isAdmin = false;
 			$isOwner = false;
 		}
-		return view(
-			'booking.view', 
-			compact(['booking', 'isOwner', 'isAdmin'])
+		$booking_times = $booking->getTimes();
+		return view('booking.view', 
+			compact(['booking', 'isOwner', 'isAdmin', 'booking_times'])
 		);
 	}
 

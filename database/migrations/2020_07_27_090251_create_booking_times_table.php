@@ -23,6 +23,7 @@ class CreateBookingTimesTable extends Migration
 			$table->index('waktu_akhir');
 			$table->boolean('relay_ITSTV');
 			$table->boolean('peserta_banyak')->comment('Apakah peserta lebih dari 500');
+			$table->boolean('gladi')->default(false);
 			$table->unsignedTinyInteger('host_account_id')->nullable();
 			$table->foreign('host_account_id')->references('id')->on('host_accounts')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->boolean('disetujui')->nullable();

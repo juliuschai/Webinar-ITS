@@ -4,8 +4,8 @@ function populateUnitSelects() {
 	let elm = document.getElementById('unitDatas');
 	unitTypes = JSON.parse(elm.dataset.types);
 	units = JSON.parse(elm.dataset.units);
-	curTypeId = elm.dataset.curtypeid;
-	curUnitId = elm.dataset.curunitid;
+	curTypeId = parseInt(elm.dataset.curtypeid);
+	curUnitId = parseInt(elm.dataset.curunitid);
 	// Populate type select
 	let typeSelect = document.getElementById('penyelengaraAcaraTypes')
 	for (type of unitTypes) {

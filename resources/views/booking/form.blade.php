@@ -117,8 +117,8 @@
 									<input id="unitDatas" hidden
 										data-types="{{json_encode($unitTypes)}}" 
 										data-units="{{json_encode($units)}}" 
-										data-curtypeid="{{json_encode($booking['unit_type_id'])}}" 
-										data-curunitid="{{json_encode($booking['unit_id'])}}"
+										data-curtypeid="{{old('penyelengaraAcaraTypes')??$booking['unit_type_id']}}" 
+										data-curunitid="{{old('penyelengaraAcara')??$booking['unit_id']}}"
 									>
 									<select name="penyelengaraAcaraTypes" id="penyelengaraAcaraTypes" class="form-control">
 									</select>
@@ -158,56 +158,82 @@
 							</div>
 							@endif
 
+							<sub>Untuk webinar lebih dari 1 sesi (1 hari) silahkan membaut sesi baru</sub>
+							<sub>Untuk keperluan gladi bersih silahkan membuat sesi baru</sub>
+							<div class="bookingGladiTimesForms">
+							</div>
 							<div class="form-group row">
-								<label for="mulaiDateElm" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
-								<i class="fa fa-calendar-o booking"></i>
+								<div class="col-md-4"></div>
 								<div class="col-md-6">
-									<input id="mulaiDateElm" type="date" class="form-control" name="mulaiDateElm" onchange="updateWaktu()">
-									<select name="mulaiTimeSelect" id="mulaiTimeSelect" onchange="updateWaktu()"></select>
+									<button type="button" onclick="addGladiTimesForm()">tambah sesi gladi</button>
 								</div>
 							</div>
+							<div class="bookingTimesForms" data-datas="{{json_encode(old('bookingTimes')??$booking_times)}}">
+								<div class="bookingTimesForm">
+									<input type="hiddenDebug" name="bookingTimes[0][id]" class="id">
+									<input type="hiddenDebug" name="bookingTimes[0][gladi]" class="gladi" value="false">
+									<div class="form-group row">
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
+										<i class="fa fa-calendar-o booking"></i>
+										<div class="col-md-6">
+											<input type="date" class="mulaiDate" onclick="updateWaktu(this)">
+											<select class="mulaiTime" onclick="updateWaktu(this)"></select>
+										</div>
+									</div>
 
-							<div class="form-group row">
-								<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}<p style="color: red" class="d-inline">*</p></label>
-								<i class="fa fa-clock-o booking"></i>
-								<div class="col-md-6">
-									<select name="durHour" id="durHour" onchange="updateWaktu()"></select> jam
-									<select name="durMinute" id="durMinute" onchange="updateWaktu()"></select> menit
-									{{-- <input id="durasi" type="text" style="width:200px;" class="form-control d-inline" value="" onchange="onupdateDurasi()">
-										Jam --}}
-								</div>
-							</div>
-							<input id="waktuMulai" type="hidden" name="waktuMulai" value="{{ old('waktuMulai')??$booking['waktu_mulai'] }}" required>
-							<input id="waktuSelesai" type="hidden" name="waktuSelesai" value="{{ old('waktuSelesai')??$booking['waktu_akhir'] }}" required>
+									<div class="form-group row">
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}<p style="color: red" class="d-inline">*</p></label>
+										<i class="fa fa-clock-o booking"></i>
+										<div class="col-md-6">
+											<select class="durHour" onclick="updateWaktu(this)"></select> jam
+											<select class="durMinute" onclick="updateWaktu(this)"></select> menit
+										</div>
+									</div>
+									<input class="waktuMulai" type="hiddenDebug" name="bookingTimes[0][waktuMulai]" required>
+									<input class="waktuSelesai" type="hiddenDebug" name="bookingTimes[0][waktuSelesai]" required>
+									<div class="form-group row">
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}<p style="color: red" class="d-inline">*</p></label>
+										<div class="col-md-6">
+											<input 
+												id="500" type="radio" class="form-radio pesertaBanyak" name="bookingTimes[0][pesertaBanyak]" 
+												value="500"
+											><div class="form-option">&le; 500</div>
+											<input 
+												id="1000" type="radio" class="form-radio pesertaBanyak" name="bookingTimes[0][pesertaBanyak]" 
+												value="1000"
+											><div class="form-option">501 - 1000</div>
+										</div>
+									</div>
 
-							<div class="form-group row">
-								<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
-								<div class="col-md-6">
-									<input 
-										id="relayITSTV" type="checkbox" class="" name="relayITSTV" 
-										value="relayITSTVBoolean" {{ $booking['relay_ITSTV']?'checked':'' }}
-									> 
-								</div>
-								<div class="col-md-6">
-									<sub class="">Silahkan menghubungi Unit Komunikasi Publik (UKP) pada <a href="https://servicedesk.its.ac.id/" target="_blank">
-									<br>servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
+									<div class="form-group row">
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
+										<div class="col-md-6">
+											<input 
+												type="radio" class="form-radio relayITSTV" name="bookingTimes[0][relayITSTV]" 
+												value="true"
+											><div class="form-option">Iya</div>
+											<input 
+												type="radio" class="form-radio relayITSTV" name="bookingTimes[0][relayITSTV]" 
+												value="false"
+											><div class="form-option">Tidak</div>
+										</div>
+										<div class="col-md-6">
+											<sub class="">Silahkan menghubungi Unit Komunikasi Publik (UKP) pada <a href="https://servicedesk.its.ac.id/" target="_blank">
+											<br>servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
+										</div>	
+									</div>
+									<div class="d-flex flex-row-reverse">
+										<button type="button" class="btn btn-danger" onclick="deleteField(this)">Hapus Sesi</button>
+									</div>
 								</div>	
-							</div>
-
+							</div>	
 							<div class="form-group row">
-								<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}<p style="color: red" class="d-inline">*</p></label>
+								<div class="col-md-4"></div>
 								<div class="col-md-6">
-									<input 
-										id="500" type="radio" class="form-radio" name="pesertaBanyak" 
-										value="500" {{ $booking['peserta_banyak']==false?'checked':'' }}
-									><div class="form-option">&le; 500</div>
-									<input id="1000" type="radio" class="form-radio" name="pesertaBanyak" 
-										value="1000" {{ $booking['peserta_banyak']==true?'checked':'' }}
-									><div class="form-option">501 - 1000</div>
+									<button type="button" onclick="addTimesForm()">tambah sesi</button>
 								</div>
-								{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 							</div>
-						<!-- </div> -->
+							<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
 									<button style="position: absolute;bottom: 15px;right: 200px;" type="button" id="prevvBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Previous</button>
@@ -229,7 +255,11 @@
 		</div>
 	</div>
 <!-- </div> -->
-<script src="{{ asset('js/booking/durasiForm.js') }}" defer></script>
+@endsection
+
+@section('scripts')
+{{-- <script src="{{ asset('js/booking/durasiForm.js') }}" defer></script> --}}
+<script src="{{ asset('js/booking/bookingTimes.js') }}" defer></script>
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
 <script src="{{ asset('js/booking/tabControls.js') }}" defer></script>
 @endsection

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    // I'm unsure if this is needed but I'm too afraid to test
     protected $casts = [
         'waktu_mulai' => 'datetime',
         'waktu_akhir' => 'datetime',
@@ -25,15 +24,8 @@ class Booking extends Model
      */
     function saveFromRequest($request) {
         // True if checkbox checked, false not checked
-        $relayITSTV = $request->has('relayITSTV'); 
-        $peserta_banyak = $request->pesertaBanyak == 500 ? false:true;
-
         $this->nama_acara = $request->namaAcara;
         $this->unit_id = $request->penyelengaraAcara;
-        $this->waktu_mulai = $request->waktuMulai;
-        $this->waktu_akhir = $request->waktuSelesai;
-        $this->relay_ITSTV = $relayITSTV;
-        $this->peserta_banyak = $peserta_banyak;
         $this->disetujui = null;
         // If there's a new file being uploaded
         if ($request->has('dokumenPendukung')) {
@@ -44,6 +36,10 @@ class Booking extends Model
             }
             $this->saveFileFromRequest($request);
         }
+        $this->save();
+        $times = BookingTime::saveFromRequest($request, $this->id);
+        $this->waktu_mulai = $times['waktu_mulai'];
+        $this->waktu_akhir = $times['waktu_akhir'];
         $this->save();
     }
 
@@ -92,6 +88,13 @@ class Booking extends Model
         $this->api_host_email = null;
         $this->deskripsi_disetujui = $request->alasan;
         $this->save();
+    }
+
+    function getTimes() {
+        return BookingTime::where('booking_id', '=', $this->id)
+            ->orderBy('gladi', 'DESC')
+            ->orderBy('waktu_mulai')
+            ->get();
     }
 
     function setUserFields($id) {

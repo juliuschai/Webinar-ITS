@@ -18,6 +18,7 @@ class CreateHostAccountsTable extends Migration
 		Schema::create('host_accounts', function (Blueprint $table) {
 			$table->tinyIncrements('id');
 			$table->string('nama', 20);
+			$table->string('pass')->default("pass");
 		});
 
 		DB::table('host_accounts')->insert([
