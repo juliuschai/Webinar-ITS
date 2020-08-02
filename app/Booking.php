@@ -91,10 +91,14 @@ class Booking extends Model
     }
 
     function getTimes() {
-        return BookingTime::where('booking_id', '=', $this->id)
+        $book_times = BookingTime::where('booking_id', '=', $this->id)
             ->orderBy('gladi', 'DESC')
             ->orderBy('waktu_mulai')
             ->get();
+        foreach ($book_times as $book_time) {
+            $book_time->setHostAccount();
+        }
+        return $book_times;
     }
 
     function setUserFields($id) {

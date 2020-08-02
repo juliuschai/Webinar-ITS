@@ -259,7 +259,7 @@
 
 @section('scripts')
 {{-- <script src="{{ asset('js/booking/durasiForm.js') }}" defer></script> --}}
-<script src="{{ asset('js/booking/bookingTimes.js') }}" defer></script>
+<script src="{{ asset('js/booking/form.js') }}" defer></script>
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
 <script src="{{ asset('js/booking/tabControls.js') }}" defer></script>
 @endsection

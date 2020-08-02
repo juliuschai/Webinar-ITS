@@ -19,12 +19,13 @@ class CreateHostAccountsTable extends Migration
 			$table->tinyIncrements('id');
 			$table->string('nama', 20);
 			$table->string('pass')->default("pass");
+			$table->boolean('type_banyak')->comment('Apakah akun ini untuk peserta 501-1000?');
 		});
 
 		DB::table('host_accounts')->insert([
-			['nama'=>'500 (1)'],
-			['nama'=>'500 (2)'],
-			['nama'=>'1000 (1)'],
+			['nama'=>'500 (1)', 'type_banyak' => false],
+			['nama'=>'500 (2)', 'type_banyak' => false],
+			['nama'=>'1000 (1)', 'type_banyak' => true],
 		]);
 	}
 

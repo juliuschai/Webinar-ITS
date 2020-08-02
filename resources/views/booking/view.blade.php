@@ -93,7 +93,7 @@
 								id="penyelengaraAcaraType" type="text" class="form-control" 
 								value="{{ $booking->unit_type }}" disabled
 							>
-						</br>
+						<br>
 							<input 
 								id="penyelengaraAcara" type="text" class="form-control" 
 								value="{{ $booking->unit }}" disabled
@@ -112,58 +112,82 @@
 					</div>
 					@endif
 
+					@foreach ($booking_times as $book_time)
 					<div class="form-group row">
-						<label for="waktuMulai" class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
 							<input 
-								id="waktuMulai" type="text" class="form-control" 
-								value="{{ $booking->waktu_mulai }}" disabled
+								type="text" class="form-control waktuMulai" 
+								value="{{ $book_time->waktu_mulai }}" disabled
 							>
 						</div>
 					</div>
 					
-					<input id="waktuSelesai" type="hidden" name="waktuSelesai" value="{{ old('waktuSelesai')??$booking['waktu_akhir'] }}" required>
+					<input type="hidden" class="waktuSelesai" value="{{ $book_time->waktu_akhir }}" required>
 
 					<div class="form-group row">
-						<label for="durasi" class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
 						<i class="fa fa-clock-o booking"></i>
 						<div class="col-md-6">
-							<input id="durasi" type="text" class="form-control" value="" onchange="onupdateDurasi()" disabled> <div>jam</div>
+							<input type="text" class="form-control durasi" disabled> <div>jam</div>
 						</div>
 					</div>
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
-						<label for="relayITSTV" class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
-							<div id="relayITSTV">{{ $booking->relay_ITSTV?'Iya':'Tidak' }}</div>
-							<!-- <label for="iya">Iya</label>
-							<label for="tidak">Tidak</label> -->
+							<div>{{ $book_time->relay_ITSTV?'Iya':'Tidak' }}</div>
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
 						<i class="fa fa-sticky-note-o  booking"></i>
 						<div class="col-md-6">
-							<div id="pesertaBanyak">{!! $booking->peserta_banyak==false?'&le; 500':'501 - 1000' !!}</div>
+							<div>{!! $book_time->peserta_banyak==false?'&le; 500':'501 - 1000' !!}</div>
 						</div>
-						{{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
 					</div>
 
 					<div class="form-group row">
-						<label for="disetujui" class="col-md-4 col-form-label text-md-left">{{ __('Current Approval Status') }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Current Approval Status') }}</label>
 						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
 							<input 
-								id="disetujui" type="text" class="form-control" s
-								value="{{ null!==$booking->disetujui ? ($booking->disetujui?'Disetujui':'Ditolak'):'' }}" disabled
+								type="text" class="form-control" 
+								value="{{ isset($book_time->disetujui)?($book_time->disetujui?'Disetujui':'Ditolak'):'' }}" disabled
 							>
 						</div>
 					</div>
+					@endif
+					@if($isAdmin)
+					<div class="action" data-id="{{$book_time->id}}">
+						<select class="hostAccount">
+							<option value="" style="display: none;">Nothing</option>
+							@foreach ($book_time->host_accounts as $host_account)
+							<option value="{{$host_account->id}}">{{$host_account->nama}}</option>
+							@endforeach
+						</select>
+						<input 
+							type="hidden" class="status" 
+							value="{{isset($book_time->disetujui) ? ($book_time->disetujui?'accept':'deny') :''}}"
+						>
+						<button type="button" class="btn btn-submit acceptButton" onclick="acceptBooking()" style="display: none;">
+							{{ __('Setujui Booking') }}
+						</button>
+						<button type="button" class="btn btn-danger denyButton" onclick="denyBooking()" style="display: none;">
+							{{ __('Tolak Booking') }}
+						</button>
+						<button type="button" class="btn btn-warning cancelButton" onclick="cancelBooking()" style="display: none;">
+							{{ __('Cancel Booking') }}
+						</button>
+					</div>
+					@endif
+					@endforeach
 
+					@if($isOwner || $isAdmin)
 					<div class="form-group row">
 						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
@@ -174,6 +198,13 @@
 					@endif
 
 					@if($isAdmin)
+					<form id="verifyForm" action="POST" action="{{ route('booking.accept', ['id' => $booking->id]) }}">
+						<div class="fields">
+							<input type="hidden" name="id" class="id">
+							<input type="hidden" name="status" class="status">
+							<input type="hidden" name="hostAccount" class="hostAccount">
+						</div>
+					</form>
 					<form method="POST" action="{{ route('booking.accept', ['id' => $booking->id]) }}">
 						@csrf
 						<div class="form-group row">
@@ -257,7 +288,7 @@
 						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
-							<textarea id="alasan" type="text" class="form-control" name="alasan">{{ old('alasan') }}</textarea>
+							
 						</div>
 					</div>
 				</div>
@@ -270,5 +301,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/booking/durasiView.js') }}" defer></script>
+<script src="{{ asset('js/booking/view.js') }}" defer></script>
 @endsection

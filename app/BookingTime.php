@@ -58,4 +58,8 @@ class BookingTime extends Model
 
 		return $retTimes;
 	}
+
+	function setHostAccount() {
+		$this->host_accounts = HostAccount::getValidAccounts($this->waktu_mulai, $this->waktu_akhir);
+	}
 }
