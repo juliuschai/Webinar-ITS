@@ -121,7 +121,7 @@ if (Array.isArray(bookingTimes) && bookingTimes.length>0) {
 	let skippedFirst = false;
 	for (let i = 0; i < bookingTimes.length; i++) {
 		const bookingTime = bookingTimes[i];
-		if (bookingTime.gladi){
+		if (bookingTime.gladi === "true" || bookingTime.gladi === true){
 			addGladiTimesForm();
 		} else {
 			if (!skippedFirst) {

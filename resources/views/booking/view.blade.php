@@ -167,20 +167,20 @@
 						<select class="hostAccount">
 							<option value="" style="display: none;">Nothing</option>
 							@foreach ($book_time->host_accounts as $host_account)
-							<option value="{{$host_account->id}}">{{$host_account->nama}}</option>
+							<option value="{{$host_account->id}}" {{$book_time->host_account_id==$host_account->id?'selected':''}}>{{$host_account->nama}}</option>
 							@endforeach
 						</select>
 						<input 
 							type="hidden" class="status" 
 							value="{{isset($book_time->disetujui) ? ($book_time->disetujui?'accept':'deny') :''}}"
 						>
-						<button type="button" class="btn btn-submit acceptButton" onclick="acceptBooking()" style="display: none;">
+						<button type="button" class="btn btn-submit acceptButton" onclick="acceptBooking(this)" style="display: none;">
 							{{ __('Setujui Booking') }}
 						</button>
-						<button type="button" class="btn btn-danger denyButton" onclick="denyBooking()" style="display: none;">
+						<button type="button" class="btn btn-danger denyButton" onclick="denyBooking(this)" style="display: none;">
 							{{ __('Tolak Booking') }}
 						</button>
-						<button type="button" class="btn btn-warning cancelButton" onclick="cancelBooking()" style="display: none;">
+						<button type="button" class="btn btn-warning cancelButton" onclick="cancelBooking(this)" style="display: none;">
 							{{ __('Cancel Booking') }}
 						</button>
 					</div>
@@ -198,108 +198,33 @@
 					@endif
 
 					@if($isAdmin)
-					<form id="verifyForm" action="POST" action="{{ route('booking.accept', ['id' => $booking->id]) }}">
-						<div class="fields">
-							<input type="hidden" name="id" class="id">
-							<input type="hidden" name="status" class="status">
-							<input type="hidden" name="hostAccount" class="hostAccount">
-						</div>
-					</form>
-					<form method="POST" action="{{ route('booking.accept', ['id' => $booking->id]) }}">
+					<form id="verifyForm" method="POST" action="{{ route('booking.verify', ['id' => $booking->id]) }}">
 						@csrf
-						<div class="form-group row">
-							<label for="hostEmail" class="col-md-4 col-form-label text-md-left">{{ __('Host Account') }}</label>
-							<i class="fa fa-envelope-o booking"></i>
-							<div class="col-md-6">
-								{{ isset($booking->api_host_email)?'Last picked: '.$booking->api_host_email:'' }}
-								<select name="hostEmail" id="hostEmail" class="form-control">
-									<option value="500 (1)">500 (1)</option>
-									<option value="500 (2)">500 (2)</option>
-									<option value="1000 (1)">1000 (1)</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row mb-0">
-							<div class="col-md-8 offset-md-4">
-								@if($booking->disetujui === null)
-								<button type="submit" class="btn btn-submit">
-									{{ __('Setujui Booking') }}
-								</button>
-								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal" onclick="modalPopulate()">
-									{{ __('Tolak Booking') }}
-								</button>
-								@else
-								<button type="button" class="btn btn-warning" onclick="cancelBooking()">
-									{{ __('Cancel Booking') }}
-								</button>
-								@endif
-							</div>
+						<input type="hidden" class="alasanField" name="alasan">
+						<div class="fields">
+							<input type="hidden" name="verify[0][id]" class="id">
+							<input type="hidden" name="verify[0][status]" class="status">
+							<input type="hidden" name="verify[0][hostAccount]" class="hostAccount">
 						</div>
 					</form>
-					@if($booking->disetujui !== null)
-						<form id="cancelForm" method="POST" action="{{ route('booking.cancel', ['id' => $booking->id]) }}">
-							@csrf
-						</form>
-						@endif
-						<script type="text/javascript" >
-							function cancelBooking() {
-								document.getElementById('cancelForm').submit();
-							}
-							function modalPopulate() {
-								let unitNama = document.getElementById('unitNama').value;
-								let unitTypeSelElm = document.getElementById('unitType');
-								let unitType = unitTypeSelElm.options[unitTypeSelElm.selectedIndex].innerText;
-								if (unitTypeSelElm.selectedIndex == 0) {
-									alert("Mohon pilih tipe unit");
-									return;
-								}
-								let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
-								document.getElementById('confirmationText').innerText = text;
-								
-								document.getElementById('modalUnitNama').value = unitNama;
-								document.getElementById('modalUnitType').value = unitTypeSelElm.value;
-						
-							}
-						
-						</script>
+					<div class="form-group row mb-0">
+						<div class="col-md-8 offset-md-4">
+							<button type="button" class="btn btn-submit" onclick="submit()">
+								{{__('Verify Booking')}}
+							</button>
+							<button type="button" class="btn btn-danger denyAll" onclick="denyAll()">
+								{{ __('Tolak Booking') }}
+							</button>
+						</div>
+					</div>
 					@endif
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+@endsection
 
-<!-- Modal -->
-<div class="modal fade" id="denyModal" tabindex="-1" role="dialog" aria-labelledby="denyModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="denyModalLabel">Konfirmasi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-			</div>
-			<form action="{{route('booking.deny', ['id' => $booking->id])}}" method="POST">
-				@csrf
-				<input name="id" type="hidden" value="{{ $booking->id }}">
-				<input name="verify" type="hidden" value="tolak">
-				<div class="modal-body">
-					<div class="form-group row">
-						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
-						<i class="fa fa-sticky-note-o booking"></i>
-						<div class="col-md-6">
-							
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-danger">Tolak Booking</button>
-				</div>
-			</form>
-    </div>
-  </div>
-</div>
-
-<script src="{{ asset('js/booking/view.js') }}" defer></script>
+@section('scripts')
+	<script src="{{ asset('js/booking/view.js') }}" defer></script>
 @endsection

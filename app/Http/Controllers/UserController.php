@@ -10,17 +10,12 @@ use DataTables;
 class UserController extends Controller
 {
 	function login(Request $request) {
-		if (!env('PROD')) {
-			OIDCHelper::login();
-		} else {
-			\Illuminate\Support\Facades\Auth::loginUsingId(1);
-		}
+		OIDCHelper::login();
 		return redirect('/');
 	}
 
 	function logout(Request $request) {
 		OIDCHelper::logout();
-		$request->session()->save();
 		return redirect('/');
 	}
 

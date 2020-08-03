@@ -29,12 +29,13 @@ function pz(str){
 		} else if (status == "deny") {
 			denyBooking(this);
 		} else {
-			cancelBooking();
+			cancelBooking(this);
 		}
 	});
 })();
 
 var nDenied = 0;
+var nAccepted = 0;
 
 function acceptBooking(thisElm) {
 	let $div = $(thisElm).closest('.action');
@@ -94,6 +95,13 @@ function cancelBooking(thisElm) {
 	$div.css('background-color', '');
 }
 
+function denyAll() {
+	$('.denyButton').each(function(i, elm) {
+		cancelBooking(this);
+		denyBooking(this);
+	});
+}
+
 function submit() {
 	let $divs = $('.action');
 	let res = [];
@@ -107,8 +115,8 @@ function submit() {
 		let hostAccount;
 		if (status == "accept") {
 			hostAccount = $elm.find('.hostAccount').val();
-			if (hostAccount) {validation = "hostAccount"};
-		} else {
+			if (!hostAccount) {validation = "hostAccount"};
+		} else if (status == "deny"){
 			hostAccount = undefined;
 			if (!alasanVal) {
 				validation = "alasan";
@@ -117,8 +125,6 @@ function submit() {
 
 		res.push({id: id, status: status, hostAccount: hostAccount});
 	});
-
-	// Check if alasan exists
 
 	if (validation == "hostAccount") {
 		alert("Menyetujui booking harus menentukan host account!")
@@ -131,12 +137,16 @@ function submit() {
 	let $fieldTemplate = $('.fields').clone();
 	$('.fields').remove();
 	let $form = $('#verifyForm');
-	for (const elm of res) {
-		$form.append();
+	$form.find('.alasanField').val(alasanVal);
+	for (let i = 0; i < res.length; i++) {
+		const elm = res[i];
+
 		let $field = $fieldTemplate.clone();
-		$field.find('.id').val(res.id);
-		$field.find('.status').val(res.status);
-		$field.find('.hostAccount').val(res.hostAccount);
+		$field.find('.id').attr('name', `verify[${i}][id]`).val(elm.id);
+		$field.find('.status').attr('name', `verify[${i}][status]`).val(elm.status);
+		$field.find('.hostAccount').attr('name', `verify[${i}][hostAccount]`).val(elm.hostAccount);
+
+		$form.append($field);
 	}
 	$form.submit();
 }

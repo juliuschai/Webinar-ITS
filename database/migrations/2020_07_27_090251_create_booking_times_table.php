@@ -27,17 +27,19 @@ class CreateBookingTimesTable extends Migration
 			$table->unsignedTinyInteger('host_account_id')->nullable();
 			$table->foreign('host_account_id')->references('id')->on('host_accounts')->onUpdate('CASCADE')->onDelete('RESTRICT');
 			$table->boolean('disetujui')->nullable();
+			$table->enum('status', array('pending', 'started', 'completed'))->default('pending');
+			$table->string('webinar_id')->nullable();
 			$table->timestamps();
 		});
 
 		$select = DB::table('bookings')
 			->leftJoin('host_accounts', 'host_accounts.nama', '=', 'bookings.api_host_email')
-			->select(['bookings.id', 'waktu_mulai', 'waktu_akhir', 'relay_ITSTV', 'peserta_banyak', 
+			->select(['bookings.id', 'waktu_mulai', 'waktu_akhir', 'relay_ITSTV', 'peserta_banyak',
 				'host_accounts.id as host_account_id', 'disetujui', 'created_at', 'updated_at'
 			]);
 
 		DB::table('booking_times')
-			->insertUsing(['booking_id', 'waktu_mulai', 'waktu_akhir', 'relay_ITSTV', 'peserta_banyak', 
+			->insertUsing(['booking_id', 'waktu_mulai', 'waktu_akhir', 'relay_ITSTV', 'peserta_banyak',
 				'host_account_id', 'disetujui', 'created_at', 'updated_at'], $select);
 
 		Schema::table('bookings', function (Blueprint $table) {
@@ -62,10 +64,10 @@ class CreateBookingTimesTable extends Migration
 			$table->string('api_host_email')->nullable()->after('api_host_nama');
 		});
 
-		DB::statement('CREATE TEMPORARY TABLE temp_bookings_table AS (SELECT 
-			b.user_id, b.nama_acara, b.unit_id, b.file_pendukung, 
-			bt.waktu_mulai, bt.waktu_akhir, bt.relay_ITSTV, bt.peserta_banyak, 
-			host.nama as api_host_email, 
+		DB::statement('CREATE TEMPORARY TABLE temp_bookings_table AS (SELECT
+			b.user_id, b.nama_acara, b.unit_id, b.file_pendukung,
+			bt.waktu_mulai, bt.waktu_akhir, bt.relay_ITSTV, bt.peserta_banyak,
+			host.nama as api_host_email,
 			bt.disetujui, b.deskripsi_disetujui, b.created_at, b.updated_at
 			FROM bookings as b
 			INNER JOIN booking_times as bt ON bt.booking_id = b.id
@@ -73,11 +75,11 @@ class CreateBookingTimesTable extends Migration
 		);');
 		DB::statement('DELETE FROM bookings;');
 		DB::statement('ALTER TABLE bookings AUTO_INCREMENT=1;');
-		DB::statement('INSERT INTO bookings(user_id, nama_acara, unit_id, file_pendukung, 
-			waktu_mulai, waktu_akhir, relay_ITSTV, peserta_banyak, 
+		DB::statement('INSERT INTO bookings(user_id, nama_acara, unit_id, file_pendukung,
+			waktu_mulai, waktu_akhir, relay_ITSTV, peserta_banyak,
 			api_host_email, disetujui, deskripsi_disetujui, created_at, updated_at)
-			SELECT user_id, nama_acara, unit_id, file_pendukung, 
-			waktu_mulai, waktu_akhir, relay_ITSTV, peserta_banyak, 
+			SELECT user_id, nama_acara, unit_id, file_pendukung,
+			waktu_mulai, waktu_akhir, relay_ITSTV, peserta_banyak,
 			api_host_email, disetujui, deskripsi_disetujui, created_at, updated_at
 			FROM temp_bookings_table;
 		');

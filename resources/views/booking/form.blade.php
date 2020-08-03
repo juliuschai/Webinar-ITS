@@ -168,10 +168,11 @@
 									<button type="button" onclick="addGladiTimesForm()">tambah sesi gladi</button>
 								</div>
 							</div>
+							<sub>Waktu booking gunakan WIB (GMT+7)</sub>
 							<div class="bookingTimesForms" data-datas="{{json_encode(old('bookingTimes')??$booking_times)}}">
 								<div class="bookingTimesForm">
-									<input type="hiddenDebug" name="bookingTimes[0][id]" class="id">
-									<input type="hiddenDebug" name="bookingTimes[0][gladi]" class="gladi" value="false">
+									<input type="hidden" name="bookingTimes[0][id]" class="id">
+									<input type="hidden" name="bookingTimes[0][gladi]" class="gladi" value="false">
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-calendar-o booking"></i>
@@ -189,8 +190,8 @@
 											<select class="durMinute" onclick="updateWaktu(this)"></select> menit
 										</div>
 									</div>
-									<input class="waktuMulai" type="hiddenDebug" name="bookingTimes[0][waktuMulai]" required>
-									<input class="waktuSelesai" type="hiddenDebug" name="bookingTimes[0][waktuSelesai]" required>
+									<input class="waktuMulai" type="hidden" name="bookingTimes[0][waktuMulai]" required>
+									<input class="waktuSelesai" type="hidden" name="bookingTimes[0][waktuSelesai]" required>
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}<p style="color: red" class="d-inline">*</p></label>
 										<div class="col-md-6">

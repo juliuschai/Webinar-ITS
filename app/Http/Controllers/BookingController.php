@@ -3,202 +3,275 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\BookingTime;
 use App\Http\Requests\AcceptBookingRequest;
 use App\Http\Requests\DenyBookingRequest;
 use App\Http\Requests\NewBookingRequest;
 use App\Http\Requests\EditBookingRequest;
+use App\Http\Requests\VerifyBookingRequest;
 use App\Unit;
 use App\UnitType;
 use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
-	function viewNewBooking(Request $request) {
-		$booking = new Booking();
-		$booking->setUserFields(Auth::id());
-		$units = Unit::getDefault();
-		$unitTypes = UnitType::get();
-		$booking_times = null;
-		return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
-	}
+    function viewNewBooking(Request $request)
+    {
+        $booking = new Booking();
+        $booking->setUserFields(Auth::id());
+        $units = Unit::getDefault();
+        $unitTypes = UnitType::get();
+        $booking_times = null;
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
+    }
 
-	function saveNewBooking(NewBookingRequest $request) {
-	// function saveNewBooking(Request $request) {
-		$booking = new Booking();
-		// dd($request->bookingTimes);
-		$booking->setUserId(Auth::id());
-		$booking->saveFromRequest($request);
-		return redirect()->route('booking.view', ['id'=>$booking['id']]);
-	}
+    function saveNewBooking(NewBookingRequest $request)
+    {
+        // function saveNewBooking(Request $request) {
+        $booking = new Booking();
+        // dd($request->bookingTimes);
+        $booking->setUserId(Auth::id());
+        $booking->saveFromRequest($request);
+        return redirect()->route('booking.view', ['id' => $booking['id']]);
+    }
 
-	function viewEditBooking($id) {
-		$booking = Booking::findOrFail($id);
-		$booking->abortIfVerified();
-		$booking->setUserFields($booking->user_id);
-		$booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
-		$units = Unit::getDefault();
-		$unitTypes = UnitType::get();
-		$booking_times = $booking->getTimes();
-		return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
-	}
+    function viewEditBooking($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->abortIfVerified();
+        $booking->setUserFields($booking->user_id);
+        $booking->unit_type_id = Unit::getTypeIdById($booking->unit_id);
+        $units = Unit::getDefault();
+        $unitTypes = UnitType::get();
+        $booking_times = $booking->getTimes();
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
+    }
 
-	function saveEditBooking(EditBookingRequest $request) {
-		$booking = Booking::findOrFail($request['id']);
-		$booking->abortIfVerified();
-		$booking->saveFromRequest($request);
+    function saveEditBooking(EditBookingRequest $request)
+    {
+        $booking = Booking::findOrFail($request['id']);
+        $booking->abortIfVerified();
+        $booking->saveFromRequest($request);
 
-		return redirect()->route('booking.view', ['id'=>$request['id']]);
-	}
+        return redirect()->route('booking.view', ['id' => $request['id']]);
+    }
 
-	function viewBooking($id) {
-		$booking = Booking::findOrFail($id);
-		$booking->setOrgFields($booking['unit_id']);
-		if (Auth::check()) {
-			$isAdmin = User::findOrLogout(Auth::id())->isAdmin();
-			$isOwner = $booking->isOwner(Auth::id());
-			if ($isAdmin || $isOwner) {
-				$booking->setUserFields($booking['user_id']);    
-			}
-		} else {
-			$isAdmin = false;
-			$isOwner = false;
-		}
-		$booking_times = $booking->getTimes();
-		return view('booking.view', 
-			compact(['booking', 'isOwner', 'isAdmin', 'booking_times'])
-		);
-	}
+    function viewBooking($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->setOrgFields($booking['unit_id']);
+        if (Auth::check()) {
+            $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
+            $isOwner = $booking->isOwner(Auth::id());
+            if ($isAdmin || $isOwner) {
+                $booking->setUserFields($booking['user_id']);
+            }
+        } else {
+            $isAdmin = false;
+            $isOwner = false;
+        }
+        $booking_times = $booking->getTimes();
+        return view(
+            'booking.view',
+            compact(['booking', 'isOwner', 'isAdmin', 'booking_times'])
+        );
+    }
 
-	
-	function acceptBooking(AcceptBookingRequest $request) {
-		$booking = Booking::findOrFail($request['id']);
-		$booking->acceptBooking($request);
+    // function verifyBooking(Request $request) {
+    function verifyBooking(VerifyBookingRequest $request)
+    {
+        // dd($request->verify);
+        $booking = Booking::findorfail($request->id);
+        $booking->verifyBooking($request->verify);
 
-		return redirect()->route('booking.view', ['id'=>$request['id']]);
-	}
+        if ($booking->checkApproved()) {
+            $booking->disetujui = true;
+            $booking->deskripsi_disetujui = "";
+            $book_times = BookingTime::where('booking_id', $booking->id)
+                ->get();
+            // Schedule a webinar for each booking time and send invitation email
+            foreach ($book_times as $book_time) {
+                // Generate new JSON Web Token
+                $token_header = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
+                $token_payload = [
+                    'iss' => env('ZOOM_API_KEY'),
+                    'exp' => (time() + 15)
+                ];
+                $token_payload = base64_encode(json_encode($token_payload));
+                $token_payload = str_replace(['+', '/', '='], ['-', '_', ''], $token_payload);
+                $token_signature = hash_hmac('sha256', "$token_header.$token_payload", env('ZOOM_API_SECRET'), true);
+                $token_signature = base64_encode($token_signature);
+                $token_signature = str_replace(['+', '/', '='], ['-', '_', ''], $token_signature);
+                $token = "$token_header.$token_payload.$token_signature";
+                // Schedule a webinar
+                $durasi = floor((strtotime($book_time->waktu_akhir) - strtotime($book_time->waktu_mulai)) / 60);
+                $data = [
+                    'topic' => $booking->nama_acara,
+                    'type' => 5,
+                    'start_time' => date("Y-m-d\TH:i:s\Z", strtotime($book_time->waktu_mulai) - 3600 * 7),
+                    'duration' => $durasi,
+                    'timezone' => 'Asia/Jakarta',
+                    'password' => 'D%9$0%3&#$',
+                    'agenda' => $booking->nama_acara,
+                    'settings' => [
+                        "host_video" => "true",
+                        "panelists_video" => "true",
+                        "practice_session" => "false",
+                        "hd_video" => "true",
+                        "approval_type" => 2,
+                        "audio" => "both",
+                        "auto_recording" => "none",
+                        "enforce_login" => "false",
+                        "close_registration" => "false",
+                        "show_share_button" => "true",
+                        "allow_multiple_devices" => "true"
+                    ]
+                ];
+                $response = Http::withToken($token)->post("https://api.zoom.us/v2/users/{$book_time->host->zoom_id}/webinars", $data);
+                if ($response->successful()) {
+                    // Save webinar id
+                    $book_time->webinar_id = $response->json()['id'];
+                    $book_time->save();
+                    // Send email
+                    $email_data = [
+                        'join_url' => $response->json()['join_url'],
+                        'topic' => $response->json()['topic'],
+                        'start_time' => $response->json()['start_time']
+                    ];
+                    $email = $booking->user->email;
+                    Mail::send('emails.booking_approved', $email_data, function ($message) use ($email) {
+                        $message->to($email);
+                        $message->subject('WEBINAR ITS');
+                    });
+                }
+            }
+        } else {
+            $booking->disetujui = false;
+            $booking->deskripsi_disetujui = $request->alasan;
+        }
+        $booking->save();
+        return redirect()->back();
+    }
 
-	function cancelBooking(Request $request) {
-		$booking = Booking::findOrFail($request['id']);
-		$booking->cancelBooking($request);
+    public function waitingListBooking()
+    {
 
-		return redirect()->route('booking.view', ['id'=>$request['id']]);
-	}
+        $bookings = \DB::table('bookings')
+            ->join('units', 'units.id', '=', 'bookings.unit_id')
+            ->where('bookings.user_id', '=', Auth::id())
+            ->select('bookings.*', 'units.nama')
+            ->paginate('10');
+        $length = Booking::where('bookings.user_id', '=', Auth::id())
+            ->count();
+        return view('booking.table', compact(['bookings', 'length']));
+    }
 
-	function denyBooking(DenyBookingRequest $request) {
-		$booking = Booking::findOrFail($request['id']);
-		$booking->denyBooking($request);
+    public function deleteBooking(Request $request)
+    {
+        $id = $request['id'];
+        Booking::destroy($id);
 
-		return redirect()->route('booking.view', ['id'=>$request['id']]);
-	}
+        // if(Route::is('booking.list')){
+        return redirect()->route('booking.list');
+        // } else if(Route::is('admin.list')){
+        // return redirect()->route('admin.list');
+        // }
+    }
 
-	public function waitingListBooking() {
+    public function adminDeleteBooking(Request $request)
+    {
+        $id = $request['id'];
+        Booking::destroy($id);
 
-		$bookings = \DB::table('bookings')
-					->join('units', 'units.id', '=', 'bookings.unit_id')
-					->where('bookings.user_id', '=', Auth::id())
-					->select('bookings.*', 'units.nama')
-					->paginate('10');
-		$length = Booking::where('bookings.user_id', '=', Auth::id())
-			->count();
-		return view('booking.table', compact(['bookings', 'length']));
-	}
+        return redirect()->route('admin.list');
+    }
 
-	public function deleteBooking(Request $request) {
-		$id = $request['id'];
-		Booking::destroy($id);
+    function adminAproveBookingData()
+    {
+        $model = Booking::viewBookingList()
+            ->where('bookings.disetujui', '=', '1')
+            ->newQuery();
 
-		// if(Route::is('booking.list')){
-			return redirect()->route('booking.list');
-		// } else if(Route::is('admin.list')){
-			// return redirect()->route('admin.list');
-		// }
-	}
+        return DataTables::eloquent($model)
+            ->toJson();
+    }
 
-	public function adminDeleteBooking(Request $request) {
-		$id = $request['id'];
-		Booking::destroy($id);
+    function listBookingData()
+    {
+        $model = Booking::viewBookingList()
+            ->where('bookings.user_id', '=', Auth::id())
+            ->newQuery();
 
-		return redirect()->route('admin.list');
-	}
+        return DataTables::eloquent($model)
+            ->filterColumn('disetujui', function ($query, $keyword) {
+                if ($keyword == "true") {
+                    $query->whereRaw("disetujui = true");
+                } else if ($keyword == "false") {
+                    $query->whereRaw("disetujui = false");
+                } else if ($keyword == "none") {
+                    $query->whereRaw("disetujui IS NULL");
+                }
+            })
+            ->toJson();
+    }
 
-	function adminAproveBookingData() {
-		$model = Booking::viewBookingList()
-			->where('bookings.disetujui', '=', '1')
-			->newQuery();
+    //Admin
+    function adminListBookingData()
+    {
+        $model = Booking::viewBookingList()
+            ->newQuery();
 
-		return DataTables::eloquent($model)
-			->toJson();
-	}
+        return DataTables::eloquent($model)
+            ->filterColumn('disetujui', function ($query, $keyword) {
+                if ($keyword == "true") {
+                    $query->whereRaw("disetujui = true");
+                } else if ($keyword == "false") {
+                    $query->whereRaw("disetujui = false");
+                } else if ($keyword == "none") {
+                    $query->whereRaw("disetujui IS NULL");
+                }
+            })
+            ->toJson();
+    }
 
-	function listBookingData() {
-		$model = Booking::viewBookingList()
-			->where('bookings.user_id', '=', Auth::id())
-			->newQuery();
+    public function adminListBooking(Request $request)
+    {
+        $bookings = Booking::viewBookingList()
+            ->paginate('10');
 
-		return DataTables::eloquent($model)
-			->filterColumn('disetujui', function($query, $keyword) {
-				if ($keyword == "true") {
-					$query->whereRaw("disetujui = true");
-				} else if ($keyword == "false"){
-					$query->whereRaw("disetujui = false");
-				} else if ($keyword == "none"){
-					$query->whereRaw("disetujui IS NULL");
-				}	
-			})
-			->toJson();
-	}
+        $length = Booking::count();
+        return view('admin.table', compact(['bookings', 'length']));
+    }
 
-	//Admin
-	function adminListBookingData() {
-		$model = Booking::viewBookingList()
-			->newQuery();
+    public function aproveBooking(Request $request)
+    {
+        $bookings = Booking::viewBookingList()
+            ->where('bookings.disetujui', '=', '1')
+            ->paginate('10');
 
-		return DataTables::eloquent($model)
-			->filterColumn('disetujui', function($query, $keyword) {
-				if ($keyword == "true") {
-					$query->whereRaw("disetujui = true");
-				} else if ($keyword == "false"){
-					$query->whereRaw("disetujui = false");
-				} else if ($keyword == "none"){
-					$query->whereRaw("disetujui IS NULL");
-				}	
-			})
-			->toJson();
-	}
+        $length = Booking::where('bookings.disetujui', '=', '1')
+            ->count();
+        return view('admin.aprove', compact(['bookings', 'length']));
+    }
 
-	public function adminListBooking(Request $request) {
-		$bookings = Booking::viewBookingList()
-					->paginate('10');
+    function getEvents()
+    {
+        $bookings = Booking::where('disetujui', true)
+            ->get([
+                'id',
+                'nama_acara as title',
+                'waktu_mulai as start',
+                'waktu_akhir as end'
+            ]);
+        foreach ($bookings as $booking) {
+            $booking['color'] = "#fae9e8";
+        }
 
-		$length = Booking::count();
-		return view('admin.table', compact(['bookings', 'length']));
-	}
-
-	public function aproveBooking(Request $request) {
-		$bookings = Booking::viewBookingList()
-					->where('bookings.disetujui', '=', '1')
-					->paginate('10');
-
-			$length = Booking::where('bookings.disetujui', '=', '1')
-				->count();
-		return view('admin.aprove', compact(['bookings', 'length']));
-	}
-
-	function getEvents() {
-		$bookings = Booking::where('disetujui', true)
-			->get([
-				'id', 
-				'nama_acara as title',
-				'waktu_mulai as start', 
-				'waktu_akhir as end'
-			]);
-		foreach ($bookings as $booking) {
-			$booking['color'] = "#fae9e8";
-		}
-
-		return json_encode($bookings);
-	}
+        return json_encode($bookings);
+    }
 }
