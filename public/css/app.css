@@ -11986,3 +11986,14 @@ input#relayITSTV {
   width: 13% !important;
   padding: 5px 8px;
 }
+
+/* Dashboard */
+
+.row .card.dashboard {
+  margin: 3px !important; 
+  padding: 3px !important; 
+  -webkit-box-flex: 0 !important; 
+  -ms-flex: 0 0 33.333333% !important; 
+  flex: 0 0 47% !important; 
+  max-width: 47% !important;
+}
