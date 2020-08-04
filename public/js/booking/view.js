@@ -103,6 +103,15 @@ function denyAll() {
 }
 
 function submit() {
+	let lastDisetujui = $('#lastDisetujui').val();
+	// confirmation popup
+	if (lastDisetujui == "true") {
+		if (!confirm(`Perhatian! Booking ini sudah dibuatkan webinar di Zoom dan \
+dikirimkan email ke user. Apakah anda yakin untuk booking ulang?`)) {
+			return;
+		}
+	}
+
 	let $divs = $('.action');
 	let res = [];
 	let validation = "";
