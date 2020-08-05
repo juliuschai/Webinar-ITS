@@ -113,8 +113,17 @@
 					@endif
 
 					@foreach ($booking_times as $book_time)
-					<div class="form-group row">
 					<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
+
+					<div class="d-flex flex-row-reverse">
+						@if($book_time->gladi == '1')
+						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Gladi</div>
+						@else
+						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Webinar</div>
+						@endif
+					</div>
+					<div class="form-group row">
+
 						<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
@@ -190,6 +199,7 @@
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
+					<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
 						<label for="alasan" class="col-md-4 col-form-label text-md-left">{{ __('Alasan') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">

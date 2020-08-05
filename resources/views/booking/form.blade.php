@@ -179,6 +179,11 @@
 								<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
 									<input type="hidden" name="bookingTimes[0][id]" class="id">
 									<input type="hidden" name="bookingTimes[0][gladi]" class="gladi" value="false">
+									
+									<div class="d-flex flex-row-reverse">
+										<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px;">Sesi Webinar</div>
+									</div>
+									
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-calendar-o booking"></i>

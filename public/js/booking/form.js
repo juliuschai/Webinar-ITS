@@ -171,6 +171,12 @@ function disableBookingTime($form) {
 function addGladiTimesForm() {
 	let $forms = $('.bookingGladiTimesForms')
 	let length = $forms.find('.bookingTimesForm').length;
+
+	var sesi = document.getElementById('sesi');
+	var text = document.createTextNode('Sesi Gladi');
+	sesi.appendChild(text);
+	sesi.removeChild(sesi.childNodes[0]); 
+
 	$form = $('.bookingTimesForm').eq(0).clone();
 	$form = formSetIdx($form, length);
 	$form.find('.id').val("");
@@ -187,6 +193,12 @@ function addGladiTimesForm() {
 }
 
 function addTimesForm() {
+
+	var sesi = document.getElementById('sesi');
+	var text = document.createTextNode('Sesi Webinar');
+	sesi.appendChild(text);
+	sesi.removeChild(sesi.childNodes[0]); 
+
 	let $forms = $('.bookingTimesForms')
 	$form = $('.bookingTimesForm').eq(0).clone();
 	$form = formSetIdx($form, formAmnt);
