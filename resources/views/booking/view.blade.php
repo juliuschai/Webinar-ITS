@@ -210,6 +210,7 @@
 					</form>
 					<div class="form-group row mb-0">
 						<div class="col-md-8 offset-md-4">
+							<input type="hidden" id="lastDisetujui" value="{{$booking->disetujui?'true':''}}">
 							<button type="button" class="btn btn-submit" onclick="submit()">
 								{{__('Setujui Booking')}}
 							</button>
