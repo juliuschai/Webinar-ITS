@@ -100,6 +100,18 @@
 						</ul>
 
 							<div class="form-group row">
+								<label for="kategoriAcara" class="col-md-4 col-form-label text-md-left">{{ __('Kategori Acara') }}<p style="color: red" class="d-inline">*</p></label>
+									<i class="fa fa-list-alt booking"></i>
+									<div class="col-md-6">
+										<select name="kategoriAcara" class="form-control">
+											<option value="Webinar/Open Talk">Webinar/Open Talk</option>
+											<option value="Konferensi Internasional/Nasional">Konferensi Internasional/Nasional</option>
+											<option value="Training/Workshop/Pelatihan">Training/Workshop/Pelatihan</option>
+										</select>
+									</div>
+							</div>
+
+							<div class="form-group row">
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
 								<div class="col-md-6">

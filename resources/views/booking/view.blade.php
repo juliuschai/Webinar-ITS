@@ -76,6 +76,17 @@
 					@endif
 
 					<div class="form-group row">
+						<label for="kategoriAcara" class="col-md-4 col-form-label text-md-left">{{ __('Kategori Acara') }}</label>
+						<i class="fa fa-list-alt booking"></i>
+						<div class="col-md-6">
+							<input 
+								type="text" class="form-control" 
+								value="{{ $booking->kategori_acara }}" disabled
+							>
+						</div>
+					</div>
+
+					<div class="form-group row">
 						<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">

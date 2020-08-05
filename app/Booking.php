@@ -24,6 +24,7 @@ class Booking extends Model
 	 */
 	function saveFromRequest($request) {
 		// True if checkbox checked, false not checked
+		$this->kategori_acara = $request->kategoriAcara;
 		$this->nama_acara = $request->namaAcara;
 		$this->unit_id = $request->penyelengaraAcara;
 		$this->disetujui = null;
