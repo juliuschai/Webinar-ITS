@@ -158,19 +158,25 @@
 							</div>
 							@endif
 
-							<sub>Untuk webinar lebih dari 1 sesi (1 hari) silahkan membaut sesi baru</sub>
-							<sub>Untuk keperluan gladi bersih silahkan membuat sesi baru</sub>
+							<sub>Keterangan :</sub></br>
+							<sub>- Untuk webinar lebih dari 1 sesi (1 hari) silahkan membaut sesi baru</sub></br>
+							<sub>- Untuk keperluan gladi bersih silahkan membuat sesi baru</sub></br>
+							<sub>- Waktu booking gunakan WIB (GMT+7)</sub>
+
+
 							<div class="bookingGladiTimesForms">
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4"></div>
 								<div class="col-md-6">
-									<button type="button" onclick="addGladiTimesForm()">tambah sesi gladi</button>
+									<button type="button" class="btn btn-info" style="padding: 5px;font-size:12px;" onclick="addGladiTimesForm()">Tambah Sesi Gladi</button>
+									<button type="button" class="btn btn-info" style="padding: 5px;font-size:12px;" onclick="addTimesForm()">Tambah Sesi</button>
 								</div>
 							</div>
-							<sub>Waktu booking gunakan WIB (GMT+7)</sub>
+
 							<div class="bookingTimesForms" data-datas="{{json_encode(old('bookingTimes')??$booking_times)}}">
 								<div class="bookingTimesForm">
+								<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
 									<input type="hidden" name="bookingTimes[0][id]" class="id">
 									<input type="hidden" name="bookingTimes[0][gladi]" class="gladi" value="false">
 									<div class="form-group row">
@@ -223,22 +229,17 @@
 											<br>servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
 										</div>	
 									</div>
-									<div class="d-flex flex-row-reverse">
-										<button type="button" class="btn btn-danger" onclick="deleteField(this)">Hapus Sesi</button>
+									<div class="d-flex">
+										<button type="button" class="btn btn-custom-danger" onclick="deleteField(this)">Hapus Sesi</button>
 									</div>
 								</div>	
 							</div>	
-							<div class="form-group row">
-								<div class="col-md-4"></div>
-								<div class="col-md-6">
-									<button type="button" onclick="addTimesForm()">tambah sesi</button>
-								</div>
-							</div>
+
 							<!-- </div> -->
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-									<button style="position: absolute;bottom: 15px;right: 200px;" type="button" id="prevvBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Previous</button>
-									<button style="position: absolute;bottom: 15px;right: 50px;" type="button" id="submitBtn" class="btn btn-submit" onclick="submitForm()">
+									<button style="position: absolute;bottom: 0px;right: 200px;" type="button" id="prevvBtn" class="btn btn-submit next-btn" onclick="nextPrev(-1)">Previous</button>
+									<button style="position: absolute;bottom: 0px;right: 50px;" type="button" id="submitBtn" class="btn btn-submit" onclick="submitForm()">
 										@if(Route::is('booking.new'))
 										{{ __('Submit Booking') }}
 										@elseif(Route::is('booking.edit'))

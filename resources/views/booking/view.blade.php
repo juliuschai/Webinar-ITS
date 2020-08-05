@@ -114,6 +114,7 @@
 
 					@foreach ($booking_times as $book_time)
 					<div class="form-group row">
+					<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
 						<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
@@ -164,7 +165,7 @@
 					@endif
 					@if($isAdmin)
 					<div class="action" data-id="{{$book_time->id}}">
-						<select class="hostAccount">
+						<select class="hostAccount form-control col-sm-4 d-inline" style="width:10%;font-size:12px;margin-right:24%;">
 							<option value="" style="display: none;">Nothing</option>
 							@foreach ($book_time->host_accounts as $host_account)
 							<option value="{{$host_account->id}}" {{$book_time->host_account_id==$host_account->id?'selected':''}}>{{$host_account->nama}}</option>
@@ -174,13 +175,13 @@
 							type="hidden" class="status" 
 							value="{{isset($book_time->disetujui) ? ($book_time->disetujui?'accept':'deny') :''}}"
 						>
-						<button type="button" class="btn btn-submit acceptButton" onclick="acceptBooking(this)" style="display: none;">
+						<button type="button" style="margin-bottom:5px;" class="btn btn-submit acceptButton" onclick="acceptBooking(this)" style="display: none;">
 							{{ __('Setujui Booking') }}
 						</button>
-						<button type="button" class="btn btn-danger denyButton" onclick="denyBooking(this)" style="display: none;">
+						<button type="button" style="margin-bottom:5px;" class="btn btn-danger denyButton" onclick="denyBooking(this)" style="display: none;">
 							{{ __('Tolak Booking') }}
 						</button>
-						<button type="button" class="btn btn-warning cancelButton" onclick="cancelBooking(this)" style="display: none;">
+						<button type="button" style="margin-bottom:5px;" class="btn btn-warning cancelButton" onclick="cancelBooking(this)" style="display: none;">
 							{{ __('Cancel Booking') }}
 						</button>
 					</div>
@@ -210,7 +211,7 @@
 					<div class="form-group row mb-0">
 						<div class="col-md-8 offset-md-4">
 							<button type="button" class="btn btn-submit" onclick="submit()">
-								{{__('Verify Booking')}}
+								{{__('Setujui Booking')}}
 							</button>
 							<button type="button" class="btn btn-danger denyAll" onclick="denyAll()">
 								{{ __('Tolak Booking') }}
