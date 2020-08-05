@@ -261,12 +261,14 @@ class BookingController extends Controller
 
     function getEvents()
     {
-        $bookings = Booking::where('disetujui', true)
+        $bookings = Booking::join('booking_times as bt', 'bt.booking_id', '=', 'bookings.id')
+            ->where('bookings.disetujui', true)
+            ->where('bt.gladi', false)
             ->get([
-                'id',
+                'bookings.id',
                 'nama_acara as title',
-                'waktu_mulai as start',
-                'waktu_akhir as end'
+                'bt.waktu_mulai as start',
+                'bt.waktu_akhir as end'
             ]);
         foreach ($bookings as $booking) {
             $booking['color'] = "#fae9e8";
