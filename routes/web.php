@@ -65,6 +65,8 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::post('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
             Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');
             Route::post('/admin/booking/verify/{id}', 'BookingController@verifyBooking')->name('booking.verify');
+
+            Route::get('/admin/webinar/accounts', 'HostAccountController@getAccounts');
         });
     });
 });
