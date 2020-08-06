@@ -30,7 +30,7 @@
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td>
-                                <p style="margin-bottom: 10px;">Webinar anda akan dimulai, berikut untuk akses zoom meeting :</p>
+                                <p style="margin-bottom: 10px;">Webinar anda akan dimulai, silahkan login ke akun webinar :</p>
                             </td>
                         </tr>
                         <tr>
