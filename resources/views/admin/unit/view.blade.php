@@ -10,6 +10,33 @@
 			{{ session()->get('message') }}
 	</div>
 	@endif
+	<div class="form-group row col-md-12 col-sm-12">
+		<form id="submitForm" action="{{route('admin.unit.add')}}" method="POST">
+			@csrf
+			<div class="form-group row">
+				<label for="unitNama" class="col-md-4 col-form-label text-md-left">Nama:</label>
+				<div class="col">
+					<input id="unitNama" type="text" name="unitNama" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="unitType" class="col-md-4 col-form-label text-md-left">Type:</label>
+				<div class="col">
+					<select name="unitType" id="unitType" class="form-control">
+						<option value="" selected>Semua</option>	
+						@foreach ($types as $type)
+							<option value="{{$type->id}}">{{$type->nama}}</option>	
+						@endforeach
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<button style="padding: 3px 8px" type="button" class="btn btn-primary" onclick="checkEmpty()">
+					Tambah Unit
+				</button>
+			</div>
+		</form>
+	</div>
 	<!-- Edit button template -->
 	<div id="editBtnTemplate" style="display: none;">
 		<a href="{{route('admin.unit.edit', ['id'=>0])}}">
@@ -69,35 +96,11 @@
 				<th></th>
 				<th></th>
 			</tr>
-	</tfoot>
-</table>
-</div>
+		</tfoot>
+	</table>
+	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmModalLabel">Konfirmasi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div id="confirmationText" class="modal-body">
-			</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<form id="modalSubmitForm" action="{{route('admin.unit.add')}}" method="POST">
-					@csrf
-					<input id="modalUnitNama" type="hidden" name="unitNama" value="">
-					<input id="modalUnitType" type="hidden" name="unitType" value="">
-					<button type="submit" class="btn btn-primary">Konfirmasi</button>
-				</form>
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
 
 @section('scripts')
