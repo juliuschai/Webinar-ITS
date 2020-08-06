@@ -27,6 +27,7 @@ class Booking extends Model
 		$this->kategori_acara = $request->kategoriAcara;
 		$this->nama_acara = $request->namaAcara;
 		$this->unit_id = $request->penyelengaraAcara;
+		$this->admin_id = $request->adminDPTSI?:null;
 		$this->disetujui = null;
 		// If there's a new file being uploaded
 		if ($request->has('dokumenPendukung')) {
@@ -68,7 +69,9 @@ class Booking extends Model
 
 	static function viewBookingList() {
 		return Booking::join('units', 'units.id', '=', 'bookings.unit_id')
-			->select('bookings.*', 'units.nama');
+			->leftJoin('users as adm', 'adm.id', '=', 'bookings.admin_id')
+			->select('bookings.*', 'units.nama', 
+				'adm.nama as admin_dptsi_nama', 'adm.no_wa as admin_dptsi_no_wa');
 	}
 
 	function verifyBooking($requestVerifies) {
@@ -120,6 +123,14 @@ class Booking extends Model
 		$this->email_pic = $user->email;
 		$this->no_wa = $user->no_wa;
 		$this->sivitas = Group::getNamaFromId($user->group_id);
+	}
+
+	function setAdminFields($id) {
+		$admin = User::find($id);
+		if ($admin) {
+			$this->admin_dptsi_nama = $admin->nama;
+			$this->admin_dptsi_no_wa = $admin->no_wa;
+		}
 	}
 
 	function setOrgFields($id) {

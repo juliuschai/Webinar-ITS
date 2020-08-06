@@ -81,6 +81,7 @@
 					<th class="text-center" scope="col">Waktu</th>
 					<th class="text-center" scope="col">Nama Acara</th>
 					<th class="text-center" scope="col">Penyelenggara Acara</th>
+					<th class="text-center" scope="col">Admin DPTSI</th>
 					<th class="text-center" scope="col">Status</th>
 					<th class="text-center" scope="col">Aksi</th>
 					</tr>
@@ -94,6 +95,7 @@
 						<td>{{$booking->waktu_mulai}}</td>
 						<td>{{$booking->nama_acara}}</td>
 						<td>{{$booking->nama}}</td>
+						<td>{{$booking->admin_dptsi_nama.' - '.$booking->admin_dptsi_no_wa}}</td>
 						<td>{{$booking->disetujui}}</td>
 						<td></td>
 					</tr>
@@ -107,6 +109,7 @@
 						<th></th>
 						<th><input type="text" placeholder="Search Nama Acara"></th>
 						<th><input type="text" placeholder="Search Penyelenggara Acara"></th>
+						<th></th>
 						<th>
 							<select id="searchStatus">
 								<option>Semua</option>

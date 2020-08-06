@@ -112,6 +112,18 @@
 						</div>
 					</div>	
 
+					@if($isOwner || $isAdmin)
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Admin DPTSI') }}</label>
+						<i class="fa fa-list-alt booking"></i>
+						<div class="col-md-6">
+							<input 
+								type="text" class="form-control" 
+								value="{{$booking->admin_dptsi_nama.' - '.$booking->admin_dptsi_no_wa}}" disabled
+							>
+						</div>
+					</div>
+
 					@if(isset($booking->file_pendukung))
 					<div class="form-group row">
 						<label class="col-md-4 col-form-label text-md-left"></label>
@@ -121,6 +133,7 @@
 							<a href="{{route('dokumen.download', ['id' => $booking->id])}}" target="_blank"><button style="background-color: #0067ac !important; color: white !important;" class="btn">Download</button></a>
 						</div>
 					</div>
+					@endif {{-- end if file_pendukung --}}
 					@endif
 
 					@foreach ($booking_times as $book_time)

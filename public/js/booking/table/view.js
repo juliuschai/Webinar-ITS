@@ -91,6 +91,23 @@ bookingTableElm.DataTable({
 		},
 		{
 			"targets": 6,
+			"title": "Admin DPTSI",
+			"data": "",
+			"name": "",
+			"searchable": false,
+			"visible": true,
+			"render": function(data, type, full, meta) {
+				if (data) {
+					return data;
+				}else if (full.admin_dptsi_nama && full.admin_dptsi_no_wa) {
+					return `${full.admin_dptsi_nama} - ${full.admin_dptsi_no_wa}`
+				} else {
+					return " - ";
+				}
+			},
+		},
+		{
+			"targets": 7,
 			"title": "Status",
 			"data": "disetujui",
 			"name": "disetujui",
@@ -107,7 +124,7 @@ bookingTableElm.DataTable({
 			},
 		},
 		{
-			"targets": 7, 
+			"targets": 8, 
 			"title": "Aksi",
 			"data": null,
 			"name": null,

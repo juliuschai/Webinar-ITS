@@ -141,6 +141,20 @@
 							</div>
 
 							<div class="form-group row">
+								<label for="adminDPTSI" class="col-md-4 col-form-label text-md-left">{{ __('Admin DPTSI') }}</label>
+									<i class="fa fa-list-alt booking"></i>
+									<div class="col-md-6">
+										<select name="adminDPTSI" class="form-control">
+											<option value="">Tidak Dispesifikasi</option>
+											<option value="1">Temp</option>
+											@foreach ($admins as $admin)
+											<option value="{{$admin->id}}" {{old('adminDPTSI')??$booking->admin_dptsi == $admin->id?'selected':''}}>{{$admin->nama}}</option>
+											@endforeach
+										</select>
+									</div>
+							</div>
+
+							<div class="form-group row">
 								<label for="dokumenPendukung" class="col-md-4 col-form-label text-md-left">{{ __('File Pendukung') }}
 									@if(!$booking->file_pendukung)
 									<p style="color: red" class="d-inline">*</p>

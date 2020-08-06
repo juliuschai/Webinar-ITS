@@ -30,6 +30,7 @@ class EditBookingRequest extends FormRequest
 			'namaAcara' => 'required|string|max:254',
 			'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg,png|max:2000',
 			'penyelengaraAcara' => 'required|numeric|exists:units,id',
+			'adminDPTSI' => 'nullable|integer|exists:users,id',
 			'bookingTimes' => ['required','array','min:1',new NonGladiMin],
 			'bookingTimes.*.id' => 'nullable|integer',
 			'bookingTimes.*.gladi' => 'required|in:true,false',

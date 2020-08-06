@@ -27,7 +27,10 @@ class BookingController extends Controller
         $units = Unit::getDefault();
         $unitTypes = UnitType::get();
         $booking_times = null;
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
+        $admins = User::where('is_admin', true)
+            ->where('nama', 'LIKE', 'Rizki Rinaldi')
+            ->orWhere('nama', 'LIKE', 'Ernis Desna');
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'admins']));
     }
 
     function saveNewBooking(NewBookingRequest $request)
@@ -49,7 +52,10 @@ class BookingController extends Controller
         $units = Unit::getDefault();
         $unitTypes = UnitType::get();
         $booking_times = $booking->getTimes();
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times']));
+        $admins = User::where('is_admin', true)
+            ->where('nama', 'LIKE', 'Rizki Rinaldi')
+            ->orWhere('nama', 'LIKE', 'Ernis Desna');
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'admins']));
     }
 
     function saveEditBooking(EditBookingRequest $request)
@@ -70,6 +76,7 @@ class BookingController extends Controller
             $isOwner = $booking->isOwner(Auth::id());
             if ($isAdmin || $isOwner) {
                 $booking->setUserFields($booking['user_id']);
+                $booking->setAdminFields($booking['admin_id']);
             }
         } else {
             $isAdmin = false;
@@ -158,13 +165,30 @@ class BookingController extends Controller
         return redirect()->back();
     }
 
+    function listBookingData()
+    {
+        $model = Booking::viewBookingList()
+            ->where('bookings.user_id', '=', Auth::id())
+            ->newQuery();
+
+        return DataTables::eloquent($model)
+            ->filterColumn('disetujui', function ($query, $keyword) {
+                if ($keyword == "true") {
+                    $query->whereRaw("disetujui = true");
+                } else if ($keyword == "false") {
+                    $query->whereRaw("disetujui = false");
+                } else if ($keyword == "none") {
+                    $query->whereRaw("disetujui IS NULL");
+                }
+            })
+            ->toJson();
+    }
+
     public function waitingListBooking()
     {
 
-        $bookings = \DB::table('bookings')
-            ->join('units', 'units.id', '=', 'bookings.unit_id')
+        $bookings = Booking::viewBookingList()
             ->where('bookings.user_id', '=', Auth::id())
-            ->select('bookings.*', 'units.nama')
             ->paginate('10');
         $length = Booking::where('bookings.user_id', '=', Auth::id())
             ->count();
@@ -176,11 +200,7 @@ class BookingController extends Controller
         $id = $request['id'];
         Booking::destroy($id);
 
-        // if(Route::is('booking.list')){
         return redirect()->route('booking.list');
-        // } else if(Route::is('admin.list')){
-        // return redirect()->route('admin.list');
-        // }
     }
 
     public function adminDeleteBooking(Request $request)
@@ -198,25 +218,6 @@ class BookingController extends Controller
             ->newQuery();
 
         return DataTables::eloquent($model)
-            ->toJson();
-    }
-
-    function listBookingData()
-    {
-        $model = Booking::viewBookingList()
-            ->where('bookings.user_id', '=', Auth::id())
-            ->newQuery();
-
-        return DataTables::eloquent($model)
-            ->filterColumn('disetujui', function ($query, $keyword) {
-                if ($keyword == "true") {
-                    $query->whereRaw("disetujui = true");
-                } else if ($keyword == "false") {
-                    $query->whereRaw("disetujui = false");
-                } else if ($keyword == "none") {
-                    $query->whereRaw("disetujui IS NULL");
-                }
-            })
             ->toJson();
     }
 
