@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\NonGladiMin;
+use Illuminate\Validation\Rule;
 
 class NewBookingRequest extends FormRequest
 {
@@ -25,6 +26,7 @@ class NewBookingRequest extends FormRequest
 	public function rules()
 	{
 		return [
+			'kategoriAcara' => ['required', 'string', 'max:254', Rule::in(['Webinar/Open Talk', 'Konferensi Internasional/Nasional', 'Training/Workshop/Pelatihan'])],
 			'namaAcara' => 'required|string|max:254',
 			'dokumenPendukung' => 'required|mimes:pdf,jpeg,jpg,png|max:2000',
 			'penyelengaraAcara' => 'required|numeric|exists:units,id',

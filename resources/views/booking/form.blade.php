@@ -104,9 +104,9 @@
 									<i class="fa fa-list-alt booking"></i>
 									<div class="col-md-6">
 										<select name="kategoriAcara" class="form-control">
-											<option value="Webinar/Open Talk">Webinar/Open Talk</option>
-											<option value="Konferensi Internasional/Nasional">Konferensi Internasional/Nasional</option>
-											<option value="Training/Workshop/Pelatihan">Training/Workshop/Pelatihan</option>
+											<option value="Webinar/Open Talk" {{old('kategoriAcara')??$booking->kategori_acara == 'Webinar/Open Talk'?'selected':''}}>Webinar/Open Talk</option>
+											<option value="Konferensi Internasional/Nasional" {{old('kategoriAcara')??$booking->kategori_acara == 'Konferensi Internasional/Nasional'?'selected':''}}>Konferensi Internasional/Nasional</option>
+											<option value="Training/Workshop/Pelatihan" {{old('kategoriAcara')??$booking->kategori_acara == 'Training/Workshop/Pelatihan'?'selected':''}}>Training/Workshop/Pelatihan</option>
 										</select>
 									</div>
 							</div>
