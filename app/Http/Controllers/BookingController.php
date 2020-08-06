@@ -158,10 +158,12 @@ class BookingController extends Controller
                         $message->subject('WEBINAR ITS');
                     });
                 } else {
-                    $resJson = $response->json();
-                    return redirect()->back()->withErrors([
-                        'Zoom', "There was an error creating the webinar $resJson"
-                    ]);
+                    $json = $response->json();
+                    $keys = implode(",", array_keys($json));
+                    $body = implode(",", $json);
+                    return redirect()->back()->with(
+                        'error', "Zoom There was an error creating the webinar [$keys] => [$body]"
+                    );
                 }
             }
         } else {
