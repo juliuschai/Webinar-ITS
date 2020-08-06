@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\BookingTime;
-use App\Http\Requests\AcceptBookingRequest;
-use App\Http\Requests\DenyBookingRequest;
 use App\Http\Requests\NewBookingRequest;
 use App\Http\Requests\EditBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
 use App\Unit;
 use App\UnitType;
 use App\User;
+use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,7 +149,7 @@ class BookingController extends Controller
                     $email_data = [
                         'join_url' => $response->json()['join_url'],
                         'topic' => $response->json()['topic'],
-                        'start_time' => $response->json()['start_time']
+                        'start_time' => Carbon::parse($response->json()['start_time'])->setTimezone('Asia/Jakarta')
                     ];
                     $email = $booking->user->email;
                     Mail::send('emails.booking_approved', $email_data, function ($message) use ($email) {

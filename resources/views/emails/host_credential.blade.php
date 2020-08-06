@@ -7,8 +7,8 @@
     <title>WEBINAR ITS</title>
 </head>
 <body>
-    <h1>Webinar anda sudah mau mulai gan</h1>
-    <p>EMAIL: {{ $email }}</p>
-    <p>PASSWORD: {{ $password }}</p>
+    <h1>Webinar anda sudah mau mulai, silahkan login ke akun webinar</h1>
+    <p>Email: {{ $email }}</p>
+    <p>Password: {{ $password }}</p>
 </body>
 </html>
