@@ -28,8 +28,9 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
         $booking_times = null;
         $admins = User::where('is_admin', true)
-            ->where('nama', 'LIKE', 'Rizki Rinaldi')
-            ->orWhere('nama', 'LIKE', 'Ernis Desna');
+            ->where('nama', 'LIKE', '%Rizki Rinaldi%')
+            ->orWhere('nama', 'LIKE', '%Ernis Desna%')
+            ->get();
         return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'admins']));
     }
 
@@ -53,8 +54,9 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
         $booking_times = $booking->getTimes();
         $admins = User::where('is_admin', true)
-            ->where('nama', 'LIKE', 'Rizki Rinaldi')
-            ->orWhere('nama', 'LIKE', 'Ernis Desna');
+            ->where('nama', 'LIKE', '%Rizki Rinaldi%')
+            ->orWhere('nama', 'LIKE', '%Ernis Desna%')
+            ->get();
         return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'admins']));
     }
 
