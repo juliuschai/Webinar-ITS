@@ -57,4 +57,8 @@ class HostAccount extends Model
 			return false;
 		}
 	}
+
+	static function viewHostList() {
+		return HostAccount::get();
+	}
 }

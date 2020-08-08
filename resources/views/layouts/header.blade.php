@@ -85,6 +85,7 @@
                     <ul class="nav child_menu">
                       <li><a href="{{ route('admin.users.view') }}">User</a></li>
                       <li><a href="{{ route('admin.unit.view') }}">Unit</a></li>
+                      <li><a href="{{ route('admin.host.accounts') }}">Host</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Report <span class="fa fa-chevron-down"></span></a>
