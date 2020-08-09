@@ -104,9 +104,9 @@
 									<i class="fa fa-list-alt booking"></i>
 									<div class="col-md-6">
 										<select name="kategoriAcara" class="form-control">
-											<option value="Webinar/Open Talk" {{old('kategoriAcara')??$booking->kategori_acara == 'Webinar/Open Talk'?'selected':''}}>Webinar/Open Talk</option>
-											<option value="Konferensi Internasional/Nasional" {{old('kategoriAcara')??$booking->kategori_acara == 'Konferensi Internasional/Nasional'?'selected':''}}>Konferensi Internasional/Nasional</option>
-											<option value="Training/Workshop/Pelatihan" {{old('kategoriAcara')??$booking->kategori_acara == 'Training/Workshop/Pelatihan'?'selected':''}}>Training/Workshop/Pelatihan</option>
+											@foreach ($kategoris as $kategori)
+												<option value="{{$kategori->id}}" {{old('kategoriAcara')??$booking->kategori_id == $kategori->id?'selected':''}}>{{$kategori->nama}}</option>
+											@endforeach
 										</select>
 									</div>
 							</div>
@@ -138,19 +138,6 @@
 									<select name="penyelengaraAcara" id="penyelengaraAcara" class="form-control">
 									</select>
 								</div>
-							</div>
-
-							<div class="form-group row">
-								<label for="adminDPTSI" class="col-md-4 col-form-label text-md-left">{{ __('Admin DPTSI') }}</label>
-									<i class="fa fa-list-alt booking"></i>
-									<div class="col-md-6">
-										<select name="adminDPTSI" class="form-control">
-											<option value="">Tidak Dispesifikasi</option>
-											@foreach ($admins as $admin)
-											<option value="{{$admin->id}}" {{old('adminDPTSI')??$booking->admin_dptsi == $admin->id?'selected':''}}>{{$admin->nama}}</option>
-											@endforeach
-										</select>
-									</div>
 							</div>
 
 							<div class="form-group row">
@@ -204,10 +191,7 @@
 								<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
 									<input type="hidden" name="bookingTimes[0][id]" class="id">
 									<input type="hidden" name="bookingTimes[0][gladi]" class="gladi" value="false">
-									
-									<div class="d-flex flex-row-reverse">
-										<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px;">Sesi Webinar</div>
-									</div>
+									<h2 class="sesiTitle">Sesi Webinar 1</h2>
 									
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
@@ -290,8 +274,7 @@
 @endsection
 
 @section('scripts')
-{{-- <script src="{{ asset('js/booking/durasiForm.js') }}" defer></script> --}}
-<script src="{{ asset('js/booking/form.js') }}" defer></script>
+<script src="{{ asset('js/booking/form.js') }}?2" defer></script>
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
 <script src="{{ asset('js/booking/tabControls.js') }}" defer></script>
 @endsection

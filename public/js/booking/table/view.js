@@ -1,6 +1,3 @@
-function getTimezoneOffsetInMs() {
-	return new Date().getTimezoneOffset()*-60000;
-}
 var bookingTableElm = $('#bookingTable');
 // Setup - add a text input to each footer cell
 var types = bookingTableElm.data('types');
@@ -49,11 +46,6 @@ bookingTableElm.DataTable({
 			"visible": true,
 			"render": function(data, type, full, meta) {
 				let date = new Date(data);
-				// If data comes from ajax, the data is in client's locale timezone
-				// Revert the automatic change that came from ajax
-				if (data.match('Z')) {
-					date.setTime(date.getTime()-getTimezoneOffsetInMs());
-				}
 				return `${pz(date.getDate())}-${pz(date.getMonth()+1)}-${date.getFullYear()}`
 			},
 		},
@@ -66,9 +58,6 @@ bookingTableElm.DataTable({
 			"visible": true,
 			"render": function(data, type, full, meta) {
 				let date = new Date(data);
-				if (data.match('Z')) {
-					date.setTime(date.getTime()-getTimezoneOffsetInMs());
-				}
 				return `${pz(date.getDate())}-${pz(date.getMonth()+1)}-${date.getFullYear()}`
 			},
 		},
@@ -81,9 +70,6 @@ bookingTableElm.DataTable({
 			"visible": true,
 			"render": function(data, type, full, meta) {
 				let date = new Date(data);
-				if (data.match('Z')) {
-					date.setTime(date.getTime()-getTimezoneOffsetInMs());
-				}
 				return `${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
 			},
 		},

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\FileHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
@@ -24,10 +25,9 @@ class Booking extends Model
 	 */
 	function saveFromRequest($request) {
 		// True if checkbox checked, false not checked
-		$this->kategori_acara = $request->kategoriAcara;
+		$this->kategori_id = $request->kategoriAcara;
 		$this->nama_acara = $request->namaAcara;
 		$this->unit_id = $request->penyelengaraAcara;
-		$this->admin_id = $request->adminDPTSI?:null;
 		$this->disetujui = null;
 		// If there's a new file being uploaded
 		if ($request->has('dokumenPendukung')) {
@@ -58,7 +58,7 @@ class Booking extends Model
 		if (isset($this->file_pendukung)) {
 			$user = User::findOrFail($this->user_id);
 			$unit_nama = Unit::findOrFail($this->unit_id)->nama;
-			$when = date("Y-m-d_Hi", strtotime($this->waktu_mulai));
+			$when = Carbon::parse($this->waktu_mulai)->setTimezone('Asia/Jakarta');
 			$fileExt = pathinfo($this->file_pendukung, PATHINFO_EXTENSION);
 			$fileName = $user->integra.'_'.$user->email.'_'.$unit_nama.'_'.$when.'.'.$fileExt;
 			return $fileName;
@@ -164,10 +164,15 @@ class Booking extends Model
 	 */
 	function isOwner($id) {
 		return $this->user_id == $id;
-    }
+	}
 
-    public function user()
-    {
-        return $this->hasOne('App\User', 'id', 'user_id');
-    }
+	public function user() {
+		return $this->hasOne('App\User', 'id', 'user_id');
+	}
+
+	public function kategori() {
+			return $this->hasOne('App\Kategori', 'id', 'kategori_id');
+	}
+
+
 }

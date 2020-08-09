@@ -18,27 +18,27 @@ class BookingTime extends Model
     {
         $inDb = BookingTime::where('booking_id', '=', $bookingId)
             ->pluck('disetujui', 'id');
-        $retTimes = [];
 
+        // Ids from input
+        $inReqIds = [];
         $length = count($request->bookingTimes);
         for ($i = 0; $i < $length; $i++) {
             $inBookTime = $request->bookingTimes[$i];
             // if id isn't in db, create new
-            if ($inBookTime['id'] && isset($inDb[$inBookTime['id']])) {
-                // if id is disetujui in db, drop changes
-                if ($inDb[$inBookTime['id']] == true) {
-                    continue;
-                } else {
-                    $curBookTime = BookingTime::find($inBookTime['id']);
+            if ($inBookTime['id']) {
+                $reqId = $inBookTime['id'];
+                $inReqIds[] = $reqId;
+                if(isset($inDb[$reqId])) {
+                    // if id is disetujui in db, drop changes
+                    if ($inDb[$reqId] == true) {
+                        continue;
+                    } else {
+                        $curBookTime = BookingTime::find($reqId);
+                    }
                 }
             } else {
                 $curBookTime = new BookingTime();
             }
-            if (!isset($retTimes['waktu_mulai'])) {
-                $retTimes['waktu_mulai'] = $inBookTime['waktuMulai'];
-            }
-            // get the latest waktu_akhir
-            $retTimes['waktu_akhir'] = $inBookTime['waktuSelesai'];
 
             $relayITSTV = $inBookTime['relayITSTV'] == "true";
             $peserta_banyak = $inBookTime['pesertaBanyak'] == 1000;
@@ -52,6 +52,20 @@ class BookingTime extends Model
             $curBookTime->gladi = $gladi;
             $curBookTime->save();
         }
+
+        // if indb is not disetujui and not in inReqIds, delete
+        foreach ($inDb as $id => $disetujui) {
+            if (!$disetujui && !in_array($id, $inReqIds)) {
+                BookingTime::find($id)->delete();
+            }
+        }
+
+        $retTimes = [];
+        $book_times = BookingTime::where('booking_id', '=', $bookingId)
+            ->get(['waktu_mulai', 'waktu_akhir']);
+        $retTimes['waktu_mulai'] = $book_times->min('waktu_mulai');
+        $retTimes['waktu_akhir'] = $book_times->max('waktu_akhir');
+
         if (!isset($retTimes['waktu_mulai'])) {
             abort(403, 'Tidak ada sesi booking yang valid!
 				Silahkan mengecheck kembali sesi-sesi booking anda.');

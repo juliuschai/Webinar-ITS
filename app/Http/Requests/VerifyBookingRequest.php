@@ -25,6 +25,7 @@ class VerifyBookingRequest extends FormRequest
 	public function rules()
 	{
 		return [
+			'adminDPTSI' => 'nullable|integer|exists:users,id',
 			'verify.*.id' => 'required|integer', 
 			'verify.*.status' => ['nullable', 'in:accept,deny', new AlasanRequiredIfDenied($this->alasan)], 
 			'verify.*.hostAccount' => 'required_if:verify.*.status,accept|nullable|exists:host_accounts,id', 

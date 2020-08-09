@@ -36,12 +36,21 @@
 	
 })();
 
-function getTimezoneOffsetInMs() {
-	return new Date().getTimezoneOffset()*-60000;
-}
-
 function pz(str){
 	return ("0"+str).slice(-2);
+}
+
+function validateOtherFields() {
+	if ($('#namaAcara').val().length <= 0) {
+		alert('Nama acara harus diisi!');
+		return false;
+	}
+	if ($('#dokumenPendukung').val().length <= 0) {
+		alert('Dokumen Pendukung dibutuhkan!');
+		return false;
+	}
+
+	return true;
 }
 
 /**
@@ -95,22 +104,26 @@ function updateWaktu(thisElm) {
 		endDate.getMinutes()+parseInt($durMin.val()), 0
 	);
 
-	$begin.val(beginDate.toLocaleString());
-	$end.val(endDate.toLocaleString());
+	$begin.val(beginDate.toISOString());
+	$end.val(endDate.toISOString());
 }
 
 function deleteField(thisElm) {
-	$(thisElm).closest('.bookingTimesForm').remove();
+	let $form = $(thisElm).closest('.bookingTimesForm');
+	if ($form.find('.gladi').val() == "true") {gladiFormAmnt--;}
+	formAmnt--;
+	$form.remove();
 	formsSetIdx();
 }
 
 function submitForm() {
-	if (validateWaktu()) {
+	if (validateOtherFields() && validateWaktu()) {
 		document.getElementById('bookingForm').submit();
 	}
 }
 
 var bookingTimes = $('.bookingTimesForms').data('datas');
+var gladiFormAmnt = 0;
 var formAmnt = 1;
 
 /**
@@ -172,13 +185,10 @@ function addGladiTimesForm() {
 	let $forms = $('.bookingGladiTimesForms')
 	let length = $forms.find('.bookingTimesForm').length;
 
-	var sesi = document.getElementById('sesi');
-	var text = document.createTextNode('Sesi Gladi');
-	sesi.appendChild(text);
-	sesi.removeChild(sesi.childNodes[0]); 
-
 	$form = $('.bookingTimesForm').eq(0).clone();
 	$form = formSetIdx($form, length);
+
+	$form.find('.sesiTitle').text(`Sesi Gladi Resik ${gladiFormAmnt+1}`);
 	$form.find('.id').val("");
 	$form.find('.gladi').val(true);
 	$form.find('input.pesertaBanyak[value=1000]').attr('checked', false).hide();
@@ -189,19 +199,17 @@ function addGladiTimesForm() {
 	$form.find("input.relayITSTV[value=false]").attr('checked', true).show();
 	formsAddIdxFromGladi();
 	$forms.append($form);
+	gladiFormAmnt++;
 	formAmnt++;
 }
 
 function addTimesForm() {
-
-	var sesi = document.getElementById('sesi');
-	var text = document.createTextNode('Sesi Webinar');
-	sesi.appendChild(text);
-	sesi.removeChild(sesi.childNodes[0]); 
-
 	let $forms = $('.bookingTimesForms')
+
 	$form = $('.bookingTimesForm').eq(0).clone();
 	$form = formSetIdx($form, formAmnt);
+
+	$form.find('.sesiTitle').text(`Sesi Webinar ${formAmnt-gladiFormAmnt+1}`);
 	$form.find('.id').val("");
 	$form.find('.gladi').val(false);
 	$form.find('input.pesertaBanyak[value=1000]').attr('checked', false).show();
@@ -218,6 +226,11 @@ function formsSetIdx() {
 	let $forms = $('.bookingTimesForm');
 	for (let i = 0; i < $forms.length; i++) {
 		const $form = $forms.eq(i);
+		if ($form.find('.gladi').val() == "true") {
+			$form.find('.sesiTitle').text(`Sesi Gladi Resik ${i+1}`);
+		} else {
+			$form.find('.sesiTitle').text(`Sesi Webinar ${i-gladiFormAmnt+1}`);
+		}
 		formSetIdx($form, i);
 	}
 }
@@ -226,10 +239,9 @@ function formsSetIdx() {
  * @param {number} i starting form idx to add
  */
 function formsAddIdxFromGladi() {
-	let gladiLength = $('.bookingGladiTimesForms').find('.bookingTimesForm').length;
-	let i = gladiLength;
+	let i = gladiFormAmnt;
 	let $forms = $('.bookingTimesForm');
-	for (i = $forms.length-1; i >= gladiLength; i--) {
+	for (i = $forms.length-1; i >= gladiFormAmnt; i--) {
 		formSetIdx($forms[i], i+1);
 	}
 }
@@ -240,12 +252,13 @@ function formsAddIdxFromGladi() {
  * @param {number} i to set the names of form 
  */
 function formSetIdx(form, i) {
-	$(form).find('.id').attr('name', `bookingTimes[${i}][id]`);
-	$(form).find('.gladi').attr('name', `bookingTimes[${i}][gladi]`);
-	$(form).find('.waktuMulai').attr('name', `bookingTimes[${i}][waktuMulai]`);
-	$(form).find('.waktuSelesai').attr('name', `bookingTimes[${i}][waktuSelesai]`);
-	$(form).find('.pesertaBanyak').attr('name', `bookingTimes[${i}][pesertaBanyak]`);
-	$(form).find('.relayITSTV').attr('name', `bookingTimes[${i}][relayITSTV]`);
+	let $form = $(form);
+	$form.find('.id').attr('name', `bookingTimes[${i}][id]`);
+	$form.find('.gladi').attr('name', `bookingTimes[${i}][gladi]`);
+	$form.find('.waktuMulai').attr('name', `bookingTimes[${i}][waktuMulai]`);
+	$form.find('.waktuSelesai').attr('name', `bookingTimes[${i}][waktuSelesai]`);
+	$form.find('.pesertaBanyak').attr('name', `bookingTimes[${i}][pesertaBanyak]`);
+	$form.find('.relayITSTV').attr('name', `bookingTimes[${i}][relayITSTV]`);
 	return form;
 }
 
@@ -260,8 +273,8 @@ function populateWaktus() {
 		if (beginStr && endStr) {
 			beginDate = new Date(beginStr);
 			let endDate = new Date(endStr);
-			beginDate.setTime(beginDate.getTime() - getTimezoneOffsetInMs());
-			endDate.setTime(endDate.getTime() - getTimezoneOffsetInMs());
+			beginDate.setTime(beginDate.getTime());
+			endDate.setTime(endDate.getTime());
 
 			durasi = (endDate.getTime() - beginDate.getTime())/60/1000;
 			durHour = Math.floor(durasi/60);

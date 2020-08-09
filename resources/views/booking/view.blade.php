@@ -17,6 +17,13 @@
 						</ul>
 					</div>
 					@endif
+					@if (session()->has('message'))
+					<div class="alert alert-success">
+						<ul>
+							<li>{{ session()->get('success') }}</li>
+						</ul>
+					</div>
+					@endif
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
@@ -81,7 +88,7 @@
 						<div class="col-md-6">
 							<input 
 								type="text" class="form-control" 
-								value="{{ $booking->kategori_acara }}" disabled
+								value="{{ $booking->kategori?$booking->kategori->nama:'' }}" disabled
 							>
 						</div>
 					</div>
@@ -136,29 +143,31 @@
 					@endif {{-- end if file_pendukung --}}
 					@endif
 
+					@php($gladiCount=0)
 					@foreach ($booking_times as $book_time)
 					<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
 
 					<div class="d-flex flex-row-reverse">
 						@if($book_time->gladi == '1')
-						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Gladi</div>
+						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Gladi @php($gladiCount++){{$gladiCount}}</div>
 						@else
-						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Webinar</div>
+						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Webinar {{$loop->index - $gladiCount+1}}</div>
 						@endif
 					</div>
 					<div class="form-group row">
 
-						<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
+					<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
 							<input 
-								type="text" class="form-control waktuMulai" 
-								value="{{ $book_time->waktu_mulai }}" disabled
+								type="text" class="form-control waktuMulaiDisplay" 
+								value="" disabled
 							>
 						</div>
 					</div>
 					
-					<input type="hidden" class="waktuSelesai" value="{{ $book_time->waktu_akhir }}" required>
+					<input type="hidden" class="waktuMulai" value="{{$book_time->waktu_mulai->format(DateTime::ATOM)}}">
+					<input type="hidden" class="waktuSelesai" value="{{ $book_time->waktu_akhir->format(DateTime::ATOM) }}">
 
 					<div class="form-group row">
 						<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
@@ -235,7 +244,20 @@
 					@if($isAdmin)
 					<form id="verifyForm" method="POST" action="{{ route('booking.verify', ['id' => $booking->id]) }}">
 						@csrf
-						<input type="hidden" class="alasanField" name="alasan">
+						<div class="form-group row">
+							<label for="adminDPTSI" class="col-md-4 col-form-label text-md-left">{{ __('Admin DPTSI') }}</label>
+								<i class="fa fa-list-alt booking"></i>
+								<div class="col-md-6">
+									<select name="adminDPTSI" class="form-control">
+										<option value="">Tidak Dispesifikasi</option>
+										@foreach ($admins as $admin)
+										<option value="{{$admin->id}}" {{old('adminDPTSI')??$booking->admin_dptsi == $admin->id?'selected':''}}>{{$admin->nama}}</option>
+										@endforeach
+									</select>
+								</div>
+						</div>
+	
+							<input type="hidden" class="alasanField" name="alasan">
 						<div class="fields">
 							<input type="hidden" name="verify[0][id]" class="id">
 							<input type="hidden" name="verify[0][status]" class="status">
@@ -246,10 +268,10 @@
 						<div class="col-md-8 offset-md-4">
 							<input type="hidden" id="lastDisetujui" value="{{$booking->disetujui?'true':''}}">
 							<button type="button" class="btn btn-submit" onclick="submit()">
-								{{__('Setujui Booking')}}
+								{{__('Verifikasi Booking')}}
 							</button>
 							<button type="button" class="btn btn-danger denyAll" onclick="denyAll()">
-								{{ __('Tolak Booking') }}
+								{{ __('Tolak Semua') }}
 							</button>
 						</div>
 					</div>

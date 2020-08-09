@@ -84,9 +84,9 @@
 					@foreach( $bookings as $booking)
 					<tr>
 						<td>{{$booking->id}}</td>
-						<td>{{$booking->created_at}}</td>
-						<td>{{$booking->waktu_mulai}}</td>
-						<td>{{$booking->waktu_mulai}}</td>
+						<td>{{$booking->created_at->format(DateTime::ATOM)}}</td>
+						<td>{{$booking->waktu_mulai->format(DateTime::ATOM)}}</td>
+						<td>{{$booking->waktu_mulai->format(DateTime::ATOM)}}</td>
 						<td>{{$booking->nama_acara}}</td>
 						<td>{{$booking->nama}}</td>
 						<td>{{$booking->admin_dptsi_nama.' - '.$booking->admin_dptsi_no_wa}}</td>
