@@ -103,14 +103,14 @@ class ChartController extends Controller
                     ->pluck('count');
 
         //meeting 
-        $test = Booking::select(\DB::raw("CAST(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60) AS INTEGER) as waktu"))
+        $test = Booking::select(\DB::raw("CONVERT(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60), SIGNED) as waktu"))
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->groupBy(\DB::raw('units.nama'))
                     ->orderByRaw('waktu DESC')
                     ->limit(5)
                     ->pluck('waktu');
 
-        $nama_test = Booking::select(\DB::raw("CAST(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60) AS INTEGER) as waktu, units.nama"))
+        $nama_test = Booking::select(\DB::raw("CONVERT(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60), SIGNED) as waktu, units.nama"))
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->groupBy(\DB::raw('units.nama'))
                     ->orderByRaw('waktu DESC')
