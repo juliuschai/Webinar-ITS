@@ -18,7 +18,7 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
     Route::get('/', 'UserController@checkLoggingIn')->name('calendar.view');
     Route::get('calendar/event', 'BookingController@getEvents')->name('calendar.event');
     
-    Route::get('chart', 'ChartController@index');
+    Route::get('chart', 'ChartController@index')->name('dashboard.chart');;
 
     Route::get('login','UserController@login')->name('login');
     Route::get('logout','UserController@logout')->name('logout');
