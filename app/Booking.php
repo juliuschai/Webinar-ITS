@@ -51,6 +51,12 @@ class Booking extends Model
 		$this->file_pendukung = $file->store('dokumen', 'local');
 	}
 
+	static function generateFilenameWithParam($user_integra, $user_email, $unit_nama, $when, $file_in_db) {
+		$when = Carbon::parse($when)->format('Y-m-d_Hi');
+		$fileExt = pathinfo($file_in_db, PATHINFO_EXTENSION);
+		$fileName = $user_integra.'_'.$user_email.'_'.$unit_nama.'_'.$when.'.'.$fileExt;
+		return $fileName;
+	}
 	/**
 	 * Generate file name for file pendukung
 	 */
@@ -58,7 +64,7 @@ class Booking extends Model
 		if (isset($this->file_pendukung)) {
 			$user = User::findOrFail($this->user_id);
 			$unit_nama = Unit::findOrFail($this->unit_id)->nama;
-			$when = Carbon::parse($this->waktu_mulai)->setTimezone('Asia/Jakarta');
+			$when = Carbon::parse($this->waktu_mulai)->setTimezone('Asia/Jakarta')->format('Y-m-d_Hi');
 			$fileExt = pathinfo($this->file_pendukung, PATHINFO_EXTENSION);
 			$fileName = $user->integra.'_'.$user->email.'_'.$unit_nama.'_'.$when.'.'.$fileExt;
 			return $fileName;

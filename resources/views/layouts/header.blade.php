@@ -90,8 +90,7 @@
                   </li>
                   <li><a><i class="fa fa-table"></i> Report <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <!-- <li><a href="tables.html">Tables</a></li> -->
-                      <li><a type="button" disabled>Tables</a></li>
+                      <li><a href="{{route('export.form')}}">Export</a></li>
                     </ul>
                   </li>
                   @endif
