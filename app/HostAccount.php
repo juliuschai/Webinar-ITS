@@ -11,8 +11,8 @@ class HostAccount extends Model
 	public $timestamps = false;
 
 	static function getValidAccounts($start, $end, $book_id, $banyak) {
-		$start = Carbon::createFromTimestamp(strtotime($start))->subHour();
-		$end = Carbon::createFromTimestamp(strtotime($end));
+		$start = Carbon::parse($start)->subHour();
+		$end = Carbon::parse($end);
 		// Siapapun yang maintain ini, saya turut berduka cita.
 		// When all hope seems lost: "php artisan inspire"
 		if ($banyak) {
@@ -33,8 +33,8 @@ class HostAccount extends Model
 	}
 
 	static function checkAvailability($start, $end, $book_id, $banyak, $id) {
-		$start = Carbon::createFromTimestamp(strtotime($start))->subHour();
-		$end = Carbon::createFromTimestamp(strtotime($end));
+		$start = Carbon::parse($start)->subHour();
+		$end = Carbon::parse($end);
 		if ($banyak) {
 			$typeQuery = 'h.type_banyak = true and ';
 		} else {

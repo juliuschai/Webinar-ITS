@@ -34,7 +34,7 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Selamat ! </br> Webinar anda dengan Topik {{ $datas[0]['topic'] }} sudah disetujui.</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Maaf, Webinar anda dengan Topik {{ $topic }} terdapat masalah dan belum disetujui. Silahkan mengecheck di aplikasi booking webinar.</p>
                                 </center>
                             </td>
                         </tr>
@@ -43,10 +43,7 @@
                             <td style="font-size: 14px; border-bottom:1px solid #f2f3f5;">
                                 <center>
                                     <h3>{{ $data['index'] }}</h3>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Waktu: {{ $data['start_time'] }} WIB</p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Link Webinar : <a href="{{ $data['join_url'] }}">{{ $data['join_url'] }}</a> </p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Webinar ID: {{ $data['webinar_id'] }}</p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Password: {{ $data['password'] }}</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Silahkan edit booking: <a href="https://webinar-book.its.ac.id/booking/edit/{{ $id }}">Link Edit Booking</a></p>
                                 </center>
                             </td>
                         </tr>

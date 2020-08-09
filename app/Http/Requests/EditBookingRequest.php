@@ -26,11 +26,10 @@ class EditBookingRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'kategoriAcara' => ['required', 'string', 'max:254', Rule::in(['Webinar/Open Talk', 'Konferensi Internasional/Nasional', 'Training/Workshop/Pelatihan'])],
+			'kategoriAcara' => 'required|integer|exists:kategoris,id',
 			'namaAcara' => 'required|string|max:254',
 			'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg,png|max:2000',
 			'penyelengaraAcara' => 'required|numeric|exists:units,id',
-			'adminDPTSI' => 'nullable|integer|exists:users,id',
 			'bookingTimes' => ['required','array','min:1',new NonGladiMin],
 			'bookingTimes.*.id' => 'nullable|integer',
 			'bookingTimes.*.gladi' => 'required|in:true,false',

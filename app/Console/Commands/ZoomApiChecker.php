@@ -42,7 +42,7 @@ class ZoomApiChecker extends Command
     public function handle()
     {
         // Completed bookings with 20 mins grace period
-        $booking_times = BookingTime::where('waktu_akhir', '<=', Carbon::now('GMT+7')->subMinutes(20))
+        $booking_times = BookingTime::where('waktu_akhir', '<=', Carbon::now()->subMinutes(20))
             ->where('status', 'started')
             ->orderBy('waktu_akhir', 'asc')
             ->get();
@@ -69,10 +69,12 @@ class ZoomApiChecker extends Command
         }
 
         // Bookings that will start soon
-        $booking_times = BookingTime::where('waktu_mulai', '<=', Carbon::now('GMT+7')->addMinutes(30))
-            ->where('disetujui', true)
-            ->where('status', 'pending')
-            ->orderBy('waktu_mulai', 'asc')
+        $booking_times = BookingTime::where('waktu_mulai', '<=', Carbon::now()->addMinutes(37))
+            ->join('bookings', 'bookings.id', '=', 'booking_times.booking_id')
+            ->where('bookings.disetujui', true)
+            ->where('booking_times.disetujui', true)
+            ->where('booking_times.status', 'pending')
+            ->orderBy('booking_times.waktu_mulai', 'asc')
             ->get();
 
         foreach ($booking_times as $booking_time) {

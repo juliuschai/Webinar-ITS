@@ -7,12 +7,14 @@ function pz(str){
 }
 
 (function populateDurasis() {
+	let $startsDisplay = $('.waktuMulaiDisplay');
 	let $starts = $('.waktuMulai');
 	let $ends = $('.waktuSelesai');
 	let $durasis = $('.durasi');
 	for (let i = 0; i < $starts.length; i++) {
-		const startDate = new Date($starts[i].value);
-		const endDate = new Date($ends[i].value);
+		const startDate = new Date($starts.eq(i).val());
+		$startsDisplay.eq(i).val(startDate.toLocaleString());
+		const endDate = new Date($ends.eq(i).val());
 		let durasi = (endDate.getTime() - startDate.getTime())/60/1000
 		let durHour = Math.floor(durasi/60);
 		let durMin = durasi%60;
@@ -96,6 +98,7 @@ function cancelBooking(thisElm) {
 }
 
 function denyAll() {
+	if (!confirm("Apakah anda yakin mau menolak semua booking?")) {return;}
 	$('.denyButton').each(function(i, elm) {
 		cancelBooking(this);
 		denyBooking(this);

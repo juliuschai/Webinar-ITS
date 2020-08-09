@@ -57,8 +57,8 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
             Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
             
-            // ToDelete:Route::get('storage/dokumen/delete/{id}', 'FileController@deleteDokumen')->name('dokumen.delete');
-            
+            Route::get('/admin/export', 'ExportController@view')->name('export.form');
+            Route::post('/admin/export', 'ExportController@download')->name('export.download');            
             // Admin
             Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
             Route::get('/admin/booking/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');

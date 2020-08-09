@@ -19,8 +19,8 @@
                     @foreach( $booking as $booking)
                     <tr>
                     <th class="text-center" scope="row">{{ $loop->iteration }}</th>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($booking->waktu_mulai)) }}</td>
-                    <td class="text-center">{{ date('H:i:s', strtotime($booking->waktu_mulai)) }}</td>
+                    <td class="text-center">{{ $booking->waktu_mulai->format(DateTime::ATOM) }}</td>
+                    <td class="text-center">{{ $booking->waktu_mulai->format(DateTime::ATOM) }}</td>
                     <td class="text-center">{{ $booking->nama_acara }}</td>
                     <td class="text-center">
                         <a href="{{ url('/booking/detail/'.$booking->id) }}">
