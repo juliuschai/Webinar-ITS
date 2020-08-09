@@ -36,8 +36,6 @@
   data-tendik="{{json_encode($tendik)}}"
   data-mahasiswa="{{json_encode($mahasiswa)}}"
   
-  data-test="{{json_encode($test)}}"
-  data-nama_test="{{json_encode($nama_test)}}"
 >
 
 @endsection

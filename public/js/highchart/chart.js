@@ -16,9 +16,6 @@ var dosen = $data.data('dosen');
 var tendik = $data.data('tendik');
 var mahasiswa = $data.data('mahasiswa');
 
-var test = $data.data('test');
-var nama_test = $data.data('nama_test');
-
 Highcharts.chart('container', {
 credits: {
 enabled: false
@@ -269,7 +266,7 @@ Highcharts.chart('container-6', {
         text: 'Waktu Webinar'
     },
     xAxis: {
-        categories: nama_test,
+        categories: Test,
     },
     yAxis: {
         min: 0,
@@ -286,7 +283,7 @@ Highcharts.chart('container-6', {
     series: [{
         name: 'Population',
         colorByPoint: true,
-        data: test,
+        data: 1,
         dataLabels: {
             enabled: true,
             rotation: -90,

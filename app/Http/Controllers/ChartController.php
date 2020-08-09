@@ -101,22 +101,26 @@ class ChartController extends Controller
                     ->pluck('count');
 
         //meeting 
-        $test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu'))
-                    ->join('units', 'units.id', '=', 'bookings.unit_id')
-                    ->groupBy(\DB::raw('units.nama'))
-                    ->orderByRaw('waktu DESC')
-                    ->limit(5)
-                    ->pluck('waktu');
+        // $test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu'))
+        //             ->join('units', 'units.id', '=', 'bookings.unit_id')
+        //             ->groupBy(\DB::raw('units.nama'))
+        //             ->orderByRaw('waktu DESC')
+        //             ->limit(5)
+        //             ->pluck('waktu');
         
-        $nama_test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu, units.nama'))
-                    ->join('units', 'units.id', '=', 'bookings.unit_id')
-                    ->groupBy(\DB::raw('units.nama'))
-                    ->orderByRaw('waktu DESC')
-                    ->limit(5)
-                    ->pluck('units.nama');
+        // $nama_test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu, units.nama'))
+        //             ->join('units', 'units.id', '=', 'bookings.unit_id')
+        //             ->groupBy(\DB::raw('units.nama'))
+        //             ->orderByRaw('waktu DESC')
+        //             ->limit(5)
+        //             ->pluck('units.nama');
+
+        // return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
+        //         'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
+        //         ,'nama_departemen', 'nama_fakultas', 'nama_unit'));
 
         return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
-                'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
+                'dosen', 'tendik', 'mahasiswa', 'nama_booking'
                 ,'nama_departemen', 'nama_fakultas', 'nama_unit'));
     }
     
