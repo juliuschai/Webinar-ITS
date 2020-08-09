@@ -83,6 +83,7 @@ class ChartController extends Controller
                     ->join('users', 'users.id', '=', 'bookings.user_id')
                     ->join('groups', 'groups.id', '=', 'users.group_id')
                     ->where('groups.id', '=', '1')
+                    ->orWhere('groups.id', '=', '4')
                     ->groupBy(\DB::raw('groups.nama'))
                     ->pluck('count');
 
@@ -90,6 +91,7 @@ class ChartController extends Controller
                     ->join('users', 'users.id', '=', 'bookings.user_id')
                     ->join('groups', 'groups.id', '=', 'users.group_id')
                     ->where('groups.id', '=', '2')
+                    ->orWhere('groups.id', '=', '5')
                     ->groupBy(\DB::raw('groups.nama'))
                     ->pluck('count');
 
@@ -101,6 +103,20 @@ class ChartController extends Controller
                     ->pluck('count');
 
         //meeting 
+        $test = Booking::select(\DB::raw("CAST(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60) AS INTEGER) as waktu"))
+                    ->join('units', 'units.id', '=', 'bookings.unit_id')
+                    ->groupBy(\DB::raw('units.nama'))
+                    ->orderByRaw('waktu DESC')
+                    ->limit(5)
+                    ->pluck('waktu');
+
+        $nama_test = Booking::select(\DB::raw("CAST(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60) AS INTEGER) as waktu, units.nama"))
+                    ->join('units', 'units.id', '=', 'bookings.unit_id')
+                    ->groupBy(\DB::raw('units.nama'))
+                    ->orderByRaw('waktu DESC')
+                    ->limit(5)
+                    ->pluck('units.nama');
+
         // $test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu'))
         //             ->join('units', 'units.id', '=', 'bookings.unit_id')
         //             ->groupBy(\DB::raw('units.nama'))
@@ -115,13 +131,10 @@ class ChartController extends Controller
         //             ->limit(5)
         //             ->pluck('units.nama');
 
-        // return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
-        //         'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
-        //         ,'nama_departemen', 'nama_fakultas', 'nama_unit'));
-
         return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
-                'dosen', 'tendik', 'mahasiswa', 'nama_booking'
+                'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
                 ,'nama_departemen', 'nama_fakultas', 'nama_unit'));
+
     }
     
 }
