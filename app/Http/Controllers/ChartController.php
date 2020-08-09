@@ -116,7 +116,7 @@ class ChartController extends Controller
                     ->pluck('units.nama');
 
         return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
-                'sivitas', 'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test'
+                'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
                 ,'nama_departemen', 'nama_fakultas', 'nama_unit'));
     }
     

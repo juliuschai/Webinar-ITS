@@ -11,7 +11,6 @@
     <title>{{ config('app.name', 'Aplikasi Booking Webinar') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/highchart/highcharts-bisa.js')}}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
