@@ -41,7 +41,6 @@
                         <tr>
                             <td style="font-size: 14px; border-bottom:1px solid #f2f3f5;">
                                 <center>
-                                    <h3>{{ $data['index'] }}</h3>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Silahkan edit booking: <a href="https://webinar-book.its.ac.id/booking/edit/{{ $id }}">Link Edit Booking</a></p>
                                 </center>
                             </td>
