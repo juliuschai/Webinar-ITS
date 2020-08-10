@@ -38,7 +38,6 @@
                                 </center>
                             </td>
                         </tr>
-                        @foreach ($datas as $data)
                         <tr>
                             <td style="font-size: 14px; border-bottom:1px solid #f2f3f5;">
                                 <center>
@@ -47,7 +46,6 @@
                                 </center>
                             </td>
                         </tr>
-                        @endforeach
                     </table>
                 </td>
             </tr>
