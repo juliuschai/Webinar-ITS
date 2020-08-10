@@ -179,10 +179,10 @@ class BookingController extends Controller
                     $message->subject('WEBINAR ITS');
                 });
             } catch (\Throwable $th) {
+                \Log::error($th);
                 return redirect()->back()->withErrors([
                     "Webinar sudah dibooking, tetapi email ke user tidak terkirim!"
                 ]);
-                \Log::error($th);
             }
         } else {
             $booking->disetujui = false;
@@ -199,10 +199,10 @@ class BookingController extends Controller
                     $message->subject('WEBINAR ITS');
                 });
             } catch (\Throwable $th) {
+                \Log::error($th);
                 return redirect()->back()->withErrors([
                     "Booking ditolak, tetapi email ke user tidak terkirim!"
                 ]);
-                \Log::error($th);
             }
         }
 		$booking->admin_id = $request->adminDPTSI?:null;
