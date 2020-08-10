@@ -93,6 +93,7 @@ class BookingController extends Controller
     {
         $booking = Booking::findorfail($request->id);
         $booking->verifyBooking($request->verify);
+        $returnMessage = "empty";
         if ($booking->checkApproved()) {
             $booking->disetujui = true;
             $booking->deskripsi_disetujui = "";
@@ -184,6 +185,7 @@ class BookingController extends Controller
                     "Webinar sudah dibooking, tetapi email ke user tidak terkirim!"
                 ]);
             }
+            $returnMessage = 'Booking berhasil dibuat dan sudah diemailkan ke user';
         } else {
             $booking->disetujui = false;
             $booking->deskripsi_disetujui = $request->alasan;
@@ -204,10 +206,11 @@ class BookingController extends Controller
                     "Booking ditolak, tetapi email ke user tidak terkirim!"
                 ]);
             }
+            $returnMessage = 'Booking ditolak! User sudah diberitahu lewat email';
         }
 		$booking->admin_id = $request->adminDPTSI?:null;
         $booking->save();
-        return redirect()->back()->with('message', 'Booking berhasil dibuat dan sudah diemailkan ke user');
+        return redirect()->back()->with('message', $returnMessage);
     }
 
     function listBookingData()
