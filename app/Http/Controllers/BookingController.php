@@ -12,6 +12,7 @@ use App\Unit;
 use App\UnitType;
 use App\User;
 use Carbon\Carbon;
+use DateTime;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -308,11 +309,12 @@ class BookingController extends Controller
         return view('admin.aprove', compact(['bookings', 'length']));
     }
 
-    function getEvents()
-    {
+    function getEvents(Request $request) {
         $bookings = Booking::join('booking_times as bt', 'bt.booking_id', '=', 'bookings.id')
             ->where('bookings.disetujui', true)
             ->where('bt.gladi', false)
+            ->where('bt.waktu_mulai', '>=', $request->start)
+            ->where('bt.waktu_akhir', '<=', $request->end)
             ->get([
                 'bookings.id',
                 'nama_acara as title',
@@ -321,6 +323,10 @@ class BookingController extends Controller
             ]);
         foreach ($bookings as $booking) {
             $booking['color'] = "#fae9e8";
+            // $booking['start'] = Carbon::parse($booking['start'])->timezone('Asia/Jakarta')->toIso8601String();
+            // $booking['end'] = Carbon::parse($booking['end'])->timezone('Asia/Jakarta')->toIso8601String();
+            $booking['start'] = Carbon::parse($booking['start']);
+            $booking['end'] = Carbon::parse($booking['end']);
         }
 
         return json_encode($bookings);

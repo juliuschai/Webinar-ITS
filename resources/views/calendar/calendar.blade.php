@@ -19,7 +19,6 @@
 <!-- Page JS Plugins -->
 <script src="{{ asset('assets/js/plugins/moment/moment.min.js') }}" defer></script>
 <!-- Page JS Code -->
-{{-- <script src="{{ asset('assets/js/pages/be_comp_calendar.min.js') }}" defer></script> --}}
 <script src="{{ asset('assets/js/plugins/fullcalendar/fullcalendar.js') }}" defer></script>
 
 <script src="{{asset('js/fullcalendarSettings.js')}}" defer></script>
