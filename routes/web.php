@@ -71,7 +71,6 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
 
             Route::get('/admin/export', 'ExportController@view')->name('export.form');
             Route::post('/admin/export/booking', 'ExportController@downloadBooking')->name('export.booking');            
-            Route::post('/admin/export/files', 'ExportController@downloadFiles')->name('export.files');            
         });
     });
 });

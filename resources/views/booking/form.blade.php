@@ -274,7 +274,11 @@
 @endsection
 
 @section('scripts')
+@if($isAdmin)
+<script src="{{ asset('js/booking/adminform.js') }}?2" defer></script>
+@else
 <script src="{{ asset('js/booking/form.js') }}?2" defer></script>
+@endif
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
 <script src="{{ asset('js/booking/tabControls.js') }}" defer></script>
 @endsection

@@ -148,8 +148,13 @@ class Booking extends Model
 	}
 
 	function abortIfVerified() {
-		if ($this->disetujui != null) {
-			abort(403, 'Booking yang sudah di verify tidak bisa di edit');
+		// If user is not admin
+		if (!User::findOrLogout(auth()->id())->isAdmin()) {
+			// And booking is disetujui
+			if ($this->disetujui != null) {
+				// Abort Disallow user to edit
+				abort(403, 'Booking yang sudah di verify tidak bisa di edit');
+			}
 		}
 	}
 
