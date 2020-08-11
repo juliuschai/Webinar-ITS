@@ -45,6 +45,15 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
         });
 
         Route::group(['middleware' => 'admin'], function () {
+            // Admin
+            Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
+            Route::get('/admin/booking/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');
+            Route::get('/admin/booking/list/aprove', 'BookingController@adminAproveBookingData')->name('admin.list.aprove');
+            Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
+            Route::post('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
+            Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');
+            Route::post('/admin/booking/verify/{id}', 'BookingController@verifyBooking')->name('booking.verify');
+
             Route::get('/unit', 'UnitController@viewUnit')->name('admin.unit.view');
             Route::get('/unit/data', 'UnitController@viewUnitData')->name('admin.unit.view.data');
             Route::post('/unit/add', 'UnitController@addUnit')->name('admin.unit.add');
@@ -56,20 +65,13 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             Route::get('/users/data', 'UserController@viewUsersData')->name('admin.users.view.data');
             Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
             Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
-            
-            Route::get('/admin/export', 'ExportController@view')->name('export.form');
-            Route::post('/admin/export', 'ExportController@download')->name('export.download');            
-            // Admin
-            Route::get('/admin/booking/list', 'BookingController@adminListBooking')->name('admin.list');
-            Route::get('/admin/booking/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');
-            Route::get('/admin/booking/list/aprove', 'BookingController@adminAproveBookingData')->name('admin.list.aprove');
-            Route::get('/admin/booking/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
-            Route::post('/admin/booking/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
-            Route::get('/admin/booking/view/{id}', 'BookingController@viewBooking')->name('admin.view');
-            Route::post('/admin/booking/verify/{id}', 'BookingController@verifyBooking')->name('booking.verify');
 
             Route::get('/admin/webinar/accounts', 'HostAccountController@getAccounts')->name('admin.host.accounts');
             Route::get('/admin/webinar/accounts/data', 'HostAccountController@getData')->name('admin.host.data');
+
+            Route::get('/admin/export', 'ExportController@view')->name('export.form');
+            Route::post('/admin/export/booking', 'ExportController@downloadBooking')->name('export.booking');            
+            Route::post('/admin/export/files', 'ExportController@downloadFiles')->name('export.files');            
         });
     });
 });

@@ -16,7 +16,7 @@ class ExportController extends Controller
         return view('admin.export.form', compact('kategoris'));
     }
 
-    function download(ExportFormRequest $request) {
+    function downloadBooking(ExportFormRequest $request) {
         $query = DB::table('bookings as b')
             ->join('booking_times as bt', 'bt.booking_id', '=', 'b.id')
             ->join('users as u', 'u.id', '=', 'b.user_id')
@@ -28,7 +28,7 @@ class ExportController extends Controller
 
         if (!$request->has('semuaWaktu')) {
             $query = $query->where('b.waktu_mulai', '>', Carbon::parse($request->waktuMulai))
-                ->where('b.waktu_akhir', '<', Carbon::parse($request->waktuAkhir));
+                ->where('b.waktu_mulai', '<', Carbon::parse($request->waktuAkhir));
         }
         if ($request->kategori) {
             $query = $query->where('b.kategori_id', $request->kategori);
@@ -98,5 +98,25 @@ class ExportController extends Controller
         $writer->save(storage_path("app/export/$filename"));
         return FileHelper::downloadDokumenOrFail("export/$filename", $filename);
         // FileHelper::deleteDokumenOrFail($filename);
+    }
+
+    function downloadFiles(ExportFormRequest $request) {
+        if (!$request->has('semuaWaktu')) {
+            $query = $query->where('b.waktu_mulai', '>', Carbon::parse($request->waktuMulai))
+                ->where('b.waktu_mulai', '<', Carbon::parse($request->waktuAkhir));
+        }
+        if ($request->kategori) {
+            $query = $query->where('b.kategori_id', $request->kategori);
+        }
+        // Status filter
+        if ($request->status) {
+            if ($request->status === "true") {
+                $query = $query->where('b.disetujui', 'true');
+            } else if ($request->status === "false") {
+                $query = $query->where('b.disetujui', 'false');
+            } else if ($request->status === "null") {
+                $query = $query->whereNull('b.disetujui');
+            }
+        }
     }
 }

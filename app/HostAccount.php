@@ -20,15 +20,21 @@ class HostAccount extends Model
 		} else {
 			$typeQuery = '';
 		}
+
+		$bindings = [
+			'start' => $start,
+			'end' => $end,
+			'book_id' => $book_id,
+		];
 		$accounts = DB::select('select * 
 			from `host_accounts` as `h` 
 			where '.$typeQuery.'
 			not exists (
 				select 1 from `booking_times` as `bt` 
-				where `bt`.`waktu_akhir` > "'.$start.'" 
-				and `bt`.`waktu_mulai` < "'.$end.'"
+				where `bt`.`waktu_akhir` > :start 
+				and `bt`.`waktu_mulai` < :end
 				and `bt`.`host_account_id` = h.id 
-				and not bt.id = '.$book_id.')');
+				and not bt.id = :book_id)', $bindings);
 		return $accounts;
 	}
 
@@ -40,18 +46,26 @@ class HostAccount extends Model
 		} else {
 			$typeQuery = '';
 		}
-		$count = DB::select('select COUNT(*) 
+
+		$bindings = [
+			'id' => $id,
+			'start' => $start,
+			'end' => $end,
+			'book_id' => $book_id,
+		];
+		// $count = DB::select('select COUNT(*) as amount
+		$count = DB::select('select COUNT(*) as amount
 			from `host_accounts` as `h`
 			where '.$typeQuery.'
-			h.id = '.$id.'
+			h.id = :id
 			and not exists (
 				select 1 from `booking_times` as `bt` 
-				where `bt`.`waktu_akhir` > "'.$start.'" 
-				and `bt`.`waktu_mulai` < "'.$end.'"
+				where `bt`.`waktu_akhir` > :start 
+				and `bt`.`waktu_mulai` < :end
 				and `bt`.`host_account_id` = h.id 
-				and not bt.id = '.$book_id.')');
-		$idx = "COUNT(*)";
-		if ($count[0]->$idx == 1) {
+				and not bt.id = :book_id)', $bindings);
+
+		if ($count[0]->amount == 1) {
 			return true;
 		} else {
 			return false;

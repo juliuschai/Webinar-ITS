@@ -22,3 +22,36 @@ function updateWaktu() {
 	$('#waktuMulai').val(firstDay.toISOString());
 	$('#waktuAkhir').val(lastDay.toISOString());
 }
+
+function validateInput() {
+	// If semuaWaktu checkbox is not checked 
+	if (!$('#semuaWaktu').prop('checked')) {
+		// If user has not selected bulanMulai and bulanAkhir
+		if ($('#waktuMulai').val() && $('#waktuAkhir').val()) {
+			alert(`Waktu mulai dan waktu akhir belum dispesifikasi!
+				Untuk download semua waktu booking silahkan pilih checkbox Semua Waktu!`);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function submitForm() {
+	if (validateInput()) {
+		$('#formSubmit').submit();
+	}
+}
+
+function submitDownloadBooking() {
+	let route = $('#formRoutes').data('bookingRoute');
+	$('#formSubmit').attr('action', route);
+	submitForm();
+}
+
+function submitDownloadFiles() {
+	let route = $('#formRoutes').data('filesRoute');
+	$('#formSubmit').attr('action', route);
+	submitForm();
+}
+

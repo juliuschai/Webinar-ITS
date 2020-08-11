@@ -126,9 +126,9 @@ class BookingController extends Controller
                 $data = [
                     'topic' => $booking->nama_acara,
                     'type' => 5,
-                    'start_time' => date("Y-m-d\TH:i:s\Z"),
+                    'start_time' => $book_time->waktu_mulai->format(DateTime::ATOM),
                     'duration' => $durasi,
-                    'timezone' => 'Asia/Jakarta',
+                    'timezone' => 'UTC',
                     'password' => $webinar_pass,
                     'agenda' => $booking->nama_acara,
                     'settings' => [
@@ -314,7 +314,7 @@ class BookingController extends Controller
             ->where('bookings.disetujui', true)
             ->where('bt.gladi', false)
             ->where('bt.waktu_mulai', '>=', $request->start)
-            ->where('bt.waktu_akhir', '<=', $request->end)
+            ->where('bt.waktu_mulai', '<=', $request->end)
             ->get([
                 'bookings.id',
                 'nama_acara as title',

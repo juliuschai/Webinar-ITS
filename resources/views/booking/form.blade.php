@@ -160,7 +160,7 @@
 							</div>
 							
 							@if(isset($booking->file_pendukung))
-							<div class="form-group row">
+							<div class="form-group row filePendukungExists">
 								<label class="col-md-4 col-form-label text-md-left"></label>
 								<i class="fa fa-user-circle booking"></i>
 								<div class="col-md-6">
