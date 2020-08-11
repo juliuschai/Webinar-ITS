@@ -135,7 +135,7 @@ class BookingController extends Controller
                     'settings' => [
                         "host_video" => "true",
                         "panelists_video" => "true",
-                        "practice_session" => "false",
+                        "practice_session" => "true",
                         "hd_video" => "true",
                         "approval_type" => 2,
                         "audio" => "both",

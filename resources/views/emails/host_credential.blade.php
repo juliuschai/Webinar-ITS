@@ -39,6 +39,11 @@
                                 <p style="margin-bottom: 20px;">Password : {{ $password }}</p>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <p style="margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting Zoom Webinar acara anda!<br>Pastikan bahwa Webinar yang anda ubah bukan Webinar acara lain!</p>
+                            </td>
+                        </tr>
                     </table>
                 </td>
             </tr>
