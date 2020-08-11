@@ -84,7 +84,7 @@ Highcharts.chart('container-2', {
         }
     },
     tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f})<br/>',
         shared: true
     },
     plotOptions: {
@@ -136,14 +136,14 @@ Highcharts.chart('container-3', {
       borderWidth: 0,
       dataLabels: {
         enabled: true,
-        format: '{point.y:.f}%'
+        format: '{point.y:.f}'
       }
     }
   },
 
   tooltip: {
     headerFormat: '<span style="font-size:11px"></span><br>',
-    pointFormat: '<b>{point.y:.f}%</b> dari Total Departemen<br/>'
+    pointFormat: '<b>{point.y:.f}</b> dari Total Departemen<br/>'
   },
 
   series: [
@@ -187,14 +187,14 @@ Highcharts.chart('container-4', {
       borderWidth: 0,
       dataLabels: {
         enabled: true,
-        format: '{point.y:.f}%'
+        format: '{point.y:.f}'
       }
     }
   },
 
   tooltip: {
     headerFormat: '<span style="font-size:11px"></span><br>',
-    pointFormat: '<b>{point.y:.f}%</b> dari Total Fakultas<br/>'
+    pointFormat: '<b>{point.y:.f}</b> dari Total Fakultas<br/>'
   },
 
   series: [
@@ -239,14 +239,14 @@ Highcharts.chart('container-5', {
       borderWidth: 0,
       dataLabels: {
         enabled: true,
-        format: '{point.y:.f}%'
+        format: '{point.y:.f}'
       }
     }
   },
 
   tooltip: {
     headerFormat: '<span style="font-size:11px"></span><br>',
-    pointFormat: '<b>{point.y:.f}%</b> dari Total Unit<br/>'
+    pointFormat: '<b>{point.y:.f}</b> dari Total Unit<br/>'
   },
 
   series: [

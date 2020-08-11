@@ -3,7 +3,7 @@
 @section('content')
 <div class="right_col booking" role="main">
 	<div class="col-md-12 col-sm-12">
-		<div class="card-header">{{ __('Export') }}</div>
+		<div style="margin-top:60px;" class="card-header">{{ __('Export') }}</div>
 		<div class="card-body">
 			@if ($errors->any())
 			<div class="alert alert-danger">

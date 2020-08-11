@@ -59,7 +59,6 @@ class ChartController extends Controller
                     ->where('units.unit_type_id', '=', '2')
                     ->groupBy(\DB::raw('units.nama'))
                     ->orderByRaw('count DESC')
-                    ->limit(5)
                     ->pluck('units.nama');
 
         $units = Booking::select(\DB::raw("COUNT(*) as count"))
@@ -116,20 +115,6 @@ class ChartController extends Controller
                     ->orderByRaw('waktu DESC')
                     ->limit(5)
                     ->pluck('units.nama');
-
-        // $test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu'))
-        //             ->join('units', 'units.id', '=', 'bookings.unit_id')
-        //             ->groupBy(\DB::raw('units.nama'))
-        //             ->orderByRaw('waktu DESC')
-        //             ->limit(5)
-        //             ->pluck('waktu');
-        
-        // $nama_test = Booking::select(\DB::raw('CAST(SUM(TIMESTAMPDIFF(MINUTE, bookings.waktu_mulai, bookings.waktu_akhir)) AS INTEGER) as waktu, units.nama'))
-        //             ->join('units', 'units.id', '=', 'bookings.unit_id')
-        //             ->groupBy(\DB::raw('units.nama'))
-        //             ->orderByRaw('waktu DESC')
-        //             ->limit(5)
-        //             ->pluck('units.nama');
 
         return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
                 'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
