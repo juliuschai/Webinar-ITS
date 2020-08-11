@@ -29,7 +29,8 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
         $booking_times = null;
         $kategoris = Kategori::get();
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris']));
+        $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
     }
 
     function saveNewBooking(NewBookingRequest $request)
