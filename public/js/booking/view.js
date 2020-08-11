@@ -6,6 +6,9 @@ function pz(str){
 	return ("0"+str).slice(-2);
 }
 
+var nDenied = 0;
+var nAccepted = 0;
+
 (function populateDurasis() {
 	let $startsDisplay = $('.waktuMulaiDisplay');
 	let $starts = $('.waktuMulai');
@@ -35,9 +38,6 @@ function pz(str){
 		}
 	});
 })();
-
-var nDenied = 0;
-var nAccepted = 0;
 
 function acceptBooking(thisElm) {
 	let $div = $(thisElm).closest('.action');

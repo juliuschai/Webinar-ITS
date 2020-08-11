@@ -45,7 +45,8 @@ function validateOtherFields() {
 		alert('Nama acara harus diisi!');
 		return false;
 	}
-	if ($('#dokumenPendukung').val().length <= 0) {
+	// If dokumen pendukung field is empty and filePendukung doesn't exist in db (filePendukungExists)
+	if ($('#dokumenPendukung').val().length <= 0 && $('.filePendukungExists').length <= 0) {
 		alert('Dokumen Pendukung dibutuhkan!');
 		return false;
 	}
