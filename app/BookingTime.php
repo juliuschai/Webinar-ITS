@@ -29,12 +29,7 @@ class BookingTime extends Model
                 $reqId = $inBookTime['id'];
                 $inReqIds[] = $reqId;
                 if(isset($inDb[$reqId])) {
-                    // if id is disetujui in db, drop changes
-                    if ($inDb[$reqId] == true) {
-                        continue;
-                    } else {
-                        $curBookTime = BookingTime::find($reqId);
-                    }
+                    $curBookTime = BookingTime::find($reqId);
                 }
             } else {
                 $curBookTime = new BookingTime();

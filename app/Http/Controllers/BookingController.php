@@ -29,7 +29,8 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
         $booking_times = null;
         $kategoris = Kategori::get();
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris']));
+        $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
     }
 
     function saveNewBooking(NewBookingRequest $request)
@@ -39,6 +40,24 @@ class BookingController extends Controller
         // dd($request->bookingTimes);
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($request);
+        $data = [
+            'id' => $booking->id,
+            'nama_acara' => $request->namaAcara,
+            'nama_user' => User::findOrLogout(Auth::id())->nama,
+            'unit' => Unit::findorfail($request->penyelengaraAcara)->nama,
+        ];
+        // Send email to admin
+        try {
+            Mail::send('emails.booking_created', $data, function ($message) {
+                // $message->to(['zahratulmillah.18051@mhs.its.ac.id', 'julius.18051@mhs.its.ac.id']);
+                $message->to(['ernis@its.ac.id', 'rizki@its.ac.id']);
+                $message->subject('Webinar Baru');
+            });
+        } catch (\Throwable $th) {
+            // Terdapat error dalam pengiriman email ke admin
+            \Log::error($th);
+        }
+
         return redirect()->route('booking.view', ['id' => $booking['id']]);
     }
 
@@ -52,7 +71,8 @@ class BookingController extends Controller
         $unitTypes = UnitType::get();
         $booking_times = $booking->getTimes();
         $kategoris = Kategori::get();
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris']));
+        $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
     }
 
     function saveEditBooking(EditBookingRequest $request)
@@ -134,7 +154,7 @@ class BookingController extends Controller
                     'settings' => [
                         "host_video" => "true",
                         "panelists_video" => "true",
-                        "practice_session" => "false",
+                        "practice_session" => "true",
                         "hd_video" => "true",
                         "approval_type" => 2,
                         "audio" => "both",

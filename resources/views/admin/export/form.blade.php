@@ -15,12 +15,7 @@
 			</div>
 			@endif
 
-			<input id="formRoutes" type="hidden" 
-				data-bookingRoute="{{route('export.booking')}}" 
-				data-filesRoute="{{route('export.files')}}"
-			>
-
-			<form id="formSubmit" action="" method="POST">
+			<form id="formSubmit" action="{{route('export.booking')}}" method="POST">
 				@csrf
 				<div class="form-group row">
 					<label for="semuaWaktu" class="col-md-4">{{ __('Semua waktu') }}</label>
@@ -64,8 +59,7 @@
 					</div>
 				</div>
 
-				<button style="margin-left:32%" type="button" class="btn btn-submit" onclick="submitDownloadBooking()">Download Booking</button>
-				<button style="margin-left:2%" type="button" class="btn btn-submit" onclick="submitDownloadFiles()">Download File Pendukung</button>
+				<button type="button" class="btn btn-submit" onclick="submitForm()">Download</button>
 			</form>
 		</div>
 	</div>

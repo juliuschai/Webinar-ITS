@@ -96,11 +96,16 @@ class ExportController extends Controller
         }
         $filename = "export_$currentTime.xls";
         $writer->save(storage_path("app/export/$filename"));
+        // FileHelper::scheduleDelete("export/$filename");
         return FileHelper::downloadDokumenOrFail("export/$filename", $filename);
         // FileHelper::deleteDokumenOrFail($filename);
     }
 
+    /* 
+    Route::post('/admin/export/files', 'ExportController@downloadFiles')->name('export.files');            
     function downloadFiles(ExportFormRequest $request) {
+        $query = DB::table('bookings as b');
+
         if (!$request->has('semuaWaktu')) {
             $query = $query->where('b.waktu_mulai', '>', Carbon::parse($request->waktuMulai))
                 ->where('b.waktu_mulai', '<', Carbon::parse($request->waktuAkhir));
@@ -118,5 +123,33 @@ class ExportController extends Controller
                 $query = $query->whereNull('b.disetujui');
             }
         }
-    }
+
+        $currentTime = Carbon::now('Asia/Jakarta')->format("Y-m-d_Hi");
+        if (!file_exists(storage_path("app/export"))) {
+            mkdir(storage_path("app/export"), 0777, true);
+        }
+        $zip_filename = "export_{$currentTime}_files.zip";
+        $datas = $query->get([
+            'u.integra as user_integra',
+            'u.email as user_email',
+            'units.nama as b_unit_nama',
+            DB::raw('DATE_ADD(b.waktu_mulai, INTERVAL 7 HOUR) as b_waktu_mulai'),
+            'b.file_pendukung as b_file_pendukung',
+        ]);
+        $zip = new \ZipArchive();
+        $zip->open($zip_filename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        foreach ($datas as $data) {
+            $data->nama_file = Booking::generateFilenameWithParam(
+                $data->user_integra,
+                $data->user_email,
+                $data->b_unit_nama,
+                $data->b_waktu_mulai,
+                $data->b_file_pendukung
+            );
+            $zip->addFile($data->nama_file, )
+        }
+        FileHelper::scheduleDelete("export/$filename");
+        return FileHelper::downloadDokumenOrFail("export/$filename", $filename);
+    } */
 }
