@@ -41,6 +41,7 @@ class BookingController extends Controller
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($request);
         $data = [
+            'id' => $booking->id,
             'nama_acara' => $request->namaAcara,
             'nama_user' => User::findOrLogout(Auth::id())->nama,
             'unit' => Unit::findorfail($request->penyelengaraAcara)->nama,

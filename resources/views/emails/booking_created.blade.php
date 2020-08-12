@@ -34,14 +34,16 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Terdapat Webinar baru dengan Topik {{ $topic }}.</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Terdapat Webinar baru dengan Topik {{$nama_acara}}. </p>
                                 </center>
                             </td>
                         </tr>
                         <tr>
                             <td style="font-size: 14px; border-bottom:1px solid #f2f3f5;">
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Lihat booking: <a href="https://webinar-book.its.ac.id/booking/view/{{ $id }}">Link view</a></p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Dari unit: {{$unit}}</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Atas nama: {{$nama_user}}</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Lihat booking: <a href="https://webinar-book.its.ac.id/booking/view/{{$id}}">Link view</a></p>
                                 </center>
                             </td>
                         </tr>
