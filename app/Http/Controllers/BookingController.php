@@ -40,6 +40,23 @@ class BookingController extends Controller
         // dd($request->bookingTimes);
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($request);
+        $data = [
+            'nama_acara' => $request->namaAcara,
+            'nama_user' => User::findOrLogout(Auth::id())->nama,
+            'unit' => Unit::findorfail($request->penyelengaraAcara)->nama,
+        ];
+        // Send email to admin
+        try {
+            Mail::send('emails.booking_created', $data, function ($message) {
+                // $message->to(['zahratulmillah.18051@mhs.its.ac.id', 'julius.18051@mhs.its.ac.id']);
+                $message->to(['ernis@its.ac.id', 'rizki@its.ac.id']);
+                $message->subject('Webinar Baru');
+            });
+        } catch (\Throwable $th) {
+            // Terdapat error dalam pengiriman email ke admin
+            \Log::error($th);
+        }
+
         return redirect()->route('booking.view', ['id' => $booking['id']]);
     }
 
