@@ -50,16 +50,25 @@ class ChartController extends Controller
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->where('units.unit_type_id', '=', '2')
                     ->groupBy(\DB::raw('units.nama'))
-                    ->orderByRaw('count DESC')
-                    ->limit(5)
+                    // ->orderByRaw('count DESC')
+                    ->orderByRaw('units.nama DESC')
                     ->pluck('count');
 
-        $nama_fakultas = Booking::select(\DB::raw("COUNT(*) as count, units.nama"))
-                    ->join('units', 'units.id', '=', 'bookings.unit_id')
+        // dd($faculties);
+
+        // $nama_fakultas = Booking::select(\DB::raw("COUNT(*) as count, units.nama"))
+        //             ->join('units', 'units.id', '=', 'bookings.unit_id')
+        //             ->where('units.unit_type_id', '=', '2')
+        //             ->groupBy(\DB::raw('units.nama'))
+        //             ->orderByRaw('count DESC')
+        //             ->pluck('units.nama');
+
+        $nama_fakultas = Unit::select(\DB::raw("units.nama"))
                     ->where('units.unit_type_id', '=', '2')
-                    ->groupBy(\DB::raw('units.nama'))
-                    ->orderByRaw('count DESC')
+                    ->orderByRaw('units.nama DESC')
                     ->pluck('units.nama');
+
+        // dd($nama_fakultas);
 
         $units = Booking::select(\DB::raw("COUNT(*) as count"))
                     ->join('units', 'units.id', '=', 'bookings.unit_id')

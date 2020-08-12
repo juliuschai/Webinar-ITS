@@ -20,8 +20,8 @@ var test = $data.data('test');
 var nama_test = $data.data('nama_test');
 
 Highcharts.chart('container', {
-credits: {
-enabled: false
+  credits: {
+    enabled: false
   },
   title: {
       text: 'User Webinar'
@@ -65,43 +65,54 @@ enabled: false
 });
 
 Highcharts.chart('container-2', {
-    credits: {
-      enabled: false
-    },
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Sivitas Akademik'
-    },
-    xAxis: {
-        categories: ['Total'] 
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: ''
-        }
-    },
-    tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f})<br/>',
-        shared: true
-    },
-    plotOptions: {
-        column: {
-            stacking: 'percent'
-        }
-    },
-    series: [{
-        name: 'Dosen',
-        data: dosen
-    }, {
-        name: 'Tendik',
-        data: tendik
-    }, {
-        name: 'Mahasiswa',
-        data: mahasiswa
-    }]
+  credits: {
+    enabled: false
+  },
+  chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+  },
+  title: {
+      text: 'Sivitas Akademika'
+  },
+  tooltip: {
+      pointFormat: '<b>{point.percentage:.0f}%</b>'
+  },
+  accessibility: {
+      point: {
+          valueSuffix: '%'
+      }
+  },
+  plotOptions: {
+      pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+              enabled: false
+          },
+          showInLegend: true
+      }
+  },
+  series: [{
+      colorByPoint: true,
+      data: [{
+          name: 'Dosen',
+          data: dosen,
+          y: 61.41,
+          sliced: true,
+          selected: true
+      }, {
+          name: 'Tendik',
+          data: tendik,
+          y: 11.84
+      }, {
+          name: 'Mahasiswa',
+          data: mahasiswa,
+          y: 10.85
+      }]
+  }]
 });
 
 Highcharts.chart('container-3', {
@@ -185,6 +196,7 @@ Highcharts.chart('container-4', {
   plotOptions: {
     series: {
       borderWidth: 0,
+      // connectNulls: true,
       dataLabels: {
         enabled: true,
         format: '{point.y:.f}'
