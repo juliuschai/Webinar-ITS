@@ -75,7 +75,7 @@ class ZoomApiChecker extends Command
             ->where('booking_times.disetujui', true)
             ->where('booking_times.status', 'pending')
             ->orderBy('booking_times.waktu_mulai', 'asc')
-            ->get();
+            ->get('booking_times.*');
 
         foreach ($booking_times as $booking_time) {
             // Make new password
