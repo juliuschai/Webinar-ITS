@@ -113,7 +113,9 @@ bookingTableElm.DataTable({
 			"name": "disetujui",
 			"searchable": true,
 			"visible": true,
+			// "width": "5%",
 			"render": function (data, type, full, meta) {
+				// let resultHTML = '<div style="white-space: nowrap;">'
 				if (data === null || data === "") {
 					return menungguStatus.clone().show().html();
 				} else if (data == true) {
@@ -121,6 +123,8 @@ bookingTableElm.DataTable({
 				} else if (data == false) {
 					return ditolakStatus.clone().show().html();
 				}
+				// resultHTML += '</div>'
+				// return resultHTML;
 			},
 		},
 		{
@@ -130,9 +134,12 @@ bookingTableElm.DataTable({
 			"name": "book_times_summary",
 			"searchable": false,
 			"visible": true,
+			// "width": "50%",
 			"render": function (data, type, full, meta) {
-				console.log(data);
+				// console.log(data);
 				let result = [];
+				let resultHTML = '<div style="white-space: nowrap;">'
+				let resultHTML2 = '</div>'
 				// seperate data string to get datetime string
 				rows = data.split(',');
 				// Remove last elm if it's empty string
@@ -144,10 +151,10 @@ bookingTableElm.DataTable({
 					// Print date with format
 					date = `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()} ${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
 					// recombine data string
-					result.push(`${date} - ${host}`)
+					result.push(`${date} <br> - ${host}`)
 				}
 				result = result.join('<br>')
-				return result;
+				return resultHTML + result + resultHTML2;
 			},
 		},
 		{

@@ -102,8 +102,7 @@ class Booking extends Model
 		return Booking::from(DB::raw("({$sub->toSql()}) as sub"))
 		->mergeBindings($sub->getQuery()) // you need to get underlying Query Builder
 			->groupBy(
-				'id',
-			)
+				'id')
 			->select(
 				'id',
 				'created_at',

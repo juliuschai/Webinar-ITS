@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div id="menungguStatus" style="display: none;">
-				<div style="background-color: #FCF0CF; padding: 8px 8px; margin: 0px" class="text-center">
+				<div style="background-color: #FCF0CF; padding: 8px 8px; margin: 0px;" class="text-center">
 					Menunggu<br>Konfirmasi
 				</div>
 			</div>
