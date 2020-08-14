@@ -236,8 +236,7 @@ class BookingController extends Controller
 
     function listBookingData()
     {
-        $model = Booking::viewBookingList()
-            ->where('bookings.user_id', '=', Auth::id())
+        $model = Booking::viewBookingList(Auth::id())
             ->newQuery();
 
         return DataTables::eloquent($model)
@@ -253,18 +252,17 @@ class BookingController extends Controller
             ->toJson();
     }
 
-    public function waitingListBooking()
+    function waitingListBooking()
     {
 
-        $bookings = Booking::viewBookingList()
-            ->where('bookings.user_id', '=', Auth::id())
+        $bookings = Booking::viewBookingList(Auth::id())
             ->paginate('10');
         $length = Booking::where('bookings.user_id', '=', Auth::id())
             ->count();
         return view('booking.table', compact(['bookings', 'length']));
     }
 
-    public function deleteBooking(Request $request)
+    function deleteBooking(Request $request)
     {
         $id = $request['id'];
         Booking::destroy($id);
@@ -272,22 +270,12 @@ class BookingController extends Controller
         return redirect()->route('booking.list');
     }
 
-    public function adminDeleteBooking(Request $request)
+    function adminDeleteBooking(Request $request)
     {
         $id = $request['id'];
         Booking::destroy($id);
 
         return redirect()->route('admin.list');
-    }
-
-    function adminAproveBookingData()
-    {
-        $model = Booking::viewBookingList()
-            ->where('bookings.disetujui', '=', '1')
-            ->newQuery();
-
-        return DataTables::eloquent($model)
-            ->toJson();
     }
 
     //Admin
@@ -298,33 +286,43 @@ class BookingController extends Controller
 
         return DataTables::eloquent($model)
             ->filterColumn('disetujui', function ($query, $keyword) {
-                if ($keyword == "true") {
-                    $query->whereRaw("disetujui = true");
-                } else if ($keyword == "false") {
-                    $query->whereRaw("disetujui = false");
-                } else if ($keyword == "none") {
-                    $query->whereRaw("disetujui IS NULL");
+                if ($keyword == 'true') {
+                    $query->where('disetujui', '=', 'true');
+                } else if ($keyword == 'false') {
+                    $query->where('disetujui', '=', 'false');
+                } else if ($keyword == 'none') {
+                    $query->whereNull('disetujui');
                 }
             })
             ->toJson();
     }
 
-    public function adminListBooking(Request $request)
+    function adminListBooking(Request $request)
     {
         $bookings = Booking::viewBookingList()
             ->paginate('10');
-
+// dd($bookings);
         $length = Booking::count();
         return view('admin.table', compact(['bookings', 'length']));
     }
 
-    public function aproveBooking(Request $request)
+    function adminAproveBookingData()
+    {
+        $model = Booking::viewBookingList()
+            ->where('disetujui', '=', '1')
+            ->newQuery();
+
+        return DataTables::eloquent($model)
+            ->toJson();
+    }
+
+    function aproveBooking(Request $request)
     {
         $bookings = Booking::viewBookingList()
-            ->where('bookings.disetujui', '=', '1')
+            ->where('disetujui', '=', '1')
             ->paginate('10');
 
-        $length = Booking::where('bookings.disetujui', '=', '1')
+        $length = Booking::where('disetujui', '=', '1')
             ->count();
         return view('admin.aprove', compact(['bookings', 'length']));
     }

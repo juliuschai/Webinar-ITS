@@ -33,7 +33,7 @@ bookingTableElm.DataTable({
 		{
 			"targets": 0,
 			"data": "id",
-			"name": 'bookings.id',
+			"name": 'id',
 			"searchable": false,
 			"visible": false,
 		},
@@ -85,7 +85,7 @@ bookingTableElm.DataTable({
 			"targets": 5,
 			"title": "Penyelenggara Acara",
 			"data": "nama",
-			"name": "units.nama",
+			"name": "nama",
 			"searchable": true,
 			"visible": true,
 		},

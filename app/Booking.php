@@ -5,6 +5,7 @@ namespace App;
 use App\Helpers\FileHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Booking extends Model
 {
@@ -73,11 +74,47 @@ class Booking extends Model
 		}
 	}
 
-	static function viewBookingList() {
-		return Booking::join('units', 'units.id', '=', 'bookings.unit_id')
-			->leftJoin('users as adm', 'adm.id', '=', 'bookings.admin_id')
-			->select('bookings.*', 'units.nama', 
-				'adm.nama as admin_dptsi_nama', 'adm.no_wa as admin_dptsi_no_wa');
+	static function viewBookingList($user_id_to_filter = "")
+	{
+		// Untuk siapapun yang akan maintain ini, saya minta maaf lahir dan batin.
+		// Habis lu maintain ini project lu masuk surga gara2 doa terus
+		$sub = Booking::join('units', 'units.id', '=', 'bookings.unit_id')
+		->join('booking_times as bt', 'booking_id', '=', 'bookings.id')
+		->leftJoin('host_accounts as h', 'h.id', '=', 'bt.host_account_id')
+		->leftJoin('users as adm', 'adm.id', '=', 'bookings.admin_id')
+		->orderBy('bt.waktu_mulai')
+		->select(
+			'bookings.id',
+			'bookings.created_at',
+			'bookings.waktu_mulai',
+			'bookings.nama_acara',
+			'units.nama',
+			'adm.nama as admin_dptsi_nama',
+			'adm.no_wa as admin_dptsi_no_wa',
+			// Coalesce: replace null with empty string
+			DB::raw('CONCAT(`bt`.`waktu_mulai`, " - ", COALESCE(`h`.`nama`, "Belum dipilih")) as `book_times`'),
+			'bookings.disetujui as disetujui'
+		);
+		if ($user_id_to_filter) {
+			$sub = $sub->where('bookings.user_id', $user_id_to_filter);
+		}
+
+		return Booking::from(DB::raw("({$sub->toSql()}) as sub"))
+		->mergeBindings($sub->getQuery()) // you need to get underlying Query Builder
+			->groupBy(
+				'id',
+			)
+			->select(
+				'id',
+				'created_at',
+				'waktu_mulai',
+				'nama_acara',
+				'nama',
+				'admin_dptsi_nama',
+				'admin_dptsi_no_wa',
+				DB::raw('GROUP_CONCAT(`book_times`) as `book_times_summary`'),
+				'disetujui'
+			);
 	}
 
 	function verifyBooking($requestVerifies) {
@@ -177,13 +214,17 @@ class Booking extends Model
 		return $this->user_id == $id;
 	}
 
-	public function user() {
+	function user() {
 		return $this->hasOne('App\User', 'id', 'user_id');
 	}
 
-	public function kategori() {
+	function kategori() {
 			return $this->hasOne('App\Kategori', 'id', 'kategori_id');
 	}
 
+    function book_times()
+    {
+        return $this->hasMany('App\BookingTime', 'booking_id', 'id');
+    }
 
 }

@@ -63,10 +63,10 @@
                   <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('booking.new') }}">Booking Webinar</a></li>
-                      <li><a href="{{ route('booking.list') }}">Daftar Tunggu Webinar</a></li>
+                      <li><a href="{{ route('booking.list') }}">Webinar Saya</a></li>
                       @if(auth()->user()->isAdmin())
                       <li><a href="{{ route('admin.list') }}">Daftar Webinar</a></li>
-                      <li><a href="{{ route('admin.aprove') }}">Webinar</a></li>
+                      <li><a href="{{ route('admin.aprove') }}">Riwayat</a></li>
                       @endif
                     </ul>
                   </li>

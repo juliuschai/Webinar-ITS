@@ -104,12 +104,12 @@ class BookingTime extends Model
         $this->save();
     }
 
-    public function booking()
+    function booking()
     {
         return $this->hasOne('App\Booking', 'id', 'booking_id');
     }
 
-    public function host()
+    function host()
     {
         return $this->hasOne('App\HostAccount', 'id', 'host_account_id');
     }

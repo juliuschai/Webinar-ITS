@@ -83,6 +83,7 @@
 					<th class="text-center" scope="col">Penyelenggara Acara</th>
 					<th class="text-center" scope="col">Admin DPTSI</th>
 					<th class="text-center" scope="col">Status</th>
+					<th class="text-center" scope="col">Sesi</th>
 					<th class="text-center" scope="col">Aksi</th>
 					</tr>
 				</thead>
@@ -90,13 +91,15 @@
 					@foreach( $bookings as $booking)
 					<tr>
 						<td>{{$booking->id}}</td>
-						<td>{{$booking->created_at->format(DateTime::ATOM)}}</td>
-						<td>{{$booking->waktu_mulai->format(DateTime::ATOM)}}</td>
-						<td>{{$booking->waktu_mulai->format(DateTime::ATOM)}}</td>
+						<td>{{Illuminate\Support\Carbon::parse($booking->created_at)->format(DateTime::ATOM)}}</td>
+						<td>{{Illuminate\Support\Carbon::parse($booking->waktu_mulai)->format(DateTime::ATOM)}}</td>
+						<td>{{Illuminate\Support\Carbon::parse($booking->waktu_mulai)->format(DateTime::ATOM)}}</td>
 						<td>{{$booking->nama_acara}}</td>
 						<td>{{$booking->nama}}</td>
 						<td>{{$booking->admin_dptsi_nama.' - '.$booking->admin_dptsi_no_wa}}</td>
+						{{-- Di unescape karena ada <br> di book_times_summary --}}
 						<td>{{$booking->disetujui}}</td>
+						<td>{{$booking->book_times_summary}}</td> 
 						<td></td>
 					</tr>
 					@endforeach
@@ -118,6 +121,7 @@
 								<option value="true">Disetujui</option>
 							</select>
 						</th>
+						<th></th>
 						<th></th>
 					</tr>
 				</tfoot>
