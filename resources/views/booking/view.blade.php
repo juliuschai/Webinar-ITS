@@ -249,7 +249,6 @@
 								<i class="fa fa-list-alt booking"></i>
 								<div class="col-md-6">
 									<select name="adminDPTSI" class="form-control">
-										<option value="">Tidak Dispesifikasi</option>
 										@foreach ($admins as $admin)
 										<option value="{{$admin->id}}" {{old('adminDPTSI')??$booking->admin_dptsi == $admin->id?'selected':''}}>{{$admin->nama}}</option>
 										@endforeach
