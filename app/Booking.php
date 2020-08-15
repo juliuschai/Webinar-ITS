@@ -92,7 +92,7 @@ class Booking extends Model
 			'adm.nama as admin_dptsi_nama',
 			'adm.no_wa as admin_dptsi_no_wa',
 			// Coalesce: replace null with empty string
-			DB::raw('CONCAT(`bt`.`waktu_mulai`, " - ", COALESCE(`h`.`nama`, "Belum dipilih")) as `book_times`'),
+			DB::raw('CONCAT(DATE_FORMAT(bt.waktu_mulai, "%Y-%m-%d\T%TZ"), " - ", COALESCE(`h`.`nama`, "Belum dipilih")) as `book_times`'),
 			'bookings.disetujui as disetujui'
 		);
 		if ($user_id_to_filter) {
