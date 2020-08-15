@@ -28,7 +28,8 @@ class OIDCHelper extends OpenIDConnectClient {
 			try {
 				$oidc->authenticate(); //call the main function of myITS SSO login
 			} catch (\Throwable $th) {
-				\Log::error($th);
+				\Log::warning('There was an error with $oidc->authenticate()');
+				\Log::warning($th);
 				return redirect()->route('login');
 			}
 			session(['id_token' => $oidc->getIdToken()]);

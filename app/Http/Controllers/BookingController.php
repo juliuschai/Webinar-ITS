@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\BookingTime;
+use App\Helpers\ZoomAPIHelper;
 use App\Http\Requests\NewBookingRequest;
 use App\Http\Requests\EditBookingRequest;
 use App\Http\Requests\VerifyBookingRequest;
@@ -55,7 +56,8 @@ class BookingController extends Controller
             });
         } catch (\Throwable $th) {
             // Terdapat error dalam pengiriman email ke admin
-            \Log::error($th);
+            \Log::warning('Masalah dalam pengiriman email pemberitahuan ada booking baru ke admin');
+            \Log::warning($th);
         }
 
         return redirect()->route('booking.view', ['id' => $booking['id']]);
@@ -127,18 +129,7 @@ class BookingController extends Controller
             $webinarCount = 0;
             // Schedule a webinar for each booking time and send invitation email
             foreach ($book_times as $book_time) {
-                // Generate new JSON Web Token
-                $token_header = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
-                $token_payload = [
-                    'iss' => env('ZOOM_API_KEY'),
-                    'exp' => (time() + 15)
-                ];
-                $token_payload = base64_encode(json_encode($token_payload));
-                $token_payload = str_replace(['+', '/', '='], ['-', '_', ''], $token_payload);
-                $token_signature = hash_hmac('sha256', "$token_header.$token_payload", env('ZOOM_API_SECRET'), true);
-                $token_signature = base64_encode($token_signature);
-                $token_signature = str_replace(['+', '/', '='], ['-', '_', ''], $token_signature);
-                $token = "$token_header.$token_payload.$token_signature";
+                $token = ZoomAPIHelper::generate_token();
                 // Schedule a webinar
                 $durasi = floor((strtotime($book_time->waktu_akhir) - strtotime($book_time->waktu_mulai)) / 60);
                 $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -187,7 +178,8 @@ class BookingController extends Controller
                         'password' => $response->json()['password']
                     ];
                 } else {
-                    \Log::error($response->json()['message']);
+                    \Log::warning('Masalah dalam pembookingan webinar');
+                    \Log::warning($response->json()['message']);
                     return redirect()->back()->withErrors([
                         $response->json()['message'],
                     ]);
@@ -198,10 +190,11 @@ class BookingController extends Controller
             try {
                 Mail::send('emails.booking_approved', $email_datas, function ($message) use ($email) {
                     $message->to($email);
-                    $message->subject('WEBINAR ITS');
+                    $message->subject('WEBINAR ITS - Disetujui');
                 });
             } catch (\Throwable $th) {
-                \Log::error($th);
+                \Log::warning('Masalah dalam pengiriman email link webinars yang baru dibuat ke user');
+                \Log::warning($th);
                 return redirect()->back()->withErrors([
                     "Webinar sudah dibooking, tetapi email ke user tidak terkirim!"
                 ]);
@@ -219,10 +212,11 @@ class BookingController extends Controller
             try {
                 Mail::send('emails.booking_denied', $data, function ($message) use ($email) {
                     $message->to($email);
-                    $message->subject('WEBINAR ITS');
+                    $message->subject('WEBINAR ITS - Belum Disetujui');
                 });
             } catch (\Throwable $th) {
-                \Log::error($th);
+                \Log::warning('Masalah dalam pengiriman pemberitahuan kepada user bahwa booking telah ditolak');
+                \Log::warning($th);
                 return redirect()->back()->withErrors([
                     "Booking ditolak, tetapi email ke user tidak terkirim!"
                 ]);

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\BookingTime;
+use App\Helpers\ZoomAPIHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -49,14 +50,38 @@ class ZoomApiChecker extends Command
 
         foreach ($booking_times as $booking_time) {
             // End webinar
-            $response = Http::withToken($this->generate_token())
+            $response = Http::withToken(ZoomAPIHelper::generate_token())
                 ->put("https://api.zoom.us/v2/webinars/{$booking_time->webinar_id}/status", ['action' => 'end']);
             // Try at next iteration
             if ($response->failed()) continue;
+            // Get share recording link to the webinar that has just finisehd.
+            $response = Http::withToken(ZoomAPIHelper::generate_token())
+                ->get("https://api.zoom.us/v2/meetings/{$booking_time->webinar_id}/recordings", ['action' => 'end']);
+            // Don't do anything if getting recording fails, it might be because webinar doesn't exist or recordings doesn't exist
+            if ($response->failed()) {
+                \Log::warning("Failed to get recording");
+                \Log::warning($response->json());
+            } else {
+                // Send an email to the PIC of the share_url
+                $email = $booking_time->booking->user->email;
+                $data = [
+                    'topic' => $booking_time->booking->nama_acara,
+                    'share_url' => $response->json()['share_url'],
+                ];
+                try {
+                    Mail::send('emails.booking_finished', $data, function ($message) use ($email) {
+                        $message->to($email);
+                        $message->subject('WEBINAR ITS - Selesai');
+                    });
+                } catch (\Throwable $th) {
+                    \Log::warning('Masalah dalam pengiriman email share_url recording webinar ke user');
+                    \Log::warning($th);
+                }
+            }
             // Make new password
             $password = $this->generate_password();
             // Reset password
-            $response = Http::withToken($this->generate_token())
+            $response = Http::withToken(ZoomAPIHelper::generate_token())
                 ->put("https://api.zoom.us/v2/users/{$booking_time->host->zoom_id}/password", ['password' => $password]);
             // Try at next iteration
             if ($response->failed()) continue;
@@ -81,7 +106,7 @@ class ZoomApiChecker extends Command
             // Make new password
             $password = $this->generate_password();
             // Reset password
-            $response = Http::withToken($this->generate_token())
+            $response = Http::withToken(ZoomAPIHelper::generate_token())
                 ->put("https://api.zoom.us/v2/users/{$booking_time->host->zoom_id}/password", ['password' => $password]);
             // Try at next iteration
             if ($response->failed()) continue;
@@ -94,33 +119,21 @@ class ZoomApiChecker extends Command
                 'email' => $booking_time->host->zoom_email,
                 'password' => $password
             ];
-            Mail::send('emails.host_credential', $data, function ($message) use ($email) {
-                $message->to($email);
-                $message->subject('WEBINAR ITS');
-            });
+            try {
+                Mail::send('emails.host_credential', $data, function ($message) use ($email) {
+                    $message->to($email);
+                    $message->subject('WEBINAR ITS - Akses');
+                });
+            } catch (\Throwable $th) {
+                \Log::warning('Masalah dalam pengiriman host_credentials ke user 40 menit sebelum webinar mulai');
+                \Log::warning($th);
+            }
             // Update booking status
             $booking_time->status = 'started';
             $booking_time->save();
         }
 
         return 0;
-    }
-
-    function generate_token()
-    {
-        // Generate new JSON Web Token
-        $token_header = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
-        $token_payload = [
-            'iss' => env('ZOOM_API_KEY'),
-            'exp' => (time() + 15)
-        ];
-        $token_payload = base64_encode(json_encode($token_payload));
-        $token_payload = str_replace(['+', '/', '='], ['-', '_', ''], $token_payload);
-        $token_signature = hash_hmac('sha256', "$token_header.$token_payload", env('ZOOM_API_SECRET'), true);
-        $token_signature = base64_encode($token_signature);
-        $token_signature = str_replace(['+', '/', '='], ['-', '_', ''], $token_signature);
-        $token = "$token_header.$token_payload.$token_signature";
-        return $token;
     }
 
     function generate_password()
