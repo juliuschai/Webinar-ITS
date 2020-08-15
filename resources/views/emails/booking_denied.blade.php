@@ -34,14 +34,23 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Maaf, Webinar anda dengan Topik {{ $topic }} terdapat masalah dan belum disetujui. Silahkan mengecheck di aplikasi booking webinar.</p>
+                                    <p class="col-md-6 col-sm-6" style="font-size: 14px; text-align: center; margin-bottom: 10px;">
+                                        Maaf, Webinar anda dengan Topik {{ $topic }} terdapat masalah dan belum disetujui. Silahkan mengecheck di aplikasi booking webinar.<br>
+                                        <br>
+                                        Jika terdapat sesi webinar yang Ditolak, maka webinar yang telah Disetujui tidak dapat diproses lebih lanjut. 
+                                        Mohon dapat mengecek slot jadwal pada Calendar untuk mengganti jadwal sesi atau menghapus sesi tersebut agar dapat kami proses lebih lanjut.
+                                        Terima kasih.
+                                    </p>
                                 </center>
                             </td>
                         </tr>
                         <tr>
                             <td style="font-size: 14px; border-bottom:1px solid #f2f3f5;">
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Silahkan edit booking: <a href="https://webinar-book.its.ac.id/booking/edit/{{ $id }}">Link Edit Booking</a></p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 5px;">Silahkan edit booking: <a href="https://webinar-book.its.ac.id/booking/edit/{{ $id }}">Link Edit Booking</a></p>
+                                </center>
+                                <center>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>
                                 </center>
                             </td>
                         </tr>

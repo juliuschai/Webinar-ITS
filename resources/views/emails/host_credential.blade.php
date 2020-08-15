@@ -42,6 +42,7 @@
                         <tr>
                             <td>
                                 <p style="margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting Zoom Webinar acara anda!<br>Pastikan bahwa Webinar yang anda ubah bukan Webinar acara lain!</p>
+                                <p style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>
                             </td>
                         </tr>
                     </table>

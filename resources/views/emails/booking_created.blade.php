@@ -45,6 +45,9 @@
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Atas nama: {{$nama_user}}</p>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Lihat booking: <a href="https://webinar-book.its.ac.id/booking/view/{{$id}}">Link view</a></p>
                                 </center>
+                                <center>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>
+                                </center>
                             </td>
                         </tr>
                     </table>

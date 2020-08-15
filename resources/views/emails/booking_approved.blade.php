@@ -55,6 +55,9 @@
                                 <center>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting di Zoom webinar acara anda!<br>Pastikan bahwa Webinar yang anda ubah bukan webinar orang lain!</p>
                                 </center>
+                                <center>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>
+                                </center>
                             </td>
                         </tr>
                         @endforeach
