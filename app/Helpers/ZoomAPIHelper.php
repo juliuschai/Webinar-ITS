@@ -11,7 +11,7 @@ class ZoomAPIHelper
         $token_header = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
         $token_payload = [
             'iss' => env('ZOOM_API_KEY'),
-            'exp' => (time() + 15)
+            'exp' => (time() + 150)
         ];
         $token_payload = base64_encode(json_encode($token_payload));
         $token_payload = str_replace(['+', '/', '='], ['-', '_', ''], $token_payload);
