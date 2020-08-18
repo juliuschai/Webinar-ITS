@@ -93,8 +93,8 @@ bookingTableElm.DataTable({
 			"targets": 6,
 			"title": "Admin DPTSI",
 			"data": "",
-			"name": "",
-			"searchable": false,
+			"name": "admin_dptsi_nama",
+			"searchable": true,
 			"visible": true,
 			"render": function(data, type, full, meta) {
 				if (data) {

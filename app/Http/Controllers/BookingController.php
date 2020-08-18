@@ -281,9 +281,9 @@ class BookingController extends Controller
         return DataTables::eloquent($model)
             ->filterColumn('disetujui', function ($query, $keyword) {
                 if ($keyword == 'true') {
-                    $query->where('disetujui', '=', 'true');
+                    $query->where('disetujui', true);
                 } else if ($keyword == 'false') {
-                    $query->where('disetujui', '=', 'false');
+                    $query->where('disetujui', false);
                 } else if ($keyword == 'none') {
                     $query->whereNull('disetujui');
                 }
@@ -295,15 +295,15 @@ class BookingController extends Controller
     {
         $bookings = Booking::viewBookingList()
             ->paginate('10');
-// dd($bookings);
-        $length = Booking::count();
+
+            $length = Booking::count();
         return view('admin.table', compact(['bookings', 'length']));
     }
 
     function adminAproveBookingData()
     {
         $model = Booking::viewBookingList()
-            ->where('disetujui', '=', '1')
+            ->where('disetujui', true)
             ->newQuery();
 
         return DataTables::eloquent($model)
@@ -313,10 +313,10 @@ class BookingController extends Controller
     function aproveBooking(Request $request)
     {
         $bookings = Booking::viewBookingList()
-            ->where('disetujui', '=', '1')
+            ->where('disetujui', true)
             ->paginate('10');
 
-        $length = Booking::where('disetujui', '=', '1')
+        $length = Booking::where('disetujui', true)
             ->count();
         return view('admin.aprove', compact(['bookings', 'length']));
     }
@@ -324,19 +324,18 @@ class BookingController extends Controller
     function getEvents(Request $request) {
         $bookings = Booking::join('booking_times as bt', 'bt.booking_id', '=', 'bookings.id')
             ->where('bookings.disetujui', true)
-            ->where('bt.gladi', false)
             ->where('bt.waktu_mulai', '>=', $request->start)
             ->where('bt.waktu_mulai', '<=', $request->end)
             ->get([
                 'bookings.id',
                 'nama_acara as title',
                 'bt.waktu_mulai as start',
-                'bt.waktu_akhir as end'
+                'bt.waktu_akhir as end',
+                'gladi'
             ]);
         foreach ($bookings as $booking) {
             $booking['color'] = "#fae9e8";
-            // $booking['start'] = Carbon::parse($booking['start'])->timezone('Asia/Jakarta')->toIso8601String();
-            // $booking['end'] = Carbon::parse($booking['end'])->timezone('Asia/Jakarta')->toIso8601String();
+            if ($booking['gladi']) $booking['title'] = "Gladi: {$booking['title']}";
             $booking['start'] = Carbon::parse($booking['start']);
             $booking['end'] = Carbon::parse($booking['end']);
         }

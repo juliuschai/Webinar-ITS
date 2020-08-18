@@ -93,8 +93,8 @@ bookingTableElm.DataTable({
 			"targets": 6,
 			"title": "Admin DPTSI",
 			"data": "",
-			"name": "",
-			"searchable": false,
+			"name": "admin_dptsi_nama",
+			"searchable": true,
 			"visible": true,
 			"render": function (data, type, full, meta) {
 				if (data) {
@@ -113,9 +113,7 @@ bookingTableElm.DataTable({
 			"name": "disetujui",
 			"searchable": true,
 			"visible": true,
-			// "width": "5%",
 			"render": function (data, type, full, meta) {
-				// let resultHTML = '<div style="white-space: nowrap;">'
 				if (data === null || data === "") {
 					return menungguStatus.clone().show().html();
 				} else if (data == true) {
@@ -123,8 +121,6 @@ bookingTableElm.DataTable({
 				} else if (data == false) {
 					return ditolakStatus.clone().show().html();
 				}
-				// resultHTML += '</div>'
-				// return resultHTML;
 			},
 		},
 		{
