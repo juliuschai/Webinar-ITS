@@ -50,19 +50,11 @@ class OIDCHelper extends OpenIDConnectClient {
 			return redirect()->route('login');
 		}
 		$attr = $oidc->requestUserInfo();
-		$user = User::firstOrNew([
-			/* // ToDelete: if email of user is already in database, edit the current user (add 
-			sub and no_wa to current user) This only needs to run until all users in db has sub id
-			(Because email field was used an identifer before "OpenID sub field update")
-			 */
-			'email' => $attr->email,
-		], [
-			// Find user by sub field from OpenID
-			'sub' => $attr->sub,
-		]);
-		// ToDelete:
+		$user = User::where('sub', $attr->sub)->first();
+		if (!$user) $user = User::where('integra', $attr->reg_id)->first();
+		if (!$user) $user = new User();
+
 		$user->sub = $attr->sub;
-		
 		if (!$attr->email) {
 			abort(403, 'Primary Email harus diisi, Update Primary Email dari menu Settings myITS SSO');
 		}
