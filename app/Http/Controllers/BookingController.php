@@ -93,10 +93,7 @@ class BookingController extends Controller
         if (Auth::check()) {
             $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
             $isOwner = $booking->isOwner(Auth::id());
-            $admins = User::where('is_admin', true)
-                ->where('nama', 'LIKE', '%Rizki Rinaldi%')
-                ->orWhere('nama', 'LIKE', '%Ernis Desna%')
-                ->get();
+            $admins = User::getAdminDPTSIDropdownOptions();
             if ($isAdmin || $isOwner) {
                 $booking->setUserFields($booking['user_id']);
                 $booking->setAdminFields($booking['admin_id']);
@@ -104,6 +101,7 @@ class BookingController extends Controller
         } else {
             $isAdmin = false;
             $isOwner = false;
+            $admins = null;
         }
         $booking_times = $booking->getTimes();
         return view(
@@ -172,6 +170,7 @@ class BookingController extends Controller
                     $email_datas['datas'][] = [
                         'index' => $index,
                         'join_url' => $response->json()['join_url'],
+                        // 'registration_url' => $response->json()['registration_url'],
                         'topic' => $response->json()['topic'],
                         'start_time' => Carbon::parse($response->json()['start_time'])->setTimezone('Asia/Jakarta'),
                         'webinar_id' => $response->json()['id'],

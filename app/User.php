@@ -46,6 +46,15 @@ class User extends Authenticatable
             ]);
     }
 
+    static function getAdminDPTSIDropdownOptions() {
+        return User::where('is_admin', true)
+            ->where(function ($query) {
+                $query->where('nama', 'LIKE', '%Rizki Rinaldi%')
+                    ->orWhere('nama', 'LIKE', '%Ernis Desna%');
+            })
+            ->get();
+    }
+
     function checkId($id) {
         return $this->id == $id;
     }
