@@ -117,8 +117,7 @@
 								<div class="col-md-6">
 									<textarea style="resize: none;" rows="2" cols="30" 
 										name="namaAcara" id="namaAcara" type="text" class="form-control" 
-										required>{{ old('namaAcara')??$booking['nama_acara'] }}
-									</textarea>
+										required>{{ old('namaAcara')??$booking['nama_acara'] }}</textarea>
 								</div>
 							</div>
 

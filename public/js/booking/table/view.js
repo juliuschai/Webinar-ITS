@@ -1,6 +1,6 @@
-var bookingTableElm = $('#bookingTable');
+var tableElm = $('#tableElm');
 // Setup - add a text input to each footer cell
-var types = bookingTableElm.data('types');
+var types = tableElm.data('types');
 $.each(types, function() {
 	$('#searchTypeSelect')
 		.append($("<option></option>")
@@ -24,16 +24,15 @@ var delBtn = $('#delBtnTemplate');
 var disableEdit = $('#editBtnDisable');
 var disableDel = $('#delBtnDisable');
 
-bookingTableElm.DataTable({
+var datatableRes = tableElm.DataTable({
 	processing: true,
 	serverSide: true,
-	ajax: bookingTableElm.data('ajaxurl'),
-	deferLoading: bookingTableElm.data("length"),
+	ajax: tableElm.data('ajaxurl'),
 	columnDefs:[
 		{
 			"targets": 0,
 			"data": "id",
-			"name": 'id',
+			"name": 'sub.id',
 			"searchable": false,
 			"visible": false,
 		},
@@ -41,7 +40,7 @@ bookingTableElm.DataTable({
 			"targets": 1,
 			"title": "Tanggal Booking",
 			"data": "created_at",
-			"name": "created_at",
+			"name": "sub.created_at",
 			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
@@ -53,7 +52,7 @@ bookingTableElm.DataTable({
 			"targets": 2,
 			"title": "Tanggal Webinar",
 			"data": "waktu_mulai",
-			"name": "waktu_mulai",
+			"name": "sub.waktu_mulai",
 			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
@@ -65,7 +64,7 @@ bookingTableElm.DataTable({
 			"targets": 3,
 			"title": "Waktu",
 			"data": "waktu_mulai",
-			"name": "waktu_mulai",
+			"name": "sub.waktu_mulai",
 			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
@@ -77,7 +76,7 @@ bookingTableElm.DataTable({
 			"targets": 4,
 			"title": "Nama Acara",
 			"data": "nama_acara",
-			"name": "nama_acara",
+			"name": "sub.nama_acara",
 			"searchable": true,
 			"visible": true,
 		},
@@ -85,32 +84,24 @@ bookingTableElm.DataTable({
 			"targets": 5,
 			"title": "Penyelenggara Acara",
 			"data": "nama",
-			"name": "nama",
+			"name": "sub.nama",
 			"searchable": true,
 			"visible": true,
 		},
 		{
 			"targets": 6,
 			"title": "Admin DPTSI",
-			"data": "",
-			"name": "admin_dptsi_nama",
+			"data": "admin_dptsi",
+			"name": "sub.admin_dptsi",
+			"defaultContent": ' - ',
 			"searchable": true,
 			"visible": true,
-			"render": function(data, type, full, meta) {
-				if (data) {
-					return data;
-				}else if (full.admin_dptsi_nama && full.admin_dptsi_no_wa) {
-					return `${full.admin_dptsi_nama} - ${full.admin_dptsi_no_wa}`
-				} else {
-					return " - ";
-				}
-			},
 		},
 		{
 			"targets": 7,
 			"title": "Status",
 			"data": "disetujui",
-			"name": "disetujui",
+			"name": "sub.disetujui",
 			"searchable": true,
 			"visible": true,
 			"render": function(data, type, full, meta) {
@@ -152,7 +143,6 @@ bookingTableElm.DataTable({
 			var column = this;
 
 			$('input', this.footer()).on('keyup change clear', $.debounce(250, true, function(e) {
-				console.log("test run");
 				if (column.search() !== this.value) {
 					column.search(this.value).draw();
 				}
@@ -165,6 +155,8 @@ bookingTableElm.DataTable({
 		});
 	}
 });
+
+datatableRes.columns('sub.created_at:name').order('desc').draw();
 
 function modalPopulate() {
 	let unitNama = document.getElementById('unitNama').value;

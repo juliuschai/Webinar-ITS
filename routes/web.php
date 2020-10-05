@@ -63,8 +63,10 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             
             Route::get('/users', 'UserController@viewUsers')->name('admin.users.view');
             Route::get('/users/data', 'UserController@viewUsersData')->name('admin.users.view.data');
-            Route::post('/users/give/{id}', 'UserController@giveAdmin')->name('admin.users.give');
-            Route::post('/users/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.revoke');
+            Route::post('/users/admin/give/{id}', 'UserController@giveAdmin')->name('admin.users.admin.give');
+            Route::post('/users/admin/revoke/{id}', 'UserController@revokeAdmin')->name('admin.users.admin.revoke');
+            Route::post('/users/verifier/give/{id}', 'UserController@giveVerifier')->name('admin.users.verifier.give');
+            Route::post('/users/verifier/revoke/{id}', 'UserController@revokeVerifier')->name('admin.users.verifier.revoke');
 
             Route::get('/admin/webinar/accounts', 'HostAccountController@getAccounts')->name('admin.host.accounts');
             Route::get('/admin/webinar/accounts/data', 'HostAccountController@getData')->name('admin.host.data');

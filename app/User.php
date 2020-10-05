@@ -42,16 +42,12 @@ class User extends Authenticatable
         return User::join('groups', 'group_id', '=', 'groups.id')
             ->select([
                 'users.id', 'email', 'users.nama',
-                'integra', 'groups.nama as sivitas', 'is_admin'
+                'integra', 'groups.nama as sivitas', 'is_admin', 'verifier'
             ]);
     }
 
     static function getAdminDPTSIDropdownOptions() {
-        return User::where('is_admin', true)
-            ->where(function ($query) {
-                $query->where('nama', 'LIKE', '%Rizki Rinaldi%')
-                    ->orWhere('nama', 'LIKE', '%Ernis Desna%');
-            })
+        return User::where('verifier', true)
             ->get();
     }
 

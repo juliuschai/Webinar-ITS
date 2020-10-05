@@ -9,13 +9,15 @@ $.each(types, function() {
 });
 
 // DataTable
-var revokeButton = $('#revokeAdmBtnTemplate');
-var giveButton = $('#giveAdmBtnTemplate');
+var revokeAdmBtn = $('#revokeAdmBtnTemplate');
+var giveAdmBtn = $('#giveAdmBtnTemplate');
+var revokeVerifierBtn = $('#revokeVerifierBtnTemplate');
+var giveVerifierBtn = $('#giveVerifierBtnTemplate');
+
 userTableElm.DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: userTableElm.data('ajaxurl'),
-	deferLoading: userTableElm.data("length"),
 	columnDefs:[
 		{
 			"targets": 0,
@@ -61,7 +63,7 @@ userTableElm.DataTable({
 			"title": "Admin",
 			"data": "is_admin",
 			"name": "is_admin",
-			"searchable": true,
+			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
 				if (full.is_admin == true) {
@@ -72,18 +74,41 @@ userTableElm.DataTable({
 			}
 		},
 		{
-			"targets": 6, 
+			"targets": 6,
+			"title": "Verifier",
+			"data": "verifier",
+			"name": "verifier",
+			"searchable": false,
+			"visible": false,
+			"render": function(data, type, full, meta) {
+				if (full.verifier == true) {
+					return '<div>Verifier</div>';
+				} else {
+					return '<div>Non Verifier</div>';
+				}
+			}
+		},
+		{
+			"targets": 7, 
 			"title": "Aksi",
 			"data": null,
 			"name": null,
 			"searchable": false,
 			"visible": true,
 			"render": function (data, type, full, meta) {
+				let res = '<div style="white-space: nowrap;">'
 				if (full.is_admin == true) {
-					return revokeButton.createButton(full.id).html();
+					res += revokeAdmBtn.createButton(full.id).html();
 				} else {
-					return giveButton.createButton(full.id).html();
+					res += giveAdmBtn.createButton(full.id).html();
 				}
+
+				if (full.verifier == true) {
+					res += revokeVerifierBtn.createButton(full.id).html();
+				} else {
+					res += giveVerifierBtn.createButton(full.id).html();
+				}
+				return res
 			}
 		},
 	],

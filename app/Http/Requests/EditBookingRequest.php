@@ -27,7 +27,7 @@ class EditBookingRequest extends FormRequest
 	{
 		return [
 			'kategoriAcara' => 'required|integer|exists:kategoris,id',
-			'namaAcara' => 'required|string|max:254',
+			'namaAcara' => 'required|string|max:200',
 			'dokumenPendukung' => 'nullable|mimes:pdf,jpeg,jpg,png|max:2000',
 			'penyelengaraAcara' => 'required|numeric|exists:units,id',
 			'bookingTimes' => ['required','array','min:1',new NonGladiMin],

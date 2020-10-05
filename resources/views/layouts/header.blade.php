@@ -8,6 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    
     <title>{{ config('app.name', 'Aplikasi Booking Webinar') }}</title>
 
     <!-- Scripts -->
@@ -41,8 +42,7 @@
         <div id="dashboard" class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title">
-                  <span>Dashboard</span></a>
+                <img src="{{ asset('img/logo4.png') }}" style="margin: -25px 0 0 10px; width: 180px">
             </div>
 
             <div class="clearfix"></div>

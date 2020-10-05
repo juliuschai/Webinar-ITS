@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\BookingTime;
+use App\Helpers\EmailHelper;
 use App\Helpers\ZoomAPIHelper;
 use App\Http\Requests\NewBookingRequest;
 use App\Http\Requests\EditBookingRequest;
@@ -13,12 +14,10 @@ use App\Unit;
 use App\UnitType;
 use App\User;
 use Carbon\Carbon;
-use DateTime;
+use Exception;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -31,33 +30,19 @@ class BookingController extends Controller
         $booking_times = null;
         $kategoris = Kategori::get();
         $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
+
         return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
     }
 
     function saveNewBooking(NewBookingRequest $request)
     {
-        // function saveNewBooking(Request $request) {
         $booking = new Booking();
-        // dd($request->bookingTimes);
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($request);
-        $data = [
-            'id' => $booking->id,
-            'nama_acara' => $request->namaAcara,
-            'nama_user' => User::findOrLogout(Auth::id())->nama,
-            'unit' => Unit::findorfail($request->penyelengaraAcara)->nama,
-        ];
-        // Send email to admin
+
         try {
-            Mail::send('emails.booking_created', $data, function ($message) {
-                // $message->to(['zahratulmillah.18051@mhs.its.ac.id', 'julius.18051@mhs.its.ac.id']);
-                $message->to(['ernis@its.ac.id', 'rizki@its.ac.id']);
-                $message->subject('Webinar Baru');
-            });
+            EmailHelper::notifyAdminNewBooking($booking, $request);
         } catch (\Throwable $th) {
-            // Terdapat error dalam pengiriman email ke admin
-            \Log::warning('Masalah dalam pengiriman email pemberitahuan ada booking baru ke admin');
-            \Log::warning($th);
         }
 
         return redirect()->route('booking.view', ['id' => $booking['id']]);
@@ -74,6 +59,7 @@ class BookingController extends Controller
         $booking_times = $booking->getTimes();
         $kategoris = Kategori::get();
         $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
+
         return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
     }
 
@@ -122,104 +108,29 @@ class BookingController extends Controller
             $book_times = BookingTime::where('booking_id', $booking->id)
                 ->orderBy('waktu_mulai')
                 ->get();
-            $email_datas = ['datas'=>[]];
-            $gladiCount = 0;
-            $webinarCount = 0;
-            // Schedule a webinar for each booking time and send invitation email
-            foreach ($book_times as $book_time) {
-                $token = ZoomAPIHelper::generate_token();
-                // Schedule a webinar
-                $durasi = floor((strtotime($book_time->waktu_akhir) - strtotime($book_time->waktu_mulai)) / 60);
-                $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $webinar_pass = substr(str_shuffle($permitted_chars), 0, 8);
-                $data = [
-                    'topic' => $booking->nama_acara,
-                    'type' => 5,
-                    'start_time' => $book_time->waktu_mulai->format(DateTime::ATOM),
-                    'duration' => $durasi,
-                    'timezone' => 'UTC',
-                    'password' => $webinar_pass,
-                    'agenda' => $booking->nama_acara,
-                    'settings' => [
-                        "host_video" => "true",
-                        "panelists_video" => "true",
-                        "practice_session" => "true",
-                        "hd_video" => "true",
-                        "approval_type" => 2,
-                        "audio" => "both",
-                        "auto_recording" => "none",
-                        "enforce_login" => "false",
-                        "close_registration" => "false",
-                        "show_share_button" => "true",
-                        "allow_multiple_devices" => "true"
-                    ]
-                ];
-                $response = Http::withToken($token)->post("https://api.zoom.us/v2/users/{$book_time->host->zoom_id}/webinars", $data);
-                if ($response->successful()) {
-                    // Save webinar id
-                    $book_time->webinar_id = $response->json()['id'];
-                    $book_time->save();
-                    // Save email data
-                    if ($book_time->gladi) {
-                        $gladiCount++;
-                        $index = "Booking Gladi Bersih $gladiCount";
-                    } else {
-                        $webinarCount++;
-                        $index = "Booking Webinar $webinarCount";
-                    }
-                    $email_datas['datas'][] = [
-                        'index' => $index,
-                        'join_url' => $response->json()['join_url'],
-                        // 'registration_url' => $response->json()['registration_url'],
-                        'topic' => $response->json()['topic'],
-                        'start_time' => Carbon::parse($response->json()['start_time'])->setTimezone('Asia/Jakarta'),
-                        'webinar_id' => $response->json()['id'],
-                        'password' => $response->json()['password']
-                    ];
-                } else {
-                    \Log::warning('Masalah dalam pembookingan webinar');
-                    \Log::warning($response->json()['message']);
-                    return redirect()->back()->withErrors([
-                        $response->json()['message'],
-                    ]);
-                }
-            }
-            // Send email to user after Zoom API success
-            $email = $booking->user->email;
+
             try {
-                Mail::send('emails.booking_approved', $email_datas, function ($message) use ($email) {
-                    $message->to($email);
-                    $message->subject('WEBINAR ITS - Disetujui');
-                });
-            } catch (\Throwable $th) {
-                \Log::warning('Masalah dalam pengiriman email link webinars yang baru dibuat ke user');
-                \Log::warning($th);
+                ZoomAPIHelper::createFromBookingTimes($book_times, $booking);
+            } catch (Exception $err) {
                 return redirect()->back()->withErrors([
-                    "Webinar sudah dibooking, tetapi email ke user tidak terkirim!"
+                    $err->getMessage()
                 ]);
             }
+
             $returnMessage = 'Booking berhasil dibuat dan sudah diemailkan ke user';
         } else {
             $booking->disetujui = false;
             $booking->deskripsi_disetujui = $request->alasan;
-            // Send email to user after getting denied
             $email = $booking->user->email;
-            $data = [
-                'topic' => $booking->nama_acara,
-                'id' => $booking->id,
-            ];
+
             try {
-                Mail::send('emails.booking_denied', $data, function ($message) use ($email) {
-                    $message->to($email);
-                    $message->subject('WEBINAR ITS - Belum Disetujui');
-                });
+                EmailHelper::notifyBookingDenied($booking, $email);
             } catch (\Throwable $th) {
-                \Log::warning('Masalah dalam pengiriman pemberitahuan kepada user bahwa booking telah ditolak');
-                \Log::warning($th);
                 return redirect()->back()->withErrors([
                     "Booking ditolak, tetapi email ke user tidak terkirim!"
                 ]);
             }
+
             $returnMessage = 'Booking ditolak! User sudah diberitahu lewat email';
         }
 		$booking->admin_id = $request->adminDPTSI?:null;
@@ -233,13 +144,14 @@ class BookingController extends Controller
             ->newQuery();
 
         return DataTables::eloquent($model)
-            ->filterColumn('disetujui', function ($query, $keyword) {
-                if ($keyword == "true") {
-                    $query->whereRaw("disetujui = true");
-                } else if ($keyword == "false") {
-                    $query->whereRaw("disetujui = false");
-                } else if ($keyword == "none") {
-                    $query->whereRaw("disetujui IS NULL");
+            ->filterColumn('sub.disetujui', function ($query, $keyword) {
+                $keyword = strtolower($keyword);
+                if ($keyword == 'disetujui') {
+                    $query->where('sub.disetujui', true);
+                } else if ($keyword == 'ditolak') {
+                    $query->where('sub.disetujui', false);
+                } else if ($keyword == 'menunggu konfirmasi') {
+                    $query->whereNull('sub.disetujui');
                 }
             })
             ->toJson();
@@ -247,12 +159,7 @@ class BookingController extends Controller
 
     function waitingListBooking()
     {
-
-        $bookings = Booking::viewBookingList(Auth::id())
-            ->paginate('10');
-        $length = Booking::where('bookings.user_id', '=', Auth::id())
-            ->count();
-        return view('booking.table', compact(['bookings', 'length']));
+        return view('booking.table');
     }
 
     function deleteBooking(Request $request)
@@ -278,25 +185,22 @@ class BookingController extends Controller
             ->newQuery();
 
         return DataTables::eloquent($model)
-            ->filterColumn('disetujui', function ($query, $keyword) {
-                if ($keyword == 'true') {
-                    $query->where('disetujui', true);
-                } else if ($keyword == 'false') {
-                    $query->where('disetujui', false);
-                } else if ($keyword == 'none') {
-                    $query->whereNull('disetujui');
+            ->filterColumn('sub.disetujui', function ($query, $keyword) {
+                $keyword = strtolower($keyword);
+                if ($keyword == 'disetujui') {
+                    $query->where('sub.disetujui', true);
+                } else if ($keyword == 'ditolak') {
+                    $query->where('sub.disetujui', false);
+                } else if ($keyword == 'menunggu konfirmasi') {
+                    $query->whereNull('sub.disetujui');
                 }
             })
             ->toJson();
     }
 
-    function adminListBooking(Request $request)
+    function adminListBooking()
     {
-        $bookings = Booking::viewBookingList()
-            ->paginate('10');
-
-            $length = Booking::count();
-        return view('admin.table', compact(['bookings', 'length']));
+        return view('admin.table');
     }
 
     function adminAproveBookingData()
@@ -309,15 +213,9 @@ class BookingController extends Controller
             ->toJson();
     }
 
-    function aproveBooking(Request $request)
+    function aproveBooking()
     {
-        $bookings = Booking::viewBookingList()
-            ->where('disetujui', true)
-            ->paginate('10');
-
-        $length = Booking::where('disetujui', true)
-            ->count();
-        return view('admin.aprove', compact(['bookings', 'length']));
+        return view('admin.aprove');
     }
 
     function getEvents(Request $request) {

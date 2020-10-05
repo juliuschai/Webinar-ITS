@@ -82,17 +82,15 @@ class Booking extends Model
 		->join('booking_times as bt', 'booking_id', '=', 'bookings.id')
 		->leftJoin('host_accounts as h', 'h.id', '=', 'bt.host_account_id')
 		->leftJoin('users as adm', 'adm.id', '=', 'bookings.admin_id')
-		->orderBy('bt.waktu_mulai')
 		->select(
 			'bookings.id',
 			'bookings.created_at',
 			'bookings.waktu_mulai',
 			'bookings.nama_acara',
 			'units.nama',
-			'adm.nama as admin_dptsi_nama',
-			'adm.no_wa as admin_dptsi_no_wa',
+			DB::raw('CONCAT(adm.nama, " - ", adm.no_wa) as admin_dptsi'),
 			// Coalesce: replace null with empty string
-			DB::raw('CONCAT(DATE_FORMAT(bt.waktu_mulai, "%Y-%m-%d\T%TZ"), " - ", COALESCE(`h`.`nama`, "Belum dipilih")) as `book_times`'),
+			DB::raw('CONCAT(DATE_FORMAT(bt.waktu_mulai, "%Y-%m-%d\T%TZ"), " - ", COALESCE(`h`.`nama`, "Belum dipilih")) as book_times'),
 			'bookings.disetujui as disetujui'
 		);
 		if ($user_id_to_filter) {
@@ -101,18 +99,16 @@ class Booking extends Model
 
 		return Booking::from(DB::raw("({$sub->toSql()}) as sub"))
 		->mergeBindings($sub->getQuery()) // you need to get underlying Query Builder
-			->groupBy(
-				'id')
+			->groupBy('id')
 			->select(
-				'id',
-				'created_at',
-				'waktu_mulai',
-				'nama_acara',
-				'nama',
-				'admin_dptsi_nama',
-				'admin_dptsi_no_wa',
-				DB::raw('GROUP_CONCAT(`book_times`) as `book_times_summary`'),
-				'disetujui'
+				'sub.id',
+				'sub.created_at',
+				'sub.waktu_mulai',
+				'sub.nama_acara',
+				'sub.nama',
+				'sub.admin_dptsi',
+				DB::raw('GROUP_CONCAT(`book_times`) as book_times_summary'),
+				'sub.disetujui'
 			);
 	}
 

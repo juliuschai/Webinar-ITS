@@ -68,9 +68,8 @@
 				</form>
 			</div>
 			<table 
-				id="bookingTable"
+				id="tableElm"
 				class="table table-bordered table-striped table-bordered table-hover"
-				data-length="{{ $length }}"
 				data-ajaxurl="{{route('admin.list.data')}}"
 			>
 				<thead class="thead-custom-blue">
@@ -88,21 +87,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach( $bookings as $booking)
-					<tr>
-						<td>{{$booking->id}}</td>
-						<td>{{Illuminate\Support\Carbon::parse($booking->created_at)->format(DateTime::ATOM)}}</td>
-						<td>{{Illuminate\Support\Carbon::parse($booking->waktu_mulai)->format(DateTime::ATOM)}}</td>
-						<td>{{Illuminate\Support\Carbon::parse($booking->waktu_mulai)->format(DateTime::ATOM)}}</td>
-						<td>{{$booking->nama_acara}}</td>
-						<td>{{$booking->nama}}</td>
-						<td>{{$booking->admin_dptsi_nama.' - '.$booking->admin_dptsi_no_wa}}</td>
-						{{-- Di unescape karena ada <br> di book_times_summary --}}
-						<td>{{$booking->disetujui}}</td>
-						<td>{{$booking->book_times_summary}}</td> 
-						<td></td>
-					</tr>
-					@endforeach
 				</tbody>
 				<tfoot class="thead-custom-blue">
 					<tr>
@@ -115,10 +99,10 @@
 						<th><input type="text" placeholder="Search Admin"></th>
 						<th>
 							<select id="searchStatus">
-								<option>Semua</option>
-								<option value="none">Menunggu Konfirmasi</option>
-								<option value="false">Ditolak</option>
-								<option value="true">Disetujui</option>
+								<option value="">Semua</option>
+								<option value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
+								<option value="Ditolak">Ditolak</option>
+								<option value="Disetujui">Disetujui</option>
 							</select>
 						</th>
 						<th></th>

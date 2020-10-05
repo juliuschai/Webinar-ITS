@@ -56,20 +56,15 @@ class UserController extends Controller
 		return DataTables::eloquent($model)
 			->filterColumn('is_admin', function($query, $keyword) {
 				if ($keyword == "true") {
-					$query->whereRaw("is_admin = true");
+					$query->where("is_admin", true);
 				} else {
-					$query->whereRaw("is_admin = false");
-				}	
+					$query->where("is_admin", false);
+				}
 			})->toJson();
 	}
 
-	function viewUsers(Request $request) {
-		$users = User::viewUserBuilder()
-			->orderBy('users.id')
-			->paginate(10);
-
-		$length = User::count();
-		return view('admin.users.view', compact('users', 'length'));
+	function viewUsers() {
+		return view('admin.users.view');
 	}
 
 	function giveAdmin($id) {
@@ -85,5 +80,20 @@ class UserController extends Controller
 		$user->is_admin = false;
 		$user->save();
 		return redirect()->route('admin.users.view')->with('message', "{$user->nama} non-aktif sebagai admin");
+	}
+
+	function giveVerifier($id) {
+		$user = User::findOrFail($id);
+		$user->verifier = true;
+		$user->save();
+		return redirect()->route('admin.users.view')->with('message', "{$user->nama} set sebagai verifier");
+	}
+
+	function revokeVerifier($id) {
+		if ($id == auth()->id()) {return "Anda tidak bisa menonaktifkan akun anda sendiri";}
+		$user = User::findOrFail($id);
+		$user->verifier = false;
+		$user->save();
+		return redirect()->route('admin.users.view')->with('message', "{$user->nama} set sebagai verifier");
 	}
 }
