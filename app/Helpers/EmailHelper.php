@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Unit;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class EmailHelper {
@@ -14,7 +16,7 @@ class EmailHelper {
             'id' => $booking->id,
             'nama_acara' => $request->namaAcara,
             'nama_user' => User::findOrLogout(Auth::id())->nama,
-            'unit' => Unit::findorfail($request->penyelengaraAcara)->nama,
+            'unit' => Unit::findOrFail($request->penyelengaraAcara)->nama,
         ];
         // Send email to admin
         try {
