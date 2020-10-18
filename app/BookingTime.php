@@ -36,14 +36,14 @@ class BookingTime extends Model
             }
 
             $relayITSTV = $inBookTime['relayITSTV'] == "true";
-            $peserta_banyak = $inBookTime['pesertaBanyak'] == 1000;
+            $max_peserta = $inBookTime['maxPeserta'];
             $gladi = $inBookTime['gladi'] == "true";
 
             $curBookTime->booking_id = $bookingId;
             $curBookTime->waktu_mulai = $inBookTime['waktuMulai'];
             $curBookTime->waktu_akhir = $inBookTime['waktuSelesai'];
             $curBookTime->relay_ITSTV = $relayITSTV;
-            $curBookTime->peserta_banyak = $peserta_banyak;
+            $curBookTime->max_peserta = $max_peserta;
             $curBookTime->gladi = $gladi;
             $curBookTime->save();
         }
@@ -71,7 +71,7 @@ class BookingTime extends Model
 
     function setHostAccount()
     {
-        $this->host_accounts = HostAccount::getValidAccounts($this->waktu_mulai, $this->waktu_akhir, $this->id, $this->peserta_banyak);
+        $this->host_accounts = HostAccount::getValidAccounts($this->waktu_mulai, $this->waktu_akhir, $this->id, $this->max_peserta);
     }
 
     function verifyBookTime($reqVerify)
@@ -90,7 +90,7 @@ class BookingTime extends Model
                 $this->waktu_mulai,
                 $this->waktu_akhir,
                 $this->id,
-                $this->peserta_banyak,
+                $this->max_peserta,
                 $reqVerify['hostAccount']
             )) {
                 $this->host_account_id = $reqVerify['hostAccount'];

@@ -8,7 +8,7 @@
     <link href="{{ asset('assets/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
     <!-- iCheck -->
     <link href="{{ asset('assets/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
-	
+
     <!-- bootstrap-progressbar -->
     <link href="{{ asset('assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
     <!-- JQVMap -->
@@ -186,13 +186,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <sub class="">Webinar akan direlay sesuai dengan persetujuan ......</sub>
-                                    </div>	
+                                    </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="pesertaBanyak" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
+                                    <label for="maxPeserta" class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
                                     <div class="col-md-6">
-                                        <input id="pesertaBanyak" type="checkbox" class="" name="pesertaBanyak" value="pesertaBanyakBoolean">
+                                        <input id="maxPeserta" type="checkbox" class="" name="maxPeserta" value="maxPesertaBoolean">
                                     </div>
                                     {{-- <sub>Jawaban iya mengurangi kemungkinan di approve karena kurangnya sumber daya</sub> --}}
                                 </div>
@@ -223,7 +223,7 @@
             1990-12-31T23:59:60Z
             1996-12-19T16:39:57-08:00 */
         </script>
-    
+
         <!-- /page content -->
 
       </div>

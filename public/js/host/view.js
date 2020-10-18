@@ -49,8 +49,8 @@ hostTableElm.DataTable({
         {
 			"targets": 5,
 			"title": "Kuota",
-			"data": "type_banyak",
-			"name": "type_banyak",
+			"data": "max_peserta",
+			"name": "max_peserta",
 			"searchable": true,
 			"visible": true,
 		}

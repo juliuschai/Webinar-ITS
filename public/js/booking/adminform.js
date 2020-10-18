@@ -15,7 +15,7 @@
 			this.appendChild(opt2);
 		}
 	});
-	
+
 	$('.durHour').each(function(i, elm) {
 		for (let i = 0; i < 24; i++) {
 			let opt = document.createElement("option");
@@ -24,7 +24,7 @@
 			this.appendChild(opt);
 		}
 	});
-	
+
 	$('.durMinute').each(function(i, elm) {
 		for (let i = 0; i < 60; i+=15) {
 			let opt = document.createElement("option");
@@ -33,7 +33,7 @@
 			this.appendChild(opt);
 		}
 	});
-	
+
 })();
 
 function pz(str){
@@ -101,7 +101,7 @@ function updateWaktu(thisElm) {
 	endDate = new Date(beginDate);
 
 	endDate.setHours(
-		endDate.getHours()+parseInt($durHour.val()), 
+		endDate.getHours()+parseInt($durHour.val()),
 		endDate.getMinutes()+parseInt($durMin.val()), 0
 	);
 
@@ -156,10 +156,10 @@ if (Array.isArray(bookingTimes) && bookingTimes.length>0) {
 		$form.find('.gladi').val(bookingTime.gladi);
 		$form.find('.waktuMulai').val(bookingTime.waktuMulai??bookingTime.waktu_mulai);
 		$form.find('.waktuSelesai').val(bookingTime.waktuSelesai??bookingTime.waktu_akhir);
-		if (bookingTime.pesertaBanyak == "1000" || bookingTime.peserta_banyak == true) {
-			$form.find("input.pesertaBanyak[value=1000]").attr('checked', true);
+		if (bookingTime.maxPeserta == "1000" || bookingTime.max_peserta == "1000") {
+			$form.find("input.maxPeserta[value=1000]").attr('checked', true);
 		} else {
-			$form.find("input.pesertaBanyak[value=500]").attr('checked', true);
+			$form.find("input.maxPeserta[value=500]").attr('checked', true);
 		}
 
 		if (bookingTime.relayITSTV == "true" || bookingTime.relay_ITSTV == true) {
@@ -181,9 +181,9 @@ function addGladiTimesForm() {
 	$form.find('.sesiTitle').text(`Sesi Gladi Resik ${gladiFormAmnt+1}`);
 	$form.find('.id').val("");
 	$form.find('.gladi').val(true);
-	$form.find('input.pesertaBanyak[value=1000]').attr('checked', false).hide();
-	$form.find('input.pesertaBanyak[value=1000] + div').hide();
-	$form.find('input.pesertaBanyak[value=500]').attr('checked', true).show();
+	$form.find('input.maxPeserta[value=1000]').attr('checked', false).hide();
+	$form.find('input.maxPeserta[value=1000] + div').hide();
+	$form.find('input.maxPeserta[value=500]').attr('checked', true).show();
 	$form.find("input.relayITSTV[value=true]").attr('checked', false).hide();
 	$form.find("input.relayITSTV[value=true] + div").hide();
 	$form.find("input.relayITSTV[value=false]").attr('checked', true).show();
@@ -202,9 +202,9 @@ function addTimesForm() {
 	$form.find('.sesiTitle').text(`Sesi Webinar ${formAmnt-gladiFormAmnt+1}`);
 	$form.find('.id').val("");
 	$form.find('.gladi').val(false);
-	$form.find('input.pesertaBanyak[value=1000]').attr('checked', false).show();
-	$form.find('input.pesertaBanyak[value=1000] + div').show();
-	$form.find('input.pesertaBanyak[value=500]').attr('checked', true).show();
+	$form.find('input.maxPeserta[value=1000]').attr('checked', false).show();
+	$form.find('input.maxPeserta[value=1000] + div').show();
+	$form.find('input.maxPeserta[value=500]').attr('checked', true).show();
 	$form.find("input.relayITSTV[value=true]").attr('checked', false).show();
 	$form.find("input.relayITSTV[value=true] + div").show();
 	$form.find("input.relayITSTV[value=false]").attr('checked', true).show();
@@ -239,7 +239,7 @@ function formsAddIdxFromGladi() {
 /**
  * sets the the name attributes of the form elements according to the index
  * @param {JQueryHTMLElement} form the form elemnt to modify
- * @param {number} i to set the names of form 
+ * @param {number} i to set the names of form
  */
 function formSetIdx(form, i) {
 	let $form = $(form);
@@ -247,7 +247,7 @@ function formSetIdx(form, i) {
 	$form.find('.gladi').attr('name', `bookingTimes[${i}][gladi]`);
 	$form.find('.waktuMulai').attr('name', `bookingTimes[${i}][waktuMulai]`);
 	$form.find('.waktuSelesai').attr('name', `bookingTimes[${i}][waktuSelesai]`);
-	$form.find('.pesertaBanyak').attr('name', `bookingTimes[${i}][pesertaBanyak]`);
+	$form.find('.maxPeserta').attr('name', `bookingTimes[${i}][maxPeserta]`);
 	$form.find('.relayITSTV').attr('name', `bookingTimes[${i}][relayITSTV]`);
 	return form;
 }
@@ -271,7 +271,7 @@ function populateWaktus() {
 			durMin = durasi%60;
 		} else {
 			beginDate = new Date();
-			
+
 			durHour = 0;
 			durMin = 0;
 		}

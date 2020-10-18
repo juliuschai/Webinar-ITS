@@ -35,8 +35,8 @@
 								<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama') }}<p style="color: red" class="d-inline">*</p></label>
 								<i style="padding-left: 1px" class="fa fa-user booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="namaPic" type="text" class="form-control" 
+									<input
+										id="namaPic" type="text" class="form-control"
 										value="{{ $booking['nama_pic'] }}" disabled
 									>
 								</div>
@@ -46,8 +46,8 @@
 								<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-address-card booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="integraPic" type="text" class="form-control"  
+									<input
+										id="integraPic" type="text" class="form-control"
 										value="{{ $booking['integra_pic'] }}" disabled
 									>
 								</div>
@@ -57,8 +57,8 @@
 								<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-envelope booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="emailPic" type="text" class="form-control" 
+									<input
+										id="emailPic" type="text" class="form-control"
 										value="{{ $booking['email_pic'] }}" disabled
 									>
 								</div>
@@ -68,8 +68,8 @@
 								<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-users booking"></i>
 								<div class="col-md-6">
-									<input 
-										id="sivitas" type="text" class="form-control" 
+									<input
+										id="sivitas" type="text" class="form-control"
 										value="{{ $booking['sivitas'] }}" disabled
 									>
 								</div>
@@ -79,14 +79,14 @@
 								<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-mobile fa-2x booking"></i>
 								<div class="col-md-6">
-									<input 
+									<input
 										id="noWa" type="text" class="form-control"
 										value="{{ old('noWa')??$booking['no_wa'] }}" disabled
 									>
 								</div>
 								<div class="col-md-6">
 									<sub class="">Jika No.HP/WA tidak sesuai, dimohon untuk melakukan perubahan di Menu Settings myITS SSO</sub>
-								</div>	
+								</div>
 							</div>
 							<div class="form-group row">
 							<button style="position: absolute;bottom: 15px;right: 50px;" type="button" id="nextBtn" class="btn btn-submit next-btn" onclick="nextPrev(1)">Next</button>
@@ -115,8 +115,8 @@
 								<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}<p style="color: red" class="d-inline">*</p></label>
 								<i class="fa fa-sticky-note-o booking"></i>
 								<div class="col-md-6">
-									<textarea style="resize: none;" rows="2" cols="30" 
-										name="namaAcara" id="namaAcara" type="text" class="form-control" 
+									<textarea style="resize: none;" rows="2" cols="30"
+										name="namaAcara" id="namaAcara" type="text" class="form-control"
 										required>{{ old('namaAcara')??$booking['nama_acara'] }}</textarea>
 								</div>
 							</div>
@@ -126,9 +126,9 @@
 								<i class="fa fa-user-circle booking"></i>
 								<div class="col-md-6">
 									<input id="unitDatas" hidden
-										data-types="{{json_encode($unitTypes)}}" 
-										data-units="{{json_encode($units)}}" 
-										data-curtypeid="{{old('penyelengaraAcaraTypes')??$booking['unit_type_id']}}" 
+										data-types="{{json_encode($unitTypes)}}"
+										data-units="{{json_encode($units)}}"
+										data-curtypeid="{{old('penyelengaraAcaraTypes')??$booking['unit_type_id']}}"
 										data-curunitid="{{old('penyelengaraAcara')??$booking['unit_id']}}"
 									>
 									<select name="penyelengaraAcaraTypes" id="penyelengaraAcaraTypes" class="form-control">
@@ -157,7 +157,7 @@
 									</sub>
 								</div>
 							</div>
-							
+
 							@if(isset($booking->file_pendukung))
 							<div class="form-group row filePendukungExists">
 								<label class="col-md-4 col-form-label text-md-left"></label>
@@ -191,7 +191,7 @@
 									<input type="hidden" name="bookingTimes[0][id]" class="id">
 									<input type="hidden" name="bookingTimes[0][gladi]" class="gladi" value="false">
 									<h2 class="sesiTitle">Sesi Webinar 1</h2>
-									
+
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Webinar') }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-calendar-o booking"></i>
@@ -214,12 +214,12 @@
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}<p style="color: red" class="d-inline">*</p></label>
 										<div class="col-md-6">
-											<input 
-												id="500" type="radio" class="form-radio pesertaBanyak" name="bookingTimes[0][pesertaBanyak]" 
+											<input
+												id="500" type="radio" class="form-radio maxPeserta" name="bookingTimes[0][maxPeserta]"
 												value="500"
 											><div class="form-option">&le; 500</div>
-											<input 
-												id="1000" type="radio" class="form-radio pesertaBanyak" name="bookingTimes[0][pesertaBanyak]" 
+											<input
+												id="1000" type="radio" class="form-radio maxPeserta" name="bookingTimes[0][maxPeserta]"
 												value="1000"
 											><div class="form-option">501 - 1000</div>
 										</div>
@@ -228,25 +228,25 @@
 									<div class="form-group row">
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Layanan Live Youtube ITS') }}</label>
 										<div class="col-md-6">
-											<input 
-												type="radio" class="form-radio relayITSTV" name="bookingTimes[0][relayITSTV]" 
+											<input
+												type="radio" class="form-radio relayITSTV" name="bookingTimes[0][relayITSTV]"
 												value="true"
 											><div class="form-option">Iya</div>
-											<input 
-												type="radio" class="form-radio relayITSTV" name="bookingTimes[0][relayITSTV]" 
+											<input
+												type="radio" class="form-radio relayITSTV" name="bookingTimes[0][relayITSTV]"
 												value="false"
 											><div class="form-option">Tidak</div>
 										</div>
 										<div class="col-md-6">
 											<sub class="">Silahkan menghubungi Unit Komunikasi Publik (UKP) pada <a href="https://servicedesk.its.ac.id/" target="_blank">
 											<br>servicedesk.its.ac.id</a> untuk permohonan Layanan Live Youtube ITS.</sub>
-										</div>	
+										</div>
 									</div>
 									<div class="d-flex">
 										<button type="button" class="btn btn-custom-danger" onclick="deleteField(this)">Hapus Sesi</button>
 									</div>
-								</div>	
-							</div>	
+								</div>
+							</div>
 
 							<!-- </div> -->
 							<div class="form-group row mb-0">
@@ -274,9 +274,9 @@
 
 @section('scripts')
 @if($isAdmin)
-<script src="{{ asset('js/booking/adminform.js') }}?2" defer></script>
+<script src="{{ asset('js/booking/adminform.js') }}?3" defer></script>
 @else
-<script src="{{ asset('js/booking/form.js') }}?2" defer></script>
+<script src="{{ asset('js/booking/form.js') }}?3" defer></script>
 @endif
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
 <script src="{{ asset('js/booking/tabControls.js') }}" defer></script>

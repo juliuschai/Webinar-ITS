@@ -11,8 +11,8 @@
 	</div>
 	@endif
 
-	<table id="hostTable" 
-		class="table table-bordered table-striped table-bordered table-hover dataTable" 
+	<table id="hostTable"
+		class="table table-bordered table-striped table-bordered table-hover dataTable"
 		data-ajaxurl="{{ route('admin.host.data') }}"
 		data-length="{{ $length }}"
 	>
@@ -34,7 +34,7 @@
 				<td>{{ $host->zoom_id }}</td>
                 <td>{{ $host->zoom_email }}</td>
                 <td>{{ $host->pass }}</td>
-                <td>{{ $host->type_banyak }}</td>
+                <td>{{ $host->max_peserta }}</td>
 			</tr>
 			@endforeach
 		</tbody>
@@ -48,5 +48,5 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" defer/>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js" defer></script>
 <script src="{{asset('js/util/datatablesPlugin.js') }}" defer></script>
-<script src="{{asset('js/host/view.js') }}" defer></script>
+<script src="{{asset('js/host/view.js') }}?2" defer></script>
 @endsection

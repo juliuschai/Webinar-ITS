@@ -30,8 +30,8 @@
 						<label for="namaPic" class="col-md-4 col-form-label text-md-left">{{ __('Nama PIC Zoom') }}</label>
 						<i tyle="padding-left: 1px" class="fa fa-user booking"></i>
 						<div class="col-md-6">
-							<input 
-								id="namaPic" type="text" class="form-control" 
+							<input
+								id="namaPic" type="text" class="form-control"
 								value="{{ $booking->nama_pic }}" disabled
 							>
 						</div>
@@ -41,8 +41,8 @@
 						<label for="integraPic" class="col-md-4 col-form-label text-md-left">{{ __('User Integra PIC Zoom') }}</label>
 						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
-							<input 
-								id="integraPic" type="text" class="form-control" 
+							<input
+								id="integraPic" type="text" class="form-control"
 								value="{{ $booking->integra_pic }}" disabled
 							>
 						</div>
@@ -52,8 +52,8 @@
 						<label for="emailPic" class="col-md-4 col-form-label text-md-left">{{ __('Email ITS PIC Zoom') }}</label>
 						<i class="fa fa-envelope booking"></i>
 						<div class="col-md-6">
-							<input 
-								id="emailPic" type="text" class="form-control" 
+							<input
+								id="emailPic" type="text" class="form-control"
 								value="{{ $booking->email_pic }}" disabled
 							>
 						</div>
@@ -63,8 +63,8 @@
 						<label for="sivitas" class="col-md-4 col-form-label text-md-left">{{ __('Sivitas Akademika') }}</label>
 						<i class="fa fa-users booking"></i>
 						<div class="col-md-6">
-							<input 
-								id="sivitas" type="text" class="form-control" 
+							<input
+								id="sivitas" type="text" class="form-control"
 								value="{{ $booking->sivitas }}" disabled
 							>
 						</div>
@@ -74,7 +74,7 @@
 						<label for="noWa" class="col-md-4 col-form-label text-md-left">{{ __('No. WA') }}</label>
 						<i class="fa fa-mobile fa-2x booking"></i>
 						<div class="col-md-6">
-							<input 
+							<input
 								id="noWa" type="tel" class="form-control"
 								value="{{ $booking->no_wa }}" disabled
 							>
@@ -86,8 +86,8 @@
 						<label for="kategoriAcara" class="col-md-4 col-form-label text-md-left">{{ __('Kategori Acara') }}</label>
 						<i class="fa fa-list-alt booking"></i>
 						<div class="col-md-6">
-							<input 
-								type="text" class="form-control" 
+							<input
+								type="text" class="form-control"
 								value="{{ $booking->kategori?$booking->kategori->nama:'' }}" disabled
 							>
 						</div>
@@ -97,7 +97,7 @@
 						<label for="namaAcara" class="col-md-4 col-form-label text-md-left">{{ __('Nama Acara') }}</label>
 						<i class="fa fa-sticky-note-o booking"></i>
 						<div class="col-md-6">
-							<textarea style="resize: none;" rows="2" cols="30" 
+							<textarea style="resize: none;" rows="2" cols="30"
 								id="namaAcara" type="text" class="form-control" disabled>{{ $booking->nama_acara }}</textarea>
 						</div>
 					</div>
@@ -106,25 +106,25 @@
 						<label for="penyelengaraAcaraType" class="col-md-4 col-form-label text-md-left">{{ __('Penyelengara Acara') }}</label>
 						<i class="fa fa-building booking"></i>
 						<div class="col-md-6">
-							<input 
-								id="penyelengaraAcaraType" type="text" class="form-control" 
+							<input
+								id="penyelengaraAcaraType" type="text" class="form-control"
 								value="{{ $booking->unit_type }}" disabled
 							>
 						<br>
-							<input 
-								id="penyelengaraAcara" type="text" class="form-control" 
+							<input
+								id="penyelengaraAcara" type="text" class="form-control"
 								value="{{ $booking->unit }}" disabled
 							>
 						</div>
-					</div>	
+					</div>
 
 					@if($isOwner || $isAdmin)
 					<div class="form-group row">
 						<label class="col-md-4 col-form-label text-md-left">{{ __('Admin DPTSI') }}</label>
 						<i class="fa fa-list-alt booking"></i>
 						<div class="col-md-6">
-							<input 
-								type="text" class="form-control" 
+							<input
+								type="text" class="form-control"
 								value="{{$booking->admin_dptsi_nama.' - '.$booking->admin_dptsi_no_wa}}" disabled
 							>
 						</div>
@@ -158,13 +158,13 @@
 					<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
-							<input 
-								type="text" class="form-control waktuMulaiDisplay" 
+							<input
+								type="text" class="form-control waktuMulaiDisplay"
 								value="" disabled
 							>
 						</div>
 					</div>
-					
+
 					<input type="hidden" class="waktuMulai" value="{{$book_time->waktu_mulai->format(DateTime::ATOM)}}">
 					<input type="hidden" class="waktuSelesai" value="{{ $book_time->waktu_akhir->format(DateTime::ATOM) }}">
 
@@ -189,7 +189,7 @@
 						<label class="col-md-4 col-form-label text-md-left">{{ __('Peserta sebanyak 500 atau lebih') }}</label>
 						<i class="fa fa-sticky-note-o  booking"></i>
 						<div class="col-md-6">
-							<div>{!! $book_time->peserta_banyak==false?'&le; 500':'501 - 1000' !!}</div>
+							<div>{!! $book_time->max_peserta == 500?'&le; 500':'501 - 1000' !!}</div>
 						</div>
 					</div>
 
@@ -197,8 +197,8 @@
 						<label class="col-md-4 col-form-label text-md-left">{{ __('Current Approval Status') }}</label>
 						<i class="fa fa-address-card booking"></i>
 						<div class="col-md-6">
-							<input 
-								type="text" class="form-control" 
+							<input
+								type="text" class="form-control"
 								value="{{ isset($book_time->disetujui)?($book_time->disetujui?'Disetujui':'Ditolak'):'' }}" disabled
 							>
 						</div>
@@ -212,8 +212,8 @@
 							<option value="{{$host_account->id}}" {{$book_time->host_account_id==$host_account->id?'selected':''}}>{{$host_account->nama}}</option>
 							@endforeach
 						</select>
-						<input 
-							type="hidden" class="status" 
+						<input
+							type="hidden" class="status"
 							value="{{isset($book_time->disetujui) ? ($book_time->disetujui?'accept':'deny') :''}}"
 						>
 						<button type="button" style="margin-bottom:5px;" class="btn btn-submit acceptButton" onclick="acceptBooking(this)" style="display: none;">
@@ -254,7 +254,7 @@
 									</select>
 								</div>
 						</div>
-	
+
 							<input type="hidden" class="alasanField" name="alasan">
 						<div class="fields">
 							<input type="hidden" name="verify[0][id]" class="id">

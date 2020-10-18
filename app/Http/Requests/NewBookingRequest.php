@@ -35,7 +35,7 @@ class NewBookingRequest extends FormRequest
 			'bookingTimes.*.gladi' => 'required|in:true,false',
 			'bookingTimes.*.waktuMulai' => 'required|date|after:now',
 			'bookingTimes.*.waktuSelesai' => 'required|date|after:bookingTimes.*.waktuMulai',
-			'bookingTimes.*.pesertaBanyak' => 'required|numeric|in:500,1000',
+			'bookingTimes.*.maxPeserta' => 'required|numeric|in:500,1000',
 			'bookingTimes.*.relayITSTV' => 'required|in:true,false',
 		];
 	}
