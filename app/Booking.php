@@ -24,7 +24,7 @@ class Booking extends Model
 	 * @* @param Request request request data from booking.form view (SaveBookingRequest)
 	 * @* @param int user_id id of booking owner (currently logged in user)
 	 */
-	function saveFromRequest($request) {
+	function saveFromRequest($tipe_zoom, $request) {
 		// True if checkbox checked, false not checked
 		$this->kategori_id = $request->kategoriAcara;
 		$this->nama_acara = $request->namaAcara;
@@ -40,7 +40,7 @@ class Booking extends Model
 			$this->saveFileFromRequest($request);
 		}
 		$this->save();
-		$times = BookingTime::saveFromRequest($request, $this->id);
+		$times = BookingTime::saveFromRequest($tipe_zoom, $request, $this->id);
 		$this->waktu_mulai = $times['waktu_mulai'];
 		$this->waktu_akhir = $times['waktu_akhir'];
 		$this->disetujui = null;
@@ -74,14 +74,15 @@ class Booking extends Model
 		}
 	}
 
-	static function viewBookingList($user_id_to_filter = "")
+	static function viewBookingList($tipe_zoom, $user_id_to_filter = "")
 	{
 		// Untuk siapapun yang akan maintain ini, saya minta maaf lahir dan batin.
 		// Habis lu maintain ini project lu masuk surga gara2 doa terus
 		$sub = Booking::join('units', 'units.id', '=', 'bookings.unit_id')
 		->join('booking_times as bt', 'booking_id', '=', 'bookings.id')
 		->leftJoin('host_accounts as h', 'h.id', '=', 'bt.host_account_id')
-		->leftJoin('users as adm', 'adm.id', '=', 'bookings.admin_id')
+        ->leftJoin('users as adm', 'adm.id', '=', 'bookings.admin_id')
+        ->where('bt.tipe_zoom', $tipe_zoom)
 		->select(
 			'bookings.id',
 			'bookings.created_at',

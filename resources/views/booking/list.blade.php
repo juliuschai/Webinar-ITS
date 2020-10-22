@@ -4,7 +4,7 @@
 
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-            <h2 class="table-title">List Webinar</h2>
+            <h2 class="table-title">List {{$tipe_zoom}}</h2>
             <table class="table table-bordered table-striped table-bordered table-hover">
                 <thead class="thead-custom-blue">
                     <tr>
@@ -24,7 +24,7 @@
                     <td class="text-center">{{ $booking->nama_acara }}</td>
                     <td class="text-center">
                         <a href="{{ url('/booking/detail/'.$booking->id) }}">
-                        <button type="button" class="btn btn-custom-primary" title="Detail Webinar">
+                        <button type="button" class="btn btn-custom-primary" title="Detail {{$tipe_zoom}}">
                             <i class="fa fa-search">  Detail</i>
                         </button>
                         </a>

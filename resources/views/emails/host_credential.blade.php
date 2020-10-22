@@ -22,15 +22,15 @@
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td bgcolor="#ffffff" style="border-top: 4px solid #013880; border-bottom:1px solid #f2f3f5;">
-                    <h1>WEBINAR</h1>
+                    <h1>{{strtoupper($tipe_zoom)}}</h1>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;"> 
+                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td>
-                                <p style="margin-bottom: 10px;">Webinar anda akan dimulai, silahkan login ke akun webinar :</p>
+                                <p style="margin-bottom: 10px;">{{lcfirst($tipe_zoom)}} anda akan dimulai, silahkan login ke akun {{$tipe_zoom}} :</p>
                             </td>
                         </tr>
                         <tr>
@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <p style="margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting Zoom Webinar acara anda!<br>Pastikan bahwa Webinar yang anda ubah bukan Webinar acara lain!</p>
+                                <p style="margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting zoom {{$tipe_zoom}} acara anda!<br>Pastikan bahwa {{$tipe_zoom}} yang anda ubah bukan {{$tipe_zoom}} acara lain!</p>
                                 <p style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>
                             </td>
                         </tr>

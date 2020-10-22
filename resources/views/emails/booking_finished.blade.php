@@ -25,16 +25,16 @@
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td bgcolor="#ffffff" style="border-top: 4px solid #013880; border-bottom:1px solid #f2f3f5;">
-                    <h1>WEBINAR</h1>
+                    <h1>{{strtoupper($tipe_zoom)}}</h1>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;"> 
+                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Webinar anda dengan Topik {{ $topic }} telah selesai.</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">{{lcfirst($tipe_zoom)}} anda dengan Topik {{ $topic }} telah selesai.</p>
                                 </center>
                             </td>
                         </tr>

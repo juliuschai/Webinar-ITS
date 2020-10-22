@@ -1,6 +1,6 @@
 /**
  * Pad string with leading zero
- * @param {string} str 
+ * @param {string} str
  */
 function pz(str){
 	return ("0"+str).slice(-2);
@@ -43,7 +43,7 @@ function acceptBooking(thisElm) {
 	let $div = $(thisElm).closest('.action');
 	nAccepted++;
 	$div.find('.status').val('accept');
-	
+
 	// if host account is not set, show error
 	if ($div.find('.hostAccount').val() == "") {
 		alert('Menyetujui booking harus menentukan host account!');
@@ -90,7 +90,7 @@ function cancelBooking(thisElm) {
 	$div.find('.acceptButton').show();
 	$div.find('.denyButton').show();
 	$div.find('.cancelButton').hide();
-	if (nDenied == 0) {// there are no more denied bookings 
+	if (nDenied == 0) {// there are no more denied bookings
 		$('#alasan').attr('disabled', true);
 	}
 	// display default
@@ -109,7 +109,7 @@ function submit() {
 	let lastDisetujui = $('#lastDisetujui').val();
 	// confirmation popup
 	if (lastDisetujui == "true") {
-		if (!confirm(`Perhatian! Booking ini sudah dibuatkan webinar di Zoom dan \
+		if (!confirm(`Perhatian! Booking ini sudah dibuatkan di Zoom dan \
 dikirimkan email ke user. Apakah anda yakin untuk booking ulang?`)) {
 			return;
 		}

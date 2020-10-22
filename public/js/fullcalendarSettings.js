@@ -5,11 +5,8 @@ $(document).ready(function (params) {
 		header:{
 			left:'prev,next today',
 			center:'title',
-			right:'month,agendaWeek,agendaDay', 
+			right:'month,agendaWeek,agendaDay',
 		},
 		events: eventRoute,
-		eventClick: function(info) {
-			window.open(`booking/view/${info.id}`);
-		}
 	});
 })

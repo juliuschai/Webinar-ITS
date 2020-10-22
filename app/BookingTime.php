@@ -14,7 +14,7 @@ class BookingTime extends Model
         'relayITSTV' => 'boolean',
     ];
 
-    static function saveFromRequest($request, $bookingId)
+    static function saveFromRequest($tipe_zoom, $request, $bookingId)
     {
         $inDb = BookingTime::where('booking_id', '=', $bookingId)
             ->pluck('disetujui', 'id');
@@ -45,6 +45,7 @@ class BookingTime extends Model
             $curBookTime->relay_ITSTV = $relayITSTV;
             $curBookTime->max_peserta = $max_peserta;
             $curBookTime->gladi = $gladi;
+            $curBookTime->tipe_zoom = $tipe_zoom;
             $curBookTime->save();
         }
 
@@ -71,7 +72,13 @@ class BookingTime extends Model
 
     function setHostAccount()
     {
-        $this->host_accounts = HostAccount::getValidAccounts($this->waktu_mulai, $this->waktu_akhir, $this->id, $this->max_peserta);
+        $this->host_accounts = HostAccount::getValidAccounts(
+            $this->waktu_mulai,
+            $this->waktu_akhir,
+            $this->id,
+            $this->max_peserta,
+            $this->tipe_zoom
+        );
     }
 
     function verifyBookTime($reqVerify)
@@ -91,7 +98,8 @@ class BookingTime extends Model
                 $this->waktu_akhir,
                 $this->id,
                 $this->max_peserta,
-                $reqVerify['hostAccount']
+                $reqVerify['hostAccount'],
+                $this->tipe_zoom
             )) {
                 $this->host_account_id = $reqVerify['hostAccount'];
             } else {

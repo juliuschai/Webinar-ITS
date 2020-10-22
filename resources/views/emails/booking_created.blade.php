@@ -25,16 +25,16 @@
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td bgcolor="#ffffff" style="border-top: 4px solid #013880; border-bottom:1px solid #f2f3f5;">
-                    <h1>WEBINAR</h1>
+                    <h1>{{strtoupper($tipe_zoom)}}</h1>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;"> 
+                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Terdapat Webinar baru dengan Topik {{$nama_acara}}. </p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Terdapat {{lcfirst($tipe_zoom)}} baru dengan Topik {{$nama_acara}}. </p>
                                 </center>
                             </td>
                         </tr>
@@ -43,7 +43,7 @@
                                 <center>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Dari unit: {{$unit}}</p>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Atas nama: {{$nama_user}}</p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Lihat booking: <a href="https://webinar-book.its.ac.id/booking/view/{{$id}}">Link view</a></p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Lihat booking: <a href="{{route('booking.view', compact(['tipe_zoom', 'id']))}}">Link view</a></p>
                                 </center>
                                 <center>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>

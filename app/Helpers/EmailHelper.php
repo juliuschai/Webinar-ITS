@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Mail;
 
 class EmailHelper {
 
-    static function notifyAdminNewBooking($booking, $request) {
+    static function notifyAdminNewBooking($booking, $request, $tipe_zoom) {
         $emails = User::where('verifier', true)->pluck('email')->toArray();
-        
+
         $data = [
             'id' => $booking->id,
             'nama_acara' => $request->namaAcara,
             'nama_user' => User::findOrLogout(Auth::id())->nama,
             'unit' => Unit::findOrFail($request->penyelengaraAcara)->nama,
+            'tipe_zoom' => $tipe_zoom,
         ];
         // Send email to admin
         try {
@@ -32,10 +33,11 @@ class EmailHelper {
         }
     }
 
-    static function notifyBookingDenied($booking, $email) {
+    static function notifyBookingDenied($booking, $email, $tipe_zoom) {
         $data = [
             'topic' => $booking->nama_acara,
             'id' => $booking->id,
+            'tipe_zoom' => $tipe_zoom,
         ];
 
         try {

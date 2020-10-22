@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    
+
     <title>{{ config('app.name', 'Aplikasi Booking Webinar') }}</title>
 
     <!-- Scripts -->
@@ -35,7 +35,7 @@
 </head>
 <body>
     <div id="app">
-        
+
     <body class="nav-md admin">
     <div class="container body admin">
       <div class="main_container">
@@ -60,13 +60,23 @@
                       <li><a href="{{ route('dashboard.chart') }}">Dashboard</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Booking <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Webinar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('booking.new') }}">Booking Webinar</a></li>
-                      <li><a href="{{ route('booking.list') }}">Webinar Saya</a></li>
+                      <li><a href="{{ route('booking.new', ['tipe_zoom'=>'webinar']) }}">Booking Webinar</a></li>
+                      <li><a href="{{ route('booking.list', ['tipe_zoom'=>'webinar']) }}">Webinar Saya</a></li>
                       @if(auth()->user()->isAdmin())
-                      <li><a href="{{ route('admin.list') }}">Daftar Webinar</a></li>
-                      <li><a href="{{ route('admin.aprove') }}">Riwayat</a></li>
+                      <li><a href="{{ route('admin.list', ['tipe_zoom'=>'webinar']) }}">Daftar Webinar</a></li>
+                      <li><a href="{{ route('admin.aprove', ['tipe_zoom'=>'webinar']) }}">Riwayat</a></li>
+                      @endif
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-edit"></i> Meeting <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ route('booking.new', ['tipe_zoom'=>'meeting']) }}">Booking Meeting</a></li>
+                      <li><a href="{{ route('booking.list', ['tipe_zoom'=>'meeting']) }}">Meeting Saya</a></li>
+                      @if(auth()->user()->isAdmin())
+                      <li><a href="{{ route('admin.list', ['tipe_zoom'=>'meeting']) }}">Daftar Meeting</a></li>
+                      <li><a href="{{ route('admin.aprove', ['tipe_zoom'=>'meeting']) }}">Riwayat</a></li>
                       @endif
                     </ul>
                   </li>
@@ -127,7 +137,7 @@
           </div>
         </div>
         <!-- /top navigation -->
-        
+
         <main>
             @yield('content')
         </main>

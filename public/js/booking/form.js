@@ -126,6 +126,13 @@ function submitForm() {
 var bookingTimes = $('.bookingTimesForms').data('datas');
 var gladiFormAmnt = 0;
 var formAmnt = 1;
+var tipeZoom = '';
+
+if (window.location.href.includes('webinar')) {
+    tipeZoom = 'Webinar';
+} else if (window.location.href.includes('meeting')) {
+    tipeZoom = 'Meeting';
+}
 
 /**
  * Update fields from waktuMulai anda waktuSelesai
@@ -210,7 +217,7 @@ function addTimesForm() {
 	$form = $('.bookingTimesForm').eq(0).clone();
 	$form = formSetIdx($form, formAmnt);
 
-	$form.find('.sesiTitle').text(`Sesi Webinar ${formAmnt-gladiFormAmnt+1}`);
+	$form.find('.sesiTitle').text(`Sesi ${tipeZoom} ${formAmnt-gladiFormAmnt+1}`);
 	$form.find('.id').val("");
 	$form.find('.gladi').val(false);
 	$form.find('input.maxPeserta[value=1000]').attr('checked', false).show();
@@ -230,7 +237,7 @@ function formsSetIdx() {
 		if ($form.find('.gladi').val() == "true") {
 			$form.find('.sesiTitle').text(`Sesi Gladi Resik ${i+1}`);
 		} else {
-			$form.find('.sesiTitle').text(`Sesi Webinar ${i-gladiFormAmnt+1}`);
+			$form.find('.sesiTitle').text(`Sesi ${tipeZoom} ${i-gladiFormAmnt+1}`);
 		}
 		formSetIdx($form, i);
 	}

@@ -30,21 +30,21 @@
 			</div>
 			<!-- Action button templates -->
 			<div id="viewBtnTemplate" style="display: none;">
-				<a href="{{ route('booking.view', ['id'=>0]) }}">
+				<a href="{{ route('booking.view', ['tipe_zoom'=>$tipe_zoom, 'id'=>0]) }}">
 				<button style="padding: 3px 8px" type="button" class="btn btn-custom-primary" title="Detail Webinar">
 					<i class="fa fa-search"></i>
 				</button>
 				</a>
 			</div>
 			<div id="editBtnTemplate" style="display: none;">
-				<a href="{{ route('booking.edit', ['id'=>0]) }}">
+				<a href="{{ route('booking.edit', ['tipe_zoom'=>$tipe_zoom, 'id'=>0]) }}">
 				<button style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
 					<i class="fa fa-pencil"></i>
 				</button>
-				</a> 
+				</a>
 			</div>
 			<div id="delBtnTemplate" style="display: none;">
-				<form action="{{ route('admin.delete', ['id'=>0]) }}" method="post" class="d-inline">    
+				<form action="{{ route('admin.delete', ['tipe_zoom'=>$tipe_zoom, 'id'=>0]) }}" method="post" class="d-inline">
 					@csrf
 					<button style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
 						<i class="fa fa-trash-o"></i>
@@ -53,24 +53,24 @@
 			</div>
 			<!-- Disable Button -->
 			<div id="editBtnDisable" style="display: none;">
-				<a href="{{ route('booking.edit', ['id'=>0]) }}">
+				<a href="{{ route('booking.edit', ['tipe_zoom'=>$tipe_zoom, 'id'=>0]) }}">
 				<button disabled style="padding: 3px 8px" type="button" class="btn btn-custom-warning" title="Edit Webinar">
 					<i class="fa fa-pencil"></i>
 				</button>
-				</a> 
+				</a>
 			</div>
 			<div id="delBtnDisable" style="display: none;">
-				<form action="{{ route('admin.delete',['id'=>0]) }}" method="delete" class="d-inline">    
+				<form action="{{ route('admin.delete',['tipe_zoom'=>$tipe_zoom, 'id'=>0]) }}" method="delete" class="d-inline">
 					@csrf
 					<button disabled style="padding: 3px 8px;" type="submit" class="btn btn-custom-danger" onclick="return confirm('Apakah anda yakin untuk menghapus Webinar?')" title="Hapus Webinar">
 						<i class="fa fa-trash-o"></i>
 					</button>
 				</form>
 			</div>
-			<table 
+			<table
 				id="tableElm"
 				class="table table-bordered table-striped table-bordered table-hover"
-				data-ajaxurl="{{route('admin.list.data')}}"
+				data-ajaxurl="{{ route('admin.list.data', ['tipe_zoom'=>$tipe_zoom]) }}"
 			>
 				<thead class="thead-custom-blue">
 					<tr>

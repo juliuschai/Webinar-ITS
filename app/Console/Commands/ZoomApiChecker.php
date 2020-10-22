@@ -50,8 +50,13 @@ class ZoomApiChecker extends Command
 
         foreach ($booking_times as $booking_time) {
             // End webinar
-            $response = Http::withToken(ZoomAPIHelper::generate_token())
-                ->put("https://api.zoom.us/v2/webinars/{$booking_time->webinar_id}/status", ['action' => 'end']);
+            if ($booking_time->tipe_zoom == 'webinar') {
+                $response = Http::withToken(ZoomAPIHelper::generate_token())
+                    ->put("https://api.zoom.us/v2/webinars/{$booking_time->webinar_id}/status", ['action' => 'end']);
+            } else if ($booking_time->tipe_zoom == 'meeting') {
+                $response = Http::withToken(ZoomAPIHelper::generate_token())
+                    ->put("https://api.zoom.us/v2/meetings/{$booking_time->webinar_id}/status", ['action' => 'end']);
+            }
             // Try at next iteration
             if ($response->failed()) continue;
             // Get share recording link to the webinar that has just finisehd.
@@ -67,6 +72,7 @@ class ZoomApiChecker extends Command
                 $data = [
                     'topic' => $booking_time->booking->nama_acara,
                     'share_url' => $response->json()['share_url'],
+                    'tipe_zoom' => $booking_time->tipe_zoom,
                 ];
                 try {
                     Mail::send('emails.booking_finished', $data, function ($message) use ($email) {
@@ -74,7 +80,7 @@ class ZoomApiChecker extends Command
                         $message->subject('WEBINAR ITS - Selesai');
                     });
                 } catch (\Throwable $th) {
-                    \Log::warning('Masalah dalam pengiriman email share_url recording webinar ke user');
+                    \Log::warning('Masalah dalam pengiriman email share_url recording ke user');
                     \Log::warning($th);
                 }
             }
@@ -117,7 +123,8 @@ class ZoomApiChecker extends Command
             $email = $booking_time->booking->user->email;
             $data = [
                 'email' => $booking_time->host->zoom_email,
-                'password' => $password
+                'password' => $password,
+                'tipe_zoom' => $booking_time->tipe_zoom,
             ];
             try {
                 Mail::send('emails.host_credential', $data, function ($message) use ($email) {
@@ -125,7 +132,7 @@ class ZoomApiChecker extends Command
                     $message->subject('WEBINAR ITS - Akses');
                 });
             } catch (\Throwable $th) {
-                \Log::warning('Masalah dalam pengiriman host_credentials ke user 40 menit sebelum webinar mulai');
+                \Log::warning('Masalah dalam pengiriman host_credentials ke user 40 menit sebelum webinar/meeting mulai');
                 \Log::warning($th);
             }
             // Update booking status

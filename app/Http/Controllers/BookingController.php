@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    function viewNewBooking(Request $request)
+    function viewNewBooking($tipe_zoom, Request $request)
     {
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
@@ -31,24 +31,25 @@ class BookingController extends Controller
         $kategoris = Kategori::get();
         $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
 
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'tipe_zoom', 'isAdmin']));
     }
 
-    function saveNewBooking(NewBookingRequest $request)
+    function saveNewBooking($tipe_zoom, NewBookingRequest $request)
     {
         $booking = new Booking();
         $booking->setUserId(Auth::id());
-        $booking->saveFromRequest($request);
+        $booking->saveFromRequest($tipe_zoom, $request);
 
         try {
-            EmailHelper::notifyAdminNewBooking($booking, $request);
+            EmailHelper::notifyAdminNewBooking($booking, $request, $tipe_zoom);
         } catch (\Throwable $th) {
         }
 
-        return redirect()->route('booking.view', ['id' => $booking['id']]);
+        $id = $booking['id'];
+        return redirect()->route('booking.view', compact(['tipe_zoom', 'id']));
     }
 
-    function viewEditBooking($id)
+    function viewEditBooking($tipe_zoom, $id)
     {
         $booking = Booking::findOrFail($id);
         $booking->abortIfVerified();
@@ -60,19 +61,20 @@ class BookingController extends Controller
         $kategoris = Kategori::get();
         $isAdmin = User::findOrLogout(Auth::id())->isAdmin();
 
-        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'isAdmin']));
+        return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'tipe_zoom', 'isAdmin']));
     }
 
-    function saveEditBooking(EditBookingRequest $request)
+    function saveEditBooking($tipe_zoom, EditBookingRequest $request)
     {
         $booking = Booking::findOrFail($request['id']);
         $booking->abortIfVerified();
-        $booking->saveFromRequest($request);
+        $booking->saveFromRequest($tipe_zoom, $request);
 
-        return redirect()->route('booking.view', ['id' => $request['id']]);
+        $id = $request['id'];
+        return redirect()->route('booking.view', compact(['tipe_zoom', 'id']));
     }
 
-    function viewBooking($id)
+    function viewBooking($tipe_zoom, $id)
     {
         $booking = Booking::findOrFail($id);
         $booking->setOrgFields($booking['unit_id']);
@@ -90,13 +92,12 @@ class BookingController extends Controller
             $admins = null;
         }
         $booking_times = $booking->getTimes();
-        return view(
-            'booking.view',
-            compact(['booking', 'isOwner', 'isAdmin', 'booking_times', 'admins'])
+        return view('booking.view',
+            compact(['booking', 'booking_times', 'admins', 'tipe_zoom', 'isOwner', 'isAdmin'])
         );
     }
 
-    function verifyBooking(VerifyBookingRequest $request)
+    function verifyBooking($tipe_zoom, VerifyBookingRequest $request)
     {
         $booking = Booking::findorfail($request->id);
         $booking->verifyBooking($request->verify);
@@ -124,7 +125,7 @@ class BookingController extends Controller
             $email = $booking->user->email;
 
             try {
-                EmailHelper::notifyBookingDenied($booking, $email);
+                EmailHelper::notifyBookingDenied($booking, $email, $tipe_zoom);
             } catch (\Throwable $th) {
                 return redirect()->back()->withErrors([
                     "Booking ditolak, tetapi email ke user tidak terkirim!"
@@ -138,9 +139,9 @@ class BookingController extends Controller
         return redirect()->back()->with('message', $returnMessage);
     }
 
-    function listBookingData()
+    function listBookingData($tipe_zoom)
     {
-        $model = Booking::viewBookingList(Auth::id())
+        $model = Booking::viewBookingList($tipe_zoom, Auth::id())
             ->newQuery();
 
         return DataTables::eloquent($model)
@@ -157,31 +158,31 @@ class BookingController extends Controller
             ->toJson();
     }
 
-    function waitingListBooking()
+    function waitingListBooking($tipe_zoom)
     {
-        return view('booking.table');
+        return view('booking.table', compact(['tipe_zoom']));
     }
 
-    function deleteBooking(Request $request)
+    function deleteBooking($tipe_zoom, Request $request)
     {
         $id = $request['id'];
         Booking::destroy($id);
 
-        return redirect()->route('booking.list');
+        return redirect()->route('booking.list', compact(['tipe_zoom']));
     }
 
-    function adminDeleteBooking(Request $request)
+    function adminDeleteBooking($tipe_zoom, Request $request)
     {
         $id = $request['id'];
         Booking::destroy($id);
 
-        return redirect()->route('admin.list');
+        return redirect()->route('admin.list', compact(['tipe_zoom']));
     }
 
     //Admin
-    function adminListBookingData()
+    function adminListBookingData($tipe_zoom)
     {
-        $model = Booking::viewBookingList()
+        $model = Booking::viewBookingList($tipe_zoom)
             ->newQuery();
 
         return DataTables::eloquent($model)
@@ -198,14 +199,14 @@ class BookingController extends Controller
             ->toJson();
     }
 
-    function adminListBooking()
+    function adminListBooking($tipe_zoom)
     {
-        return view('admin.table');
+        return view('admin.table', compact(['tipe_zoom']));
     }
 
-    function adminAproveBookingData()
+    function adminAproveBookingData($tipe_zoom)
     {
-        $model = Booking::viewBookingList()
+        $model = Booking::viewBookingList($tipe_zoom)
             ->where('disetujui', true)
             ->newQuery();
 
@@ -213,9 +214,9 @@ class BookingController extends Controller
             ->toJson();
     }
 
-    function aproveBooking()
+    function aproveBooking($tipe_zoom)
     {
-        return view('admin.aprove');
+        return view('admin.aprove', compact(['tipe_zoom']));
     }
 
     function getEvents(Request $request) {
@@ -228,10 +229,21 @@ class BookingController extends Controller
                 'nama_acara as title',
                 'bt.waktu_mulai as start',
                 'bt.waktu_akhir as end',
-                'gladi'
+                'gladi',
+                'bt.tipe_zoom',
             ]);
         foreach ($bookings as $booking) {
-            $booking['color'] = "#fae9e8";
+            $tipe_zoom = $booking['tipe_zoom'];
+            $id = $booking['id'];
+            if ($tipe_zoom == 'webinar') {
+                $booking['color'] = "#fae9e8";
+                $booking['textColor'] = "#000000";
+                $booking['url'] = route('booking.view', compact(['tipe_zoom', 'id']));
+            } else if ($tipe_zoom == 'meeting') {
+                $booking['color'] = "#e0fffe";
+                $booking['textColor'] = "#000000";
+                $booking['url'] = route('booking.view', compact(['tipe_zoom', 'id']));
+            }
             if ($booking['gladi']) $booking['title'] = "Gladi: {$booking['title']}";
             $booking['start'] = Carbon::parse($booking['start']);
             $booking['end'] = Carbon::parse($booking['end']);

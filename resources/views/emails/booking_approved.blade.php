@@ -25,16 +25,16 @@
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td bgcolor="#ffffff" style="border-top: 4px solid #013880; border-bottom:1px solid #f2f3f5;">
-                    <h1>WEBINAR</h1>
+                    <h1>{{strtoupper($data['tipe_zoom'])}}</h1>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;"> 
+                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Selamat ! </br> Webinar anda dengan Topik {{ $datas[0]['topic'] }} sudah disetujui.</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Selamat ! </br> {{lcfirst($data['tipe_zoom'])}} anda dengan Topik {{ $datas[0]['topic'] }} sudah disetujui.</p>
                                 </center>
                             </td>
                         </tr>
@@ -44,8 +44,8 @@
                                 <center>
                                     <h3>{{ $data['index'] }}</h3>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Waktu: {{ $data['start_time'] }} WIB</p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Link Webinar : <a href="{{ $data['join_url'] }}">{{ $data['join_url'] }}</a> </p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Webinar ID: {{ $data['webinar_id'] }}</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Link {{lcfirst($data['tipe_zoom'])}} : <a href="{{ $data['join_url'] }}">{{ $data['join_url'] }}</a> </p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">{{lcfirst($data['tipe_zoom'])}} ID: {{ $data['webinar_id'] }}</p>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Password: {{ $data['password'] }}</p>
                                 </center>
                             </td>
@@ -53,7 +53,7 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting di Zoom webinar acara anda!<br>Pastikan bahwa Webinar yang anda ubah bukan webinar orang lain!</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting di Zoom {{$data['tipe_zoom']}} acara anda!<br>Pastikan bahwa {{$data['tipe_zoom']}} yang anda ubah bukan {{$data['tipe_zoom']}} orang lain!</p>
                                 </center>
                                 <center>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>

@@ -5,7 +5,7 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-				<div class="card-header">{{ __('Booking Form') }}</div>
+				<div class="card-header">{{ __('Booking Form - ').$tipe_zoom }}</div>
 
 				<div class="card-body">
 					@if ($errors->any())
@@ -150,12 +150,12 @@
 						@if($book_time->gladi == '1')
 						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Gladi @php($gladiCount++){{$gladiCount}}</div>
 						@else
-						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Webinar {{$loop->index - $gladiCount+1}}</div>
+						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi {{$tipe_zoom}} {{$loop->index - $gladiCount+1}}</div>
 						@endif
 					</div>
 					<div class="form-group row">
 
-					<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai Webinar') }}</label>
+					<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai ').$tipe_zoom }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
 							<input
@@ -169,7 +169,7 @@
 					<input type="hidden" class="waktuSelesai" value="{{ $book_time->waktu_akhir->format(DateTime::ATOM) }}">
 
 					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi Webinar') }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').$tipe_zoom }}</label>
 						<i class="fa fa-clock-o booking"></i>
 						<div class="col-md-6">
 							<input type="text" class="form-control durasi" disabled> <div>jam</div>
@@ -241,7 +241,7 @@
 					@endif
 
 					@if($isAdmin)
-					<form id="verifyForm" method="POST" action="{{ route('booking.verify', ['id' => $booking->id]) }}">
+					<form id="verifyForm" method="POST" action="{{ route('booking.verify', ['tipe_zoom'=>$tipe_zoom, 'id' => $booking->id]) }}">
 						@csrf
 						<div class="form-group row">
 							<label for="adminDPTSI" class="col-md-4 col-form-label text-md-left">{{ __('Admin DPTSI') }}</label>
@@ -282,5 +282,5 @@
 @endsection
 
 @section('scripts')
-	<script src="{{ asset('js/booking/view.js') }}" defer></script>
+	<script src="{{ asset('js/booking/view.js') }}?2" defer></script>
 @endsection
