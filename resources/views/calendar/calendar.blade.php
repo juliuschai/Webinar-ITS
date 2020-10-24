@@ -5,9 +5,9 @@
 <div class="right_col booking" role="main">
     <div class="col-md-12 col-sm-12">
         <h2 class="table-title">Jadwal Webinar</h2>
-        <h5>Penjelasan wanra webinar/meeting</h5>
-        <div>merah untuk webinar</div>
-        <div>Warna biru untuk meeting</div>
+        <h5>Penjelasan warna webinar/meeting</h5>
+        <div><span style="color:red;">merah</span> untuk webinar</div>
+        <div><span style="color:blue;">biru</span> untuk meeting</div>
         <br>
         <div class="col-xl-12">
             <!-- Calendar Container -->
