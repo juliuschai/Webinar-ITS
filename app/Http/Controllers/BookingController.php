@@ -21,8 +21,15 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    static function abortIfMeetingMahasiswa($tipe_zoom) {
+        if ($tipe_zoom == 'meeting' && User::findOrLogout(Auth::id())->isMahasiswa()) {
+            abort(403, 'meeting hanya untuk tendik/dosen');
+        }
+    }
+
     function viewNewBooking($tipe_zoom, Request $request)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
         $units = Unit::getDefault();
@@ -36,6 +43,7 @@ class BookingController extends Controller
 
     function saveNewBooking($tipe_zoom, NewBookingRequest $request)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = new Booking();
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($tipe_zoom, $request);
@@ -51,6 +59,7 @@ class BookingController extends Controller
 
     function viewEditBooking($tipe_zoom, $id)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = Booking::findOrFail($id);
         $booking->abortIfVerified();
         $booking->setUserFields($booking->user_id);
@@ -66,6 +75,7 @@ class BookingController extends Controller
 
     function saveEditBooking($tipe_zoom, EditBookingRequest $request)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = Booking::findOrFail($request['id']);
         $booking->abortIfVerified();
         $booking->saveFromRequest($tipe_zoom, $request);
@@ -141,6 +151,7 @@ class BookingController extends Controller
 
     function listBookingData($tipe_zoom)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $model = Booking::viewBookingList($tipe_zoom, Auth::id())
             ->newQuery();
 
@@ -160,11 +171,13 @@ class BookingController extends Controller
 
     function waitingListBooking($tipe_zoom)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         return view('booking.table', compact(['tipe_zoom']));
     }
 
     function deleteBooking($tipe_zoom, Request $request)
     {
+        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $id = $request['id'];
         Booking::destroy($id);
 

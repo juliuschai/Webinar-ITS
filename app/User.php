@@ -54,7 +54,7 @@ class User extends Authenticatable
     function checkId($id) {
         return $this->id == $id;
     }
-    
+
     function isAdmin() {
         return $this['is_admin'];
     }
@@ -63,8 +63,13 @@ class User extends Authenticatable
         return $this['id'] == $id;
     }
 
+    function isMahasiswa() {
+        // if not admin and mahasiswa
+        return !$this->isAdmin() && $this->group_id == 3;
+    }
+
     /**
-     * This is to handle if there's an error with 
+     * This is to handle if there's an error with
      * the currently logged in user credentials
      */
     static function findOrLogout($id) {

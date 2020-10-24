@@ -70,6 +70,7 @@
                       @endif
                     </ul>
                   </li>
+                  @if(!auth()->user()->isMahasiswa())
                   <li><a><i class="fa fa-edit"></i> Meeting <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('booking.new', ['tipe_zoom'=>'meeting']) }}">Booking Meeting</a></li>
@@ -80,6 +81,7 @@
                       @endif
                     </ul>
                   </li>
+                  @endif
                   <li><a><i class="fa fa-desktop"></i> Calendar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('calendar.view') }}">Calendar</a></li>
