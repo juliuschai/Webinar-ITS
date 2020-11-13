@@ -1,0 +1,19 @@
+/* Email */
+
+/* h1 .email {
+  text-align: center;
+  color: #013880
+} */
+
+.email h1 {
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif !important;
+  margin-top: 10px;
+  color: #013880 !important;
+  font-weight: 400;
+  text-align:center !important;
+}
+
+.email p {
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+  margin:0;
+}
