@@ -12,6 +12,12 @@ function pz(str) {
 	return ("0"+str).slice(-2);
 }
 
+function forceTZShow(dateStr, tzInGMT) {
+    let date = new Date(dateStr);
+    // force timezone
+    date.setTime(date.getTime() + date.getTimezoneOffset()*60000 + tzInGMT*3600000);
+    return date;
+}
 // DataTable
 var ditolakStatus = $('#ditolakStatus');
 var disetujuiStatus = $('#disetujuiStatus');
@@ -44,8 +50,9 @@ var datatableRes = tableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
-				let date = new Date(data);
-				return `${pz(date.getDate())}-${pz(date.getMonth()+1)}-${date.getFullYear()}`
+                let date = forceTZShow(new Date(data), 7);
+
+                return `${pz(date.getUTCDate())}-${pz(date.getUTCMonth()+1)}-${date.getUTCFullYear()}`
 			},
 		},
 		{
@@ -56,8 +63,9 @@ var datatableRes = tableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
-				let date = new Date(data);
-				return `${pz(date.getDate())}-${pz(date.getMonth()+1)}-${date.getFullYear()}`
+                let date = forceTZShow(new Date(data), 7);
+
+				return `${pz(date.getUTCDate())}-${pz(date.getUTCMonth()+1)}-${date.getUTCFullYear()}`
 			},
 		},
 		{
@@ -68,8 +76,9 @@ var datatableRes = tableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function(data, type, full, meta) {
-				let date = new Date(data);
-				return `${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
+                let date = forceTZShow(new Date(data), 7);
+
+				return `${pz(date.getUTCHours())}:${pz(date.getUTCMinutes())}:${pz(date.getUTCSeconds())}`
 			},
 		},
 		{
@@ -115,7 +124,7 @@ var datatableRes = tableElm.DataTable({
 			},
 		},
 		{
-			"targets": 8, 
+			"targets": 8,
 			"title": "Aksi",
 			"data": null,
 			"name": null,
@@ -168,7 +177,7 @@ function modalPopulate() {
 	}
 	let text = `Tambahkan ${unitNama} kategori ${unitType} ke database?`;
 	document.getElementById('confirmationText').innerText = text;
-	
+
 	document.getElementById('modalUnitNama').value = unitNama;
 	document.getElementById('modalUnitType').value = unitTypeSelElm.value;
 

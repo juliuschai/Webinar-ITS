@@ -12,6 +12,13 @@ function pz(str) {
 	return ("0" + str).slice(-2);
 }
 
+function forceTZShow(dateStr, tzInGMT) {
+    let date = new Date(dateStr);
+    // force timezone
+    date.setTime(date.getTime() + date.getTimezoneOffset()*60000 + tzInGMT*3600000);
+    return date;
+}
+
 // DataTable
 var ditolakStatus = $('#ditolakStatus');
 var disetujuiStatus = $('#disetujuiStatus');
@@ -44,8 +51,9 @@ var datatableRes = tableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function (data, type, full, meta) {
-				let date = new Date(data);
-				return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
+                let date = forceTZShow(new Date(data), 7);
+
+                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
 			},
 		},
 		{
@@ -56,8 +64,9 @@ var datatableRes = tableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function (data, type, full, meta) {
-				let date = new Date(data);
-				return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
+                let date = forceTZShow(new Date(data), 7);
+
+                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
 			},
 		},
 		{
@@ -68,9 +77,10 @@ var datatableRes = tableElm.DataTable({
 			"searchable": false,
 			"visible": true,
 			"render": function (data, type, full, meta) {
-				let date = new Date(data);
-				return `${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
-			},
+                let date = forceTZShow(new Date(data), 7);
+
+                return `${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
+            },
 		},
 		{
 			"targets": 4,
@@ -128,7 +138,7 @@ var datatableRes = tableElm.DataTable({
 				// seperate data string to get datetime string
 				rows = data.split(',');
 				// Remove last elm if it's empty string
-				if (!rows[rows.length-1]) rows.pop(); 
+				if (!rows[rows.length-1]) rows.pop();
 				for (const row of rows) {
 					let [date, host] = row.split(" - ");
 					// Parse UTC timezome to locale timezone

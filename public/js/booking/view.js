@@ -6,6 +6,13 @@ function pz(str){
 	return ("0"+str).slice(-2);
 }
 
+function forceTZShow(dateStr, tzInGMT = 7) {
+    let date = new Date(dateStr);
+    // force timezone
+    date.setTime(date.getTime() + date.getTimezoneOffset()*60000 + tzInGMT*3600000);
+    return date;
+}
+
 var nDenied = 0;
 var nAccepted = 0;
 
@@ -15,9 +22,9 @@ var nAccepted = 0;
 	let $ends = $('.waktuSelesai');
 	let $durasis = $('.durasi');
 	for (let i = 0; i < $starts.length; i++) {
-		const startDate = new Date($starts.eq(i).val());
+		const startDate = forceTZShow(new Date($starts.eq(i).val()), 7);
 		$startsDisplay.eq(i).val(startDate.toLocaleString());
-		const endDate = new Date($ends.eq(i).val());
+		const endDate = forceTZShow(new Date($ends.eq(i).val()), 7);
 		let durasi = (endDate.getTime() - startDate.getTime())/60/1000
 		let durHour = Math.floor(durasi/60);
 		let durMin = durasi%60;

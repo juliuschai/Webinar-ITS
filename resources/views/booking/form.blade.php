@@ -5,7 +5,6 @@
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<div class="card">
-
 				<div class="card-body">
 					@if ($errors->any())
 					<div class="alert alert-danger">
@@ -17,6 +16,7 @@
 					</div>
 					@endif
 
+                    <small>Timezone Asia/Jakarta (GMT+7)</small>
 					@if(Route::is('booking.new'))
 					<form id="bookingForm" method="POST" action="{{ route('booking.new', ['tipe_zoom'=>$tipe_zoom]) }}" enctype="multipart/form-data">
 					@elseif(Route::is('booking.edit'))
@@ -172,8 +172,7 @@
 							<sub>Keterangan :</sub></br>
 							<sub>- Untuk {{$tipe_zoom}} lebih dari 1 sesi (1 hari) silahkan membaut sesi baru</sub></br>
 							<sub>- Untuk keperluan gladi bersih silahkan membuat sesi baru</sub></br>
-							<sub>- Waktu booking gunakan WIB (GMT+7)</sub>
-
+							<sub>- Gunakan timezone (GMT+7)</sub>
 
 							<div class="bookingGladiTimesForms">
 							</div>

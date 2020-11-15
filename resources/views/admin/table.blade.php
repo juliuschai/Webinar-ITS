@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-
+<small>Timezone Asia/Jakarta (GMT+7)</small>
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
 			<h2 class="table-title">Daftar Webinar</h2>
@@ -67,6 +67,7 @@
 					</button>
 				</form>
 			</div>
+            <small>Timezone Asia/Jakarta (GMT+7)</small>
 			<table
 				id="tableElm"
 				class="table table-bordered table-striped table-bordered table-hover"

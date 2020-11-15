@@ -15,6 +15,7 @@
 			</div>
 			@endif
 
+            <small>Timezone Asia/Jakarta (GMT+7)</small>
 			<form id="formSubmit" action="{{route('export.booking')}}" method="POST">
 				@csrf
 				<div class="form-group row">
@@ -69,3 +70,4 @@
 @section('scripts')
 <script src="{{asset('js/export/export.js') }}?2" defer></script>
 @endsection
+

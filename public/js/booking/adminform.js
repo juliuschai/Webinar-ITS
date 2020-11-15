@@ -40,6 +40,20 @@ function pz(str){
 	return ("0"+str).slice(-2);
 }
 
+function forceTZIn(dateStr, tzInGMT) {
+    let date = new Date(dateStr);
+    // force timezone
+    date.setTime(date.getTime() - date.getTimezoneOffset()*60000 - tzInGMT*3600000);
+    return date;
+}
+
+function forceTZShow(dateStr, tzInGMT = 7) {
+    let date = new Date(dateStr);
+    // force timezone
+    date.setTime(date.getTime() + date.getTimezoneOffset()*60000 + tzInGMT*3600000);
+    return date;
+}
+
 function validateOtherFields() {
 	if ($('#namaAcara').val().length <= 0) {
 		alert('Nama acara harus diisi!');
@@ -62,18 +76,18 @@ function validateWaktu() {
 
 	let $begins = $('.bookingTimesForm').find('.waktuMulai');
 	$begins.each(function (i, elm) {
-		beginDates.push(new Date($(this).val()));
+        beginDates.push(forceTZIn(new Date($(this).val()), 7));
 	});
 	let $ends = $('.bookingTimesForm').find('.waktuSelesai');
 	$ends.each(function (i, elm) {
-		endDates.push(new Date($(this).val()));
+		endDates.push(forceTZIn(new Date($(this).val()), 7));
 	});
 
 	for (let i = 0; i < beginDates.length; i++) {
 		const beginDate = beginDates[i];
 		const endDate = endDates[i];
 
-		if (beginDate <= new Date()) {
+		if (beginDate <= forceTZIn(new Date(), 7)) {
 			alert('Waktu mulai tidak bisa diletakkan di masa lalu!');
 			return false;
 		}
@@ -97,8 +111,10 @@ function updateWaktu(thisElm) {
 	let $begin = $this.closest('.bookingTimesForm').find('.waktuMulai');
 	let $end = $this.closest('.bookingTimesForm').find('.waktuSelesai');
 
-	let beginDate = new Date(`${$startDate.val()} ${$startTime.val()}`);
-	endDate = new Date(beginDate);
+    let beginDate = new Date(`${$startDate.val()} ${$startTime.val()}`);
+    beginDate = forceTZIn(beginDate, 7);
+
+    endDate = new Date(beginDate);
 
 	endDate.setHours(
 		endDate.getHours()+parseInt($durHour.val()),
@@ -268,16 +284,19 @@ function populateWaktus() {
 
 		var beginDate, durHour, durMin, startTimeStr;
 		if (beginStr && endStr) {
-			beginDate = new Date(beginStr);
+            beginDate = new Date(beginStr);
+            beginDate = forceTZShow(beginDate, 7);
 			let endDate = new Date(endStr);
-			beginDate.setTime(beginDate.getTime());
-			endDate.setTime(endDate.getTime());
+            endDate = forceTZShow(endDate, 7);
 
 			durasi = (endDate.getTime() - beginDate.getTime())/60/1000;
 			durHour = Math.floor(durasi/60);
 			durMin = durasi%60;
 		} else {
-			beginDate = new Date();
+            beginDate = new Date();
+            console.log(beginDate);
+            beginDate = forceTZShow(beginDate, 7);
+            console.log(beginDate);
 
 			durHour = 0;
 			durMin = 0;

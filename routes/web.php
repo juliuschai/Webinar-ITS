@@ -27,8 +27,6 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
 
-        Route::get('authorize/admin/aGVzb3lhbWhlc295YW1oZXNveWFt', 'UserController@tempAdm');
-
         Route::get('/booking/{tipe_zoom}/new', 'BookingController@viewNewBooking')->name('booking.new');
         Route::post('/booking/{tipe_zoom}/new', 'BookingController@saveNewBooking')->name('booking.new');
 
@@ -48,8 +46,8 @@ Route::domain(Config::get('app.base_subdomain').'.'.Config::get('app.base_domain
             // Admin
             Route::get('/admin/booking/{tipe_zoom}/list', 'BookingController@adminListBooking')->name('admin.list');
             Route::get('/admin/booking/{tipe_zoom}/list/data', 'BookingController@adminListBookingData')->name('admin.list.data');
-            Route::get('/admin/booking/{tipe_zoom}/list/aprove', 'BookingController@adminAproveBookingData')->name('admin.list.aprove');
             Route::get('/admin/booking/{tipe_zoom}/aprove', 'BookingController@aproveBooking')->name('admin.aprove');
+            Route::get('/admin/booking/{tipe_zoom}/list/aprove', 'BookingController@adminAproveBookingData')->name('admin.list.aprove');
             Route::post('/admin/booking/{tipe_zoom}/delete/{id}', 'BookingController@adminDeleteBooking')->name('admin.delete');
             Route::post('/admin/booking/{tipe_zoom}/verify/{id}', 'BookingController@verifyBooking')->name('booking.verify');
 
