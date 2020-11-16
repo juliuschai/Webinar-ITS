@@ -258,8 +258,9 @@ class BookingController extends Controller
                 $booking['url'] = route('booking.view', compact(['tipe_zoom', 'id']));
             }
             if ($booking['gladi']) $booking['title'] = "Gladi: {$booking['title']}";
-            $booking['start'] = Carbon::parse($booking['start']);
-            $booking['end'] = Carbon::parse($booking['end']);
+            // Force timezone to Asia/Jakarta
+            $booking['start'] = Carbon::parse($booking['start'])->addHours(7);
+            $booking['end'] = Carbon::parse($booking['end'])->addHours(7);
         }
 
         return json_encode($bookings);

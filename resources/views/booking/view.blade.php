@@ -142,6 +142,7 @@
 					@endif {{-- end if file_pendukung --}}
 					@endif
 
+                    <small>Timezone Asia/Jakarta (GMT+7)</small>
 					@php($gladiCount=0)
 					@foreach ($booking_times as $book_time)
 					<hr style="width:100%;text-align:left;margin-top:5px;margin-bottom:10px">
@@ -154,8 +155,7 @@
 						@endif
 					</div>
 					<div class="form-group row">
-
-					<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai ').$tipe_zoom }}</label>
+                        <label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai ').$tipe_zoom }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
 							<input

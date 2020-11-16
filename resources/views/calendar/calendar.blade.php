@@ -9,6 +9,7 @@
         <div><span style="color:red;">merah</span> untuk webinar</div>
         <div><span style="color:blue;">biru</span> untuk meeting</div>
         <br>
+        <small>Timezone Asia/Jakarta (GMT+7)</small>
         <div class="col-xl-12">
             <!-- Calendar Container -->
             <input id="calendarData" data-eventroute="{{route('calendar.event')}}" type="hidden">
