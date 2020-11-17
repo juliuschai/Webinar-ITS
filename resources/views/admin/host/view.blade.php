@@ -48,5 +48,5 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" defer/>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js" defer></script>
 <script src="{{asset('js/util/datatablesPlugin.js') }}" defer></script>
-<script src="{{asset('js/host/view.js') }}?2" defer></script>
+<script src="{{asset('js/host/view.js') }}?4" defer></script>
 @endsection

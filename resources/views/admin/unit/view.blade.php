@@ -23,9 +23,9 @@
 				<label for="unitType" class="col-md-4 col-form-label text-md-left">Type:</label>
 				<div class="col">
 					<select name="unitType" id="unitType" class="form-control">
-						<option value="" selected>Semua</option>	
+						<option value="" selected>Semua</option>
 						@foreach ($types as $type)
-							<option value="{{$type->id}}">{{$type->nama}}</option>	
+							<option value="{{$type->id}}">{{$type->nama}}</option>
 						@endforeach
 					</select>
 				</div>
@@ -55,8 +55,8 @@
 			</button>
 		</form>
 	</div>
-	<table id="unitTable" 
-		class="table table-bordered table-striped table-bordered table-hover dataTable" 
+	<table id="unitTable"
+		class="table table-bordered table-striped table-bordered table-hover dataTable"
 		data-ajaxurl="{{route('admin.unit.view.data')}}"
 		data-length="{{ $length }}"
 		data-types="{{json_encode($types)}}"
@@ -107,5 +107,5 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" defer/>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js" defer></script>
 <script src="{{asset('js/util/datatablesPlugin.js') }}" defer></script>
-<script src="{{asset('js/unit/view.js') }}" defer></script>
+<script src="{{asset('js/unit/view.js') }}?4" defer></script>
 @endsection

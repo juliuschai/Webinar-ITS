@@ -68,6 +68,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{asset('js/export/export.js') }}?2" defer></script>
+<script src="{{asset('js/export/export.js') }}?4" defer></script>
 @endsection
 

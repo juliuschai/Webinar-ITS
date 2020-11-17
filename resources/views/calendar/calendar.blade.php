@@ -26,7 +26,7 @@
 <!-- Page JS Code -->
 <script src="{{ asset('assets/js/plugins/fullcalendar/fullcalendar.js') }}" defer></script>
 
-<script src="{{asset('js/fullcalendarSettings.js')}}?2" defer></script>
+<script src="{{asset('js/fullcalendarSettings.js')}}?4" defer></script>
 
 
 @endsection

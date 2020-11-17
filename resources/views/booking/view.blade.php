@@ -282,5 +282,5 @@
 @endsection
 
 @section('scripts')
-	<script src="{{ asset('js/booking/view.js') }}?2" defer></script>
+	<script src="{{ asset('js/booking/view.js') }}?4" defer></script>
 @endsection
