@@ -144,9 +144,9 @@ var gladiFormAmnt = 0;
 var formAmnt = 1;
 var tipeZoom = '';
 
-if (window.location.href.includes('webinar')) {
+if (window.location.href.includes('webinar/')) {
     tipeZoom = 'Webinar';
-} else if (window.location.href.includes('meeting')) {
+} else if (window.location.href.includes('meeting/')) {
     tipeZoom = 'Meeting';
 }
 

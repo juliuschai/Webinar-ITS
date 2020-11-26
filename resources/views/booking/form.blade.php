@@ -192,7 +192,7 @@
 									<h2 class="sesiTitle">Sesi {{$tipe_zoom}} 1</h2>
 
 									<div class="form-group row">
-										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu ').$tipe_zoom }}<p style="color: red" class="d-inline">*</p></label>
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu ').lcfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-calendar-o booking"></i>
 										<div class="col-md-6">
 											<input type="date" class="mulaiDate" onclick="updateWaktu(this)">
@@ -201,7 +201,7 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').$tipe_zoom }}<p style="color: red" class="d-inline">*</p></label>
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').lcfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-clock-o booking"></i>
 										<div class="col-md-6">
 											<select class="durHour" onclick="updateWaktu(this)"></select> jam
@@ -273,9 +273,9 @@
 
 @section('scripts')
 @if($isAdmin)
-<script src="{{ asset('js/booking/adminform.js') }}?5" defer></script>
+<script src="{{ asset('js/booking/adminform.js') }}?6" defer></script>
 @else
-<script src="{{ asset('js/booking/form.js') }}?5" defer></script>
+<script src="{{ asset('js/booking/form.js') }}?6" defer></script>
 @endif
 <script src="{{ asset('js/booking/units.js') }}" defer></script>
 <script src="{{ asset('js/booking/tabControls.js') }}" defer></script>

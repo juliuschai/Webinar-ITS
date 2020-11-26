@@ -3,7 +3,7 @@
 @section('content')
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-			<h2 class="table-title">Webinar</h2>
+			<h2 class="table-title">{{ lcfirst($tipe_zoom) }}</h2>
 			<!-- Tempaltes -->
 			<!-- Status templates -->
 			<div id="ditolakStatus" style="display: none;">
