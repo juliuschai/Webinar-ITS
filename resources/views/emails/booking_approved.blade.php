@@ -34,7 +34,7 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Selamat ! </br> {{lcfirst($datas[0]['tipe_zoom'])}} anda dengan Topik {{ $datas[0]['topic'] }} sudah disetujui.</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Selamat ! </br> {{ucfirst($datas[0]['tipe_zoom'])}} anda dengan Topik {{ $datas[0]['topic'] }} sudah disetujui.</p>
                                 </center>
                             </td>
                         </tr>
@@ -44,8 +44,8 @@
                                 <center>
                                     <h3>{{ $data['index'] }}</h3>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Waktu: {{ $data['start_time'] }} WIB</p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Link {{lcfirst($data['tipe_zoom'])}} : <a href="{{ $data['join_url'] }}">{{ $data['join_url'] }}</a> </p>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">{{lcfirst($data['tipe_zoom'])}} ID: {{ $data['webinar_id'] }}</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Link {{ucfirst($data['tipe_zoom'])}} : <a href="{{ $data['join_url'] }}">{{ $data['join_url'] }}</a> </p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">{{ucfirst($data['tipe_zoom'])}} ID: {{ $data['webinar_id'] }}</p>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Password: {{ $data['password'] }}</p>
                                 </center>
                             </td>

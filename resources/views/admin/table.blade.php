@@ -4,7 +4,7 @@
 <small>Timezone Asia/Jakarta (GMT+7)</small>
 	<div class="right_col booking" role="main">
 		<div class="col-md-12 col-sm-12">
-			<h2 class="table-title">Daftar {{ lcfirst($tipe_zoom) }}</h2>
+			<h2 class="table-title">Daftar {{ ucfirst($tipe_zoom) }}</h2>
 			<!-- Tempaltes -->
 			<!-- Disetujui templates -->
 			<div id="ditolakStatus" style="display: none;">

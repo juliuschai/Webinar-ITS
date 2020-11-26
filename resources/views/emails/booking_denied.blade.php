@@ -35,7 +35,7 @@
                             <td>
                                 <center>
                                     <p class="col-md-6 col-sm-6" style="font-size: 14px; text-align: center; margin-bottom: 10px;">
-                                        Maaf, {{lcfirst($tipe_zoom)}} anda dengan Topik {{ $topic }} terdapat masalah dan belum disetujui. Silahkan mengecheck di aplikasi booking {{$tipe_zoom}}.<br>
+                                        Maaf, {{ucfirst($tipe_zoom)}} anda dengan Topik {{ $topic }} terdapat masalah dan belum disetujui. Silahkan mengecheck di aplikasi booking {{$tipe_zoom}}.<br>
                                         <br>
                                         Semua sesi didalam booking harus disetujui untuk sebuah booking bisa diproses lebih lanjut.
                                         Jika terdapat 1 sesi {{$tipe_zoom}} yang Ditolak, maka sesi {{$tipe_zoom}} lain yang telah Disetujui tidak dapat diproses lebih lanjut.

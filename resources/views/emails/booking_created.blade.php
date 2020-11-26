@@ -34,7 +34,7 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Terdapat {{lcfirst($tipe_zoom)}} baru dengan Topik {{$nama_acara}}. </p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Terdapat {{ucfirst($tipe_zoom)}} baru dengan Topik {{$nama_acara}}. </p>
                                 </center>
                             </td>
                         </tr>

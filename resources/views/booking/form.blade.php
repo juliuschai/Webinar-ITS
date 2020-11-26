@@ -192,7 +192,7 @@
 									<h2 class="sesiTitle">Sesi {{$tipe_zoom}} 1</h2>
 
 									<div class="form-group row">
-										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu ').lcfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu ').ucfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-calendar-o booking"></i>
 										<div class="col-md-6">
 											<input type="date" class="mulaiDate" onclick="updateWaktu(this)">
@@ -201,7 +201,7 @@
 									</div>
 
 									<div class="form-group row">
-										<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').lcfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
+										<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').ucfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-clock-o booking"></i>
 										<div class="col-md-6">
 											<select class="durHour" onclick="updateWaktu(this)"></select> jam

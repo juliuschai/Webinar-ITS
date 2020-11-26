@@ -151,11 +151,11 @@
 						@if($book_time->gladi == '1')
 						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi Gladi @php($gladiCount++){{$gladiCount}}</div>
 						@else
-						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi {{lcfirst($tipe_zoom)}} {{$loop->index - $gladiCount+1}}</div>
+						<div id="sesi" class="btn btn-outline-info" style="padding: 2px 10px; font-size:11px; margin-bottom: 10px;">Sesi {{ucfirst($tipe_zoom)}} {{$loop->index - $gladiCount+1}}</div>
 						@endif
 					</div>
 					<div class="form-group row">
-                        <label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai ').lcfirst($tipe_zoom) }}</label>
+                        <label class="col-md-4 col-form-label text-md-left">{{ __('Waktu Mulai ').ucfirst($tipe_zoom) }}</label>
 						<i class="fa fa-calendar-o booking"></i>
 						<div class="col-md-6">
 							<input
@@ -169,7 +169,7 @@
 					<input type="hidden" class="waktuSelesai" value="{{ $book_time->waktu_akhir->format(DateTime::ATOM) }}">
 
 					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').lcfirst($tipe_zoom) }}</label>
+						<label class="col-md-4 col-form-label text-md-left">{{ __('Durasi ').ucfirst($tipe_zoom) }}</label>
 						<i class="fa fa-clock-o booking"></i>
 						<div class="col-md-6">
 							<input type="text" class="form-control durasi" disabled> <div>jam</div>

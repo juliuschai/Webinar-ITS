@@ -30,7 +30,7 @@
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td>
-                                <p style="margin-bottom: 10px;">{{lcfirst($tipe_zoom)}} anda akan dimulai, silahkan login ke akun {{$tipe_zoom}} :</p>
+                                <p style="margin-bottom: 10px;">{{ucfirst($tipe_zoom)}} anda akan dimulai, silahkan login ke akun {{$tipe_zoom}} :</p>
                             </td>
                         </tr>
                         <tr>

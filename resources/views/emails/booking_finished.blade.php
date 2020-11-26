@@ -34,7 +34,7 @@
                         <tr>
                             <td>
                                 <center>
-                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">{{lcfirst($tipe_zoom)}} anda dengan Topik {{ $topic }} telah selesai.</p>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">{{ucfirst($tipe_zoom)}} anda dengan Topik {{ $topic }} telah selesai.</p>
                                 </center>
                             </td>
                         </tr>
