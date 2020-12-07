@@ -9,6 +9,7 @@ use DataTables;
 
 class UnitController extends Controller
 {
+    // Get unit data
     function viewUnitData() {
         $model = Unit::viewUnitBuilder()->newQuery();
 
@@ -18,6 +19,7 @@ class UnitController extends Controller
             })->toJson();
     }
 
+    // View unit table
     function viewUnit(Request $request) {
         $units = Unit::viewUnitBuilder()
             ->orderBy('units.id')
@@ -28,6 +30,7 @@ class UnitController extends Controller
         return view('admin.unit.view', compact('units', 'types', 'length'));
     }
 
+    // Save new unit
     function addUnit(Request $request) {
         $this->validate($request, [
             'unitNama' => 'required|string|max:254',
@@ -43,6 +46,7 @@ class UnitController extends Controller
         return redirect()->route('admin.unit.view')->with('message', "added \"{$unit_nama}\" with type \"{$unit_type}\"");
     }
 
+    // Delete unit
     function delUnit($id) {
         $unit = Unit::findOrFail($id);
         $unit_nama = $unit->nama;
@@ -51,12 +55,14 @@ class UnitController extends Controller
         return redirect()->route('admin.unit.view')->with('message', "deleted \"{$unit_nama}\" with type \"{$unit_type}\"");
     }
 
+    // View unit booking form
     function viewEditUnit($id) {
         $unit = Unit::findOrFail($id);
         $types = UnitType::get();
         return view('admin.unit.edit', compact('unit','types'));
     }
 
+    // Save edited unit
     function saveEditUnit($id, Request $request) {
         $unit = Unit::findOrFail($id);
         $unit->nama = $request->unitNama;

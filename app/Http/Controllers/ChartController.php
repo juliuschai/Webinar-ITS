@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ChartController extends Controller
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     public function index()
     {
         $bookings = Booking::select(\DB::raw("COUNT(*) as count"))
@@ -45,7 +40,7 @@ class ChartController extends Controller
                     ->orderByRaw('count DESC')
                     ->limit(5)
                     ->pluck('units.nama');
-        
+
         $faculties = Booking::select(\DB::raw("COUNT(*) as count"))
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->where('units.unit_type_id', '=', '2')
@@ -85,7 +80,7 @@ class ChartController extends Controller
                     ->orderByRaw('count DESC')
                     ->limit(5)
                     ->pluck('units.nama');
-        
+
         // sivitas
         $dosen = Booking::select(\DB::raw("COUNT(*) as count"))
                     ->join('users', 'users.id', '=', 'bookings.user_id')
@@ -110,7 +105,7 @@ class ChartController extends Controller
                     ->groupBy(\DB::raw('groups.nama'))
                     ->pluck('count');
 
-        //meeting 
+        //meeting
         $test = Booking::select(\DB::raw("CONVERT(SUM(time_to_sec(timediff(bookings.waktu_akhir, bookings.waktu_mulai)) / 60), SIGNED) as waktu"))
                     ->join('units', 'units.id', '=', 'bookings.unit_id')
                     ->groupBy(\DB::raw('units.nama'))
@@ -125,10 +120,10 @@ class ChartController extends Controller
                     ->limit(5)
                     ->pluck('units.nama');
 
-        return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units', 
+        return view('chart.chart', compact('bookings', 'departements', 'faculties', 'units',
                 'dosen', 'tendik', 'mahasiswa', 'test', 'nama_test', 'nama_booking'
                 ,'nama_departemen', 'nama_fakultas', 'nama_unit'));
 
     }
-    
+
 }

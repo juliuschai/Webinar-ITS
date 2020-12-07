@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
+    // Meeting middleware
     static function abortIfMeetingMahasiswa($tipe_zoom) {
         if ($tipe_zoom == 'meeting' && User::findOrLogout(Auth::id())->isMahasiswa()) {
             abort(403, 'meeting hanya untuk tendik/dosen');
         }
     }
 
+    // Show new booking form
     function viewNewBooking($tipe_zoom, Request $request)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
@@ -41,6 +43,7 @@ class BookingController extends Controller
         return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'tipe_zoom', 'isAdmin']));
     }
 
+    // Save a new booking
     function saveNewBooking($tipe_zoom, NewBookingRequest $request)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
@@ -57,6 +60,7 @@ class BookingController extends Controller
         return redirect()->route('booking.view', compact(['tipe_zoom', 'id']));
     }
 
+    // View edit booking form
     function viewEditBooking($tipe_zoom, $id)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
@@ -73,6 +77,7 @@ class BookingController extends Controller
         return view('booking.form', compact(['booking', 'units', 'unitTypes', 'booking_times', 'kategoris', 'tipe_zoom', 'isAdmin']));
     }
 
+    // Save an edited booking
     function saveEditBooking($tipe_zoom, EditBookingRequest $request)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
@@ -84,6 +89,7 @@ class BookingController extends Controller
         return redirect()->route('booking.view', compact(['tipe_zoom', 'id']));
     }
 
+    // View a booking
     function viewBooking($tipe_zoom, $id)
     {
         $booking = Booking::findOrFail($id);
@@ -107,6 +113,7 @@ class BookingController extends Controller
         );
     }
 
+    // verify a booking as admin
     function verifyBooking($tipe_zoom, VerifyBookingRequest $request)
     {
         $booking = Booking::findorfail($request->id);
@@ -149,6 +156,7 @@ class BookingController extends Controller
         return redirect()->back()->with('message', $returnMessage);
     }
 
+    // Get booking data owned by user
     function listBookingData($tipe_zoom)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
@@ -169,12 +177,14 @@ class BookingController extends Controller
             ->toJson();
     }
 
+    // Show booking table owned by user
     function waitingListBooking($tipe_zoom)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         return view('booking.table', compact(['tipe_zoom']));
     }
 
+    // Delete a given booking
     function deleteBooking($tipe_zoom, Request $request)
     {
         BookingController::abortIfMeetingMahasiswa($tipe_zoom);
@@ -184,6 +194,7 @@ class BookingController extends Controller
         return redirect()->route('booking.list', compact(['tipe_zoom']));
     }
 
+    // Delete a given booking as admin
     function adminDeleteBooking($tipe_zoom, Request $request)
     {
         $id = $request['id'];
@@ -192,7 +203,7 @@ class BookingController extends Controller
         return redirect()->route('admin.list', compact(['tipe_zoom']));
     }
 
-    //Admin
+    // Get booking list data as Admin
     function adminListBookingData($tipe_zoom)
     {
         $model = Booking::viewBookingList($tipe_zoom)
@@ -212,6 +223,7 @@ class BookingController extends Controller
             ->toJson();
     }
 
+    // Show booking list table as Admin
     function adminListBooking($tipe_zoom)
     {
         return view('admin.table', compact(['tipe_zoom']));
@@ -232,6 +244,7 @@ class BookingController extends Controller
         return view('admin.aprove', compact(['tipe_zoom']));
     }
 
+    // Get booking data for calendar event
     function getEvents(Request $request) {
         $bookings = Booking::join('booking_times as bt', 'bt.booking_id', '=', 'bookings.id')
             ->where('bookings.disetujui', true)

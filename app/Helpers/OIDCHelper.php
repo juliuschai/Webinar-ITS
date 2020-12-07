@@ -23,13 +23,12 @@ class OIDCHelper extends OpenIDConnectClient {
 			$oidc->setVerifyHost(false);
 			$oidc->setVerifyPeer(false);
 
-			/* if oidc authenticate throws any errors, and i mean ANY ERRORS, 
+			/* if oidc authenticate throws any errors, and i mean ANY ERRORS,
 			retry the user's login. Might result in infinite redirects */
 			try {
 				$oidc->authenticate(); //call the main function of myITS SSO login
 			} catch (\Throwable $th) {
 				\Log::warning('There was an error with $oidc->authenticate()');
-				\Log::warning($th);
 				return redirect()->route('login');
 			}
 			session(['id_token' => $oidc->getIdToken()]);
@@ -85,7 +84,7 @@ class OIDCHelper extends OpenIDConnectClient {
 					env('OIDC_CLIENT_ID'), // Client ID
 					env('OIDC_CLIENT_SECRET') // Client Secret
 				);
-		
+
 				// PROD: Remove
 				$oidc->setVerifyHost(false);
 				$oidc->setVerifyPeer(false);

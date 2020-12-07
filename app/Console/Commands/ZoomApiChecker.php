@@ -58,7 +58,11 @@ class ZoomApiChecker extends Command
                     ->put("https://api.zoom.us/v2/meetings/{$booking_time->webinar_id}/status", ['action' => 'end']);
             }
             // Try at next iteration
-            if ($response->failed()) continue;
+            if ($response->failed()) {
+                \Log::warning("Failed to end webinar {$booking_time->webinar_id}");
+                \Log::warning($response->json());
+                continue;
+            }
             // Get share recording link to the webinar that has just finisehd.
             $response = Http::withToken(ZoomAPIHelper::generate_token())
                 ->get("https://api.zoom.us/v2/meetings/{$booking_time->webinar_id}/recordings", ['action' => 'end']);
@@ -90,7 +94,11 @@ class ZoomApiChecker extends Command
             $response = Http::withToken(ZoomAPIHelper::generate_token())
                 ->put("https://api.zoom.us/v2/users/{$booking_time->host->zoom_id}/password", ['password' => $password]);
             // Try at next iteration
-            if ($response->failed()) continue;
+            if ($response->failed()) {
+                \Log::warning("Failed to reset password for {$booking_time->host->zoom_id}");
+                \Log::warning($response->json());
+                continue;
+            }
             // Update host account password
             $booking_time->host->pass = $password;
             $booking_time->host->save();
@@ -115,7 +123,11 @@ class ZoomApiChecker extends Command
             $response = Http::withToken(ZoomAPIHelper::generate_token())
                 ->put("https://api.zoom.us/v2/users/{$booking_time->host->zoom_id}/password", ['password' => $password]);
             // Try at next iteration
-            if ($response->failed()) continue;
+            if ($response->failed()) {
+                \Log::warning("Failed to reset password for {$booking_time->host->zoom_id}");
+                \Log::warning($response->json());
+                continue;
+            }
             // Update host account password
             $booking_time->host->pass = $password;
             $booking_time->host->save();

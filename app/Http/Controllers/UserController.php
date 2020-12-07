@@ -9,11 +9,13 @@ use DataTables;
 
 class UserController extends Controller
 {
+    // Login menggunakan OIDC
 	function login(Request $request) {
 		OIDCHelper::login();
 		return redirect('/');
 	}
 
+    // Logout menggunakan OIDC
 	function logout(Request $request) {
 		OIDCHelper::logout();
 		return redirect('/');
@@ -32,7 +34,7 @@ class UserController extends Controller
 		}
 	}
 
-	// Start CRUD users
+    // View user table
 	function viewUsersData(Request $request) {
 		$model = User::viewUserBuilder()
 			->newQuery();
@@ -47,10 +49,12 @@ class UserController extends Controller
 			})->toJson();
 	}
 
+    // View user table
 	function viewUsers() {
 		return view('admin.users.view');
 	}
 
+    // Set user as admin
 	function giveAdmin($id) {
 		$user = User::findOrFail($id);
 		$user->is_admin = true;
@@ -58,6 +62,7 @@ class UserController extends Controller
 		return redirect()->route('admin.users.view')->with('message', "{$user->nama} aktif sebagai admin");
 	}
 
+    // Set admin as user
 	function revokeAdmin($id) {
 		if ($id == auth()->id()) {return "Anda tidak bisa menonaktifkan akun anda sendiri";}
 		$user = User::findOrFail($id);
@@ -66,6 +71,7 @@ class UserController extends Controller
 		return redirect()->route('admin.users.view')->with('message', "{$user->nama} non-aktif sebagai admin");
 	}
 
+    // Set user as a verifier
 	function giveVerifier($id) {
 		$user = User::findOrFail($id);
 		$user->verifier = true;
@@ -73,6 +79,7 @@ class UserController extends Controller
 		return redirect()->route('admin.users.view')->with('message', "{$user->nama} set sebagai verifier");
 	}
 
+    // remove user as a verifier
 	function revokeVerifier($id) {
 		if ($id == auth()->id()) {return "Anda tidak bisa menonaktifkan akun anda sendiri";}
 		$user = User::findOrFail($id);
