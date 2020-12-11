@@ -52,7 +52,7 @@ var datatableRes = tableElm.DataTable({
 			"render": function(data, type, full, meta) {
                 let date = forceTZShow(new Date(data), 7);
 
-                return `${pz(date.getUTCDate())}-${pz(date.getUTCMonth()+1)}-${date.getUTCFullYear()}`
+                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
 			},
 		},
 		{
@@ -65,7 +65,7 @@ var datatableRes = tableElm.DataTable({
 			"render": function(data, type, full, meta) {
                 let date = forceTZShow(new Date(data), 7);
 
-				return `${pz(date.getUTCDate())}-${pz(date.getUTCMonth()+1)}-${date.getUTCFullYear()}`
+                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
 			},
 		},
 		{
@@ -78,7 +78,7 @@ var datatableRes = tableElm.DataTable({
 			"render": function(data, type, full, meta) {
                 let date = forceTZShow(new Date(data), 7);
 
-				return `${pz(date.getUTCHours())}:${pz(date.getUTCMinutes())}:${pz(date.getUTCSeconds())}`
+                return `${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
 			},
 		},
 		{
