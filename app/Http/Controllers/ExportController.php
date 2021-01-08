@@ -58,7 +58,7 @@ class ExportController extends Controller
         foreach ($datas as $data) {
             // process disetujui
             if ($data->b_disetujui == true) {$data->b_disetujui = "Iya";}
-            else if ($data->b_disetujui === false) {$data->b_disetujui = "Tidak";}
+            else if ($data->b_disetujui == false) {$data->b_disetujui = "Tidak";}
             else if ($data->b_disetujui === null) {$data->b_disetujui = "Menunggu Konfirmasi";}
         }
 
