@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Booking;
-use App\Helpers\FileHelper;
 use App\Http\Requests\ExportFormRequest;
 use App\Kategori;
 use Carbon\Carbon;
@@ -43,113 +41,76 @@ class ExportController extends Controller
                 $query = $query->whereNull('b.disetujui');
             }
         }
+
         $datas = $query->get([
+            DB::raw('DATE_ADD(bt.waktu_mulai, INTERVAL 7 HOUR) as bt_waktu_mulai'),
             'u.nama as user_nama',
-            'u.email as user_email',
-            'u.integra as user_integra',
-            'u.no_wa as user_no_wa',
             'g.nama as user_group_nama',
-            'k.nama as b_kategori',
             'b.nama_acara as b_nama_acara',
             'units.nama as b_unit_nama',
-            'b.file_pendukung as b_file_pendukung',
-            DB::raw('DATE_ADD(b.waktu_mulai, INTERVAL 7 HOUR) as b_waktu_mulai'),
-            DB::raw('DATE_ADD(b.waktu_akhir, INTERVAL 7 HOUR) as b_waktu_akhir'),
+            'bt.tipe_zoom as bt_tipe_zoom',
+            DB::raw('IF(bt.gladi, "gladi", "") as bt_gladi'),
+            'bt.max_peserta as bt_max_peserta',
             'b.disetujui as b_disetujui',
-            'b.deskripsi_disetujui as b_deskripsi_disetujui',
-            DB::raw('DATE_ADD(bt.waktu_mulai, INTERVAL 7 HOUR) as bt_waktu_mulai'),
-            DB::raw('DATE_ADD(bt.waktu_akhir, INTERVAL 7 HOUR) as bt_waktu_akhir'),
-            'bt.relay_ITSTV as bt_relay_ITSTV',
-            'bt.gladi as bt_gladi',
-            'host.nama as bt_host_nama',
-            'bt.webinar_id as bt_webinar_id',
         ]);
 
-        // Populate the rest of the datas
+        // Process datas
         foreach ($datas as $data) {
-            // Nama file
-            $data->b_nama_file = Booking::generateFilenameWithParam(
-                $data->user_integra,
-                $data->user_email,
-                $data->b_unit_nama,
-                $data->b_waktu_mulai,
-                $data->b_file_pendukung
-            );
-            // disetujui
+            // process disetujui
             if ($data->b_disetujui == true) {$data->b_disetujui = "Iya";}
             else if ($data->b_disetujui === false) {$data->b_disetujui = "Tidak";}
             else if ($data->b_disetujui === null) {$data->b_disetujui = "Menunggu Konfirmasi";}
-            // relay_itstv
-            $data->bt_relay_ITSTV=$data->bt_relay_ITSTV?'Iya':'Tidak';
-            // gladi
-            $data->bt_gladi=$data->bt_gladi?'Iya':'Tidak';
         }
-        
-        $htmlString = view('admin.export.table', compact('datas'));
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
-        $spreadsheet = $reader->loadFromString($htmlString);
-        
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-        $currentTime = Carbon::now('Asia/Jakarta')->format("Y-m-d_Hi");
-        if (!file_exists(storage_path("app/export"))) {
-            mkdir(storage_path("app/export"), 0777, true);
-        }
-        $filename = "export_$currentTime.xls";
-        $writer->save(storage_path("app/export/$filename"));
-        // FileHelper::scheduleDelete("export/$filename");
-        return FileHelper::downloadDokumenOrFail("export/$filename", $filename);
-        // FileHelper::deleteDokumenOrFail($filename);
-    }
 
-    /* 
-    Route::post('/admin/export/files', 'ExportController@downloadFiles')->name('export.files');            
-    function downloadFiles(ExportFormRequest $request) {
-        $query = DB::table('bookings as b');
+        // Prepare csv
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=file.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
 
-        if (!$request->has('semuaWaktu')) {
-            $query = $query->where('b.waktu_mulai', '>', Carbon::parse($request->waktuMulai))
-                ->where('b.waktu_mulai', '<', Carbon::parse($request->waktuAkhir));
-        }
-        if ($request->kategori) {
-            $query = $query->where('b.kategori_id', $request->kategori);
-        }
-        // Status filter
-        if ($request->status) {
-            if ($request->status === "true") {
-                $query = $query->where('b.disetujui', 'true');
-            } else if ($request->status === "false") {
-                $query = $query->where('b.disetujui', 'false');
-            } else if ($request->status === "null") {
-                $query = $query->whereNull('b.disetujui');
+        // Write to user buffer
+        $callback = function() use ($datas)
+        {
+            $columns = [
+                'Tanggal Pelaksanaan',
+                'Nama PIC',
+                'Group PIC',
+                'Nama Acara',
+                'Unit',
+                'Webinar/Meeting',
+                'Gladi',
+                'Kapasitas (500/1000)',
+                'Status'
+            ];
+
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach($datas as $data) {
+                // The weird ass syntax is to escape commas and quotes in a csv file
+                fputcsv($file, [
+                    $data->bt_waktu_mulai,
+                    $data->user_nama,
+                    $data->user_group_nama,
+                    $data->b_nama_acara,
+                    $data->b_unit_nama,
+                    $data->bt_tipe_zoom,
+                    $data->bt_gladi,
+                    $data->bt_max_peserta,
+                    $data->b_disetujui,
+                ]);
             }
-        }
+            fclose($file);
+        };
 
         $currentTime = Carbon::now('Asia/Jakarta')->format("Y-m-d_Hi");
-        if (!file_exists(storage_path("app/export"))) {
-            mkdir(storage_path("app/export"), 0777, true);
-        }
-        $zip_filename = "export_{$currentTime}_files.zip";
-        $datas = $query->get([
-            'u.integra as user_integra',
-            'u.email as user_email',
-            'units.nama as b_unit_nama',
-            DB::raw('DATE_ADD(b.waktu_mulai, INTERVAL 7 HOUR) as b_waktu_mulai'),
-            'b.file_pendukung as b_file_pendukung',
-        ]);
-        $zip = new \ZipArchive();
-        $zip->open($zip_filename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+        $filename = "export_$currentTime.csv";
 
-        foreach ($datas as $data) {
-            $data->nama_file = Booking::generateFilenameWithParam(
-                $data->user_integra,
-                $data->user_email,
-                $data->b_unit_nama,
-                $data->b_waktu_mulai,
-                $data->b_file_pendukung
-            );
-            $zip->addFile($data->nama_file, )
-        }
-        FileHelper::scheduleDelete("export/$filename");
-        return FileHelper::downloadDokumenOrFail("export/$filename", $filename);
-    } */
+        // return Response::stream($callback, 200, $headers);
+        return response()->streamDownload($callback, $filename, $headers);
+
+    }
 }
