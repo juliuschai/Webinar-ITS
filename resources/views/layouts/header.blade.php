@@ -62,16 +62,18 @@
                       <li><a href="{{ route('dashboard.chart') }}">Dashboard</a></li>
                     </ul>
                   </li>
+                  @if(auth()->user()->isAdmin())
                   <li><a><i class="fa fa-edit"></i> Webinar <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+{{--
                       <li><a href="{{ route('booking.new', ['tipe_zoom'=>'webinar']) }}">Booking Webinar</a></li>
                       <li><a href="{{ route('booking.list', ['tipe_zoom'=>'webinar']) }}">Webinar Saya</a></li>
-                      @if(auth()->user()->isAdmin())
+ --}}
                       <li><a href="{{ route('admin.list', ['tipe_zoom'=>'webinar']) }}">Daftar Webinar</a></li>
                       <li><a href="{{ route('admin.aprove', ['tipe_zoom'=>'webinar']) }}">Riwayat</a></li>
-                      @endif
                     </ul>
                   </li>
+                  @endif
                   @if(!auth()->user()->isMahasiswa())
                   <li><a><i class="fa fa-edit"></i> Meeting <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
