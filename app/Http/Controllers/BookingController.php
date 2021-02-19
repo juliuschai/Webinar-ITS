@@ -31,7 +31,7 @@ class BookingController extends Controller
     // Show new booking form
     function viewNewBooking($tipe_zoom, Request $request)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = new Booking();
         $booking->setUserFields(Auth::id());
         $units = Unit::getDefault();
@@ -46,7 +46,7 @@ class BookingController extends Controller
     // Save a new booking
     function saveNewBooking($tipe_zoom, NewBookingRequest $request)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = new Booking();
         $booking->setUserId(Auth::id());
         $booking->saveFromRequest($tipe_zoom, $request);
@@ -63,7 +63,7 @@ class BookingController extends Controller
     // View edit booking form
     function viewEditBooking($tipe_zoom, $id)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = Booking::findOrFail($id);
         $booking->abortIfVerified();
         $booking->setUserFields($booking->user_id);
@@ -80,7 +80,7 @@ class BookingController extends Controller
     // Save an edited booking
     function saveEditBooking($tipe_zoom, EditBookingRequest $request)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $booking = Booking::findOrFail($request['id']);
         $booking->abortIfVerified();
         $booking->saveFromRequest($tipe_zoom, $request);
@@ -159,7 +159,7 @@ class BookingController extends Controller
     // Get booking data owned by user
     function listBookingData($tipe_zoom)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $model = Booking::viewBookingList($tipe_zoom, Auth::id())
             ->newQuery();
 
@@ -180,14 +180,14 @@ class BookingController extends Controller
     // Show booking table owned by user
     function waitingListBooking($tipe_zoom)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         return view('booking.table', compact(['tipe_zoom']));
     }
 
     // Delete a given booking
     function deleteBooking($tipe_zoom, Request $request)
     {
-        BookingController::abortIfMeetingMahasiswa($tipe_zoom);
+        // BookingController::abortIfMeetingMahasiswa($tipe_zoom);
         $id = $request['id'];
         Booking::destroy($id);
 
