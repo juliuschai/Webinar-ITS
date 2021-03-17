@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "myits/openid-connect-client": "*",
+        "spatie/laravel-backup": "^6.15",
         "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {
