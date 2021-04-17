@@ -195,8 +195,8 @@
 										<label class="col-md-4 col-form-label text-md-left">{{ __('Waktu ').ucfirst($tipe_zoom) }}<p style="color: red" class="d-inline">*</p></label>
 										<i class="fa fa-calendar-o booking"></i>
 										<div class="col-md-6">
-											<input type="date" class="mulaiDate" onclick="updateWaktu(this)">
-											<select class="mulaiTime" onclick="updateWaktu(this)"></select>
+											<input type="date" class="mulaiDate" onchange="updateWaktu(this)">
+											<select class="mulaiTime" onchange="updateWaktu(this)"></select>
 										</div>
 									</div>
 
