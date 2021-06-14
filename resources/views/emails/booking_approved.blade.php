@@ -53,6 +53,9 @@
                         <tr>
                             <td>
                                 <center>
+                                    <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Tutorial cara pemakaian: <a href="https://www.its.ac.id/dptsi/id/2021/03/23/panduan-host-pada-zoom-meeting">https://www.its.ac.id/dptsi/id/2021/03/23/panduan-host-pada-zoom-meeting</a></p>
+                                </center>
+                                <center>
                                     <p class="col-md-5 col-sm-5" style="font-size: 14px; text-align: center; margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting di Zoom {{$data['tipe_zoom']}} acara anda!<br>Pastikan bahwa {{$data['tipe_zoom']}} yang anda ubah bukan {{$data['tipe_zoom']}} orang lain!</p>
                                 </center>
                                 <center>

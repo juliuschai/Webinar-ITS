@@ -41,6 +41,7 @@
                         </tr>
                         <tr>
                             <td>
+                                <p style="margin-bottom: 10px;">Tutorial cara pemakaian: <a href="https://www.its.ac.id/dptsi/id/2021/03/23/panduan-host-pada-zoom-meeting">https://www.its.ac.id/dptsi/id/2021/03/23/panduan-host-pada-zoom-meeting</p>
                                 <p style="margin-bottom: 10px;">Mohon berhati-hati saat mengubah setting zoom {{$tipe_zoom}} acara anda!<br>Pastikan bahwa {{$tipe_zoom}} yang anda ubah bukan {{$tipe_zoom}} acara lain!</p>
                                 <p style="font-size: 14px; text-align: center; margin-bottom: 10px;margin-top: 15px;">Admin Webinar DPTSI</p>
                             </td>
