@@ -108,6 +108,7 @@ class BookingTime extends Model
             }
         } else {
             $this->host_account_id = null;
+            $this->status = 'pending';
         }
         $this->save();
     }
