@@ -53,7 +53,7 @@ var datatableRes = tableElm.DataTable({
 			"render": function (data, type, full, meta) {
                 let date = forceTZShow(new Date(data), 7);
 
-                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
+                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()} ${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
 			},
 		},
 		{
@@ -66,24 +66,11 @@ var datatableRes = tableElm.DataTable({
 			"render": function (data, type, full, meta) {
                 let date = forceTZShow(new Date(data), 7);
 
-                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()}`
+                return `${pz(date.getDate())}-${pz(date.getMonth() + 1)}-${date.getFullYear()} ${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
 			},
 		},
 		{
 			"targets": 3,
-			"title": "Waktu",
-			"data": "waktu_mulai",
-			"name": "sub.waktu_mulai",
-			"searchable": false,
-			"visible": true,
-			"render": function (data, type, full, meta) {
-                let date = forceTZShow(new Date(data), 7);
-
-                return `${pz(date.getHours())}:${pz(date.getMinutes())}:${pz(date.getSeconds())}`
-            },
-		},
-		{
-			"targets": 4,
 			"title": "Nama Acara",
 			"data": "nama_acara",
 			"name": "sub.nama_acara",
@@ -91,7 +78,7 @@ var datatableRes = tableElm.DataTable({
 			"visible": true,
 		},
 		{
-			"targets": 5,
+			"targets": 4,
 			"title": "Penyelenggara Acara",
 			"data": "nama",
 			"name": "sub.nama",
@@ -99,7 +86,7 @@ var datatableRes = tableElm.DataTable({
 			"visible": true,
 		},
 		{
-			"targets": 6,
+			"targets": 5,
 			"title": "Admin DPTSI",
 			"data": "admin_dptsi",
 			"name": "sub.admin_dptsi",
@@ -108,7 +95,7 @@ var datatableRes = tableElm.DataTable({
 			"visible": true,
 		},
 		{
-			"targets": 7,
+			"targets": 6,
 			"title": "Status",
 			"data": "disetujui",
 			"name": "sub.disetujui",
@@ -125,7 +112,7 @@ var datatableRes = tableElm.DataTable({
 			},
 		},
 		{
-			"targets": 8,
+			"targets": 7,
 			"title": "Sesi",
 			"data": "book_times_summary",
 			"name": "sub.book_times_summary",
@@ -153,7 +140,7 @@ var datatableRes = tableElm.DataTable({
 			},
 		},
 		{
-			"targets": 9,
+			"targets": 8,
 			"title": "Aksi",
 			"data": null,
 			"name": null,

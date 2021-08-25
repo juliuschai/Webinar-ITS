@@ -78,7 +78,6 @@
 					<th class="text-center" scope="col">Id</th>
 					<th class="text-center" scope="col">Tanggal Booking</th>
 					<th class="text-center" scope="col">Tanggal Webinar</th>
-					<th class="text-center" scope="col">Waktu</th>
 					<th class="text-center" scope="col">Nama Acara</th>
 					<th class="text-center" scope="col">Penyelenggara Acara</th>
 					<th class="text-center" scope="col">Admin DPTSI</th>
@@ -91,7 +90,6 @@
 				</tbody>
 				<tfoot class="thead-custom-blue">
 					<tr>
-						<th></th>
 						<th></th>
 						<th></th>
 						<th></th>
@@ -120,5 +118,5 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" defer/>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js" defer></script>
 <script src="{{asset('js/util/datatablesPlugin.js') }}" defer></script>
-<script src="{{asset('js/booking/table/adminview.js') }}?4" defer></script>
+<script src="{{asset('js/booking/table/adminview.js') }}?1" defer></script>
 @endsection
